@@ -1,0 +1,11 @@
+.authInvite {
+    padding: 8px 0;
+
+    &__head {
+        font-weight: 500;
+        color: var(--mainBoldGray);
+    }
+    &__item {
+        padding: 8px 0;
+    }
+}

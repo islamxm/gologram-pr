@@ -1,0 +1,62 @@
+.authInput.disabled {
+    pointer-events: none;
+    opacity: .5;
+    
+}
+
+
+.authInput {
+    position: relative;
+    &__status {
+        position: absolute;
+        top: calc(50% - (14px / 2));
+        right: 10px;
+        font-size: 14px;
+        line-height: 14px;
+    }
+
+    &__inner {
+        display: flex;
+        background: #F7F7F7;
+        border-radius: 6px;
+        position: relative;
+
+    }   
+
+    &__main {
+        flex: 1 0 auto;
+        input {
+            width: 100%;
+            padding: 10px;
+            padding-right: 25px;
+            display: block;
+            border: none;
+            transition: all .3s ease;
+            border-radius: 6px;
+            border: 2px solid transparent; 
+
+            &:focus {
+                border-color: rgba(#FF8B00, .4);
+            }
+        }
+    }
+
+    &__before {
+        width: 30px;
+    }
+
+    &__after {
+        width: 30px;
+    }
+
+    &__ex {
+        color: red;
+        font-size: 12px;
+        line-height: 15px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        transform: translateY(calc(100% + 10px));
+        width: 100%;
+    }
+}

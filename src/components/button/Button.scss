@@ -1,0 +1,63 @@
+.button {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    transition: all .3s ease;
+    
+
+    .button__text {
+        font-weight: 600;
+        transition: all .3s ease;
+    }
+
+    .button__icon {
+        transition: all .3s ease;
+        font-size: 28px;
+        line-height: 28px;
+    }
+
+    &:active {
+        transform: scale(0.95);      
+    }
+
+    &:disabled {
+        opacity: .5;
+        filter: grayscale(50%);
+        pointer-events: none;
+    }
+}
+
+.button.button__orange {
+    background-color: var(--orange);
+
+    .button__text {
+        color: #fff;
+    }
+
+    &:hover {
+        background-color: var(--lightOrange);
+    }
+}
+
+.button.button__border {
+    background-color: transparent;
+    border: 1px solid #2C2C2C;
+
+    &:hover {
+
+        background-color: #2C2C2C;
+
+        .button__text {
+            color: #fff;
+        }
+    }
+
+    .button__text {
+        color: #2C2C2C;
+    }
+}

@@ -1,0 +1,91 @@
+.profilePosts {
+
+
+
+    
+    &__in {
+        overflow: hidden;
+        border-radius: 20px;
+        background-color: #fff;
+
+        .ant-tabs-nav {
+            padding: 15px 0 0 0;
+        }
+        .ant-tabs-ink-bar {
+            background-color: #FF8B00;
+            background-color: #000;
+        }
+
+        .ant-tabs-nav-list {
+            width: 100%;
+
+            .ant-tabs-tab {
+                width: calc(100% / 5);
+                display: flex;  
+                justify-content: center;
+            }
+
+            .ant-tabs-tab.ant-tabs-tab-active {
+                .profilePosts__tabs_item {
+                    opacity: 1;
+                }
+                .profilePosts__tabs_item_text {
+                    color: #000;
+                }
+                .profilePosts__tabs_item_icon {
+                    color: #000;
+                }
+            }
+        }
+    }
+
+    &__tabs {
+        padding: 0 30px;
+
+
+        &_item {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            line-height: 100%;
+            opacity: .4;
+
+            &_icon {
+                color: #000;
+            }
+
+            &_text {
+                font-weight: 700;    
+                text-transform: uppercase;
+                color: #000;
+            }
+        }
+
+        &_content {
+
+
+        }
+    }
+}
+
+.emptyPost {
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    &__wrapper {
+        font-size: 30px;
+        line-height: 35px;
+        opacity: .5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }   
+
+    &__text {
+        text-align: center;
+        opacity: .5;
+        margin: 10px 0;
+    }
+}

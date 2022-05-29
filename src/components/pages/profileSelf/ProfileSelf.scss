@@ -1,0 +1,14 @@
+.profile {
+
+    &__item.profile__search {
+        display: flex;
+        justify-content: center;
+        align-items: center;width: 100%;
+    }
+
+
+    .profileHeader {
+        background-color: #fff;
+        padding: 15px 0;
+    }
+}

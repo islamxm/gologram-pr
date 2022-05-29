@@ -1,0 +1,14 @@
+.none {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    &__message {
+        font-size: 30px;
+        line-height: 30px;
+        font-weight: 600;
+        color: maroon;
+    }
+}

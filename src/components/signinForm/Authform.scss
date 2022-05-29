@@ -1,0 +1,61 @@
+.authform {
+    max-width: 375px;
+    width: 100%;
+
+    &__inner {
+
+    }
+    
+    &__panel {
+        background: #FFFFFF;
+        border: 1px solid #EFEFEF;
+        border-radius: 10px;
+    }
+
+    &__item {
+        padding: 8px 0;
+
+        &_in {
+            padding: 40px;
+        }
+        
+    }
+
+    &__main {
+        
+        &_top {
+
+            &_logo {
+                margin-bottom: 30px;
+            }
+        }
+        &_item {
+            padding: 10px 0;
+        }
+        
+
+    }
+
+    &__action {
+        padding: 8px 0;
+    }
+
+    &__ex {
+        padding: 20px 40px;
+        &_link {
+            font-weight: 700;
+            color: var(--mainBlue);
+        }
+    }
+
+    &__download {
+        padding: 20px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &_item {
+            width: 48%;
+        }
+    }
+}
