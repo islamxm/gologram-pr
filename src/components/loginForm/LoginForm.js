@@ -118,7 +118,6 @@ const SigninForm = () => {
                                     
                                     <div className="authform__action">
                                         <Button type='submit' disabled={isSubmitting} buttonText='Войти' classList={'button__orange'}/>
-                                        
                                     </div>
                                 </Form>
                             )}
