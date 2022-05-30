@@ -23,10 +23,10 @@ function App() {
         <div className="wrapper">
             <main className="main">
                 <Routes>
-                    {/* <Route exact path='/signin' element={<Signin/>}/> */}
+                    <Route exact path='/signin' element={<Signin/>}/>
                     <Route exact path='/login' element={<Login/>}/>
-                    {/* <Route exact path='/profile-self' element={<ProfileSelf/>}/>
-                    <Route exact path='*' element={<None/>}/> */}
+                    <Route exact path='/profile-self' element={<ProfileSelf/>}/>
+                    <Route exact path='*' element={<None/>}/>
                 </Routes>
             </main>
         </div>
