@@ -92,7 +92,7 @@ const SigninForm = () => {
                                 <Form className="authform__main_body">
                                     <div className="authform__main_item">
                                         <Tooltip
-                                            title='текст подсказка'
+                                            title='ваш логин'
                                             position='top'
                                             trigger='mouseenter'>
                                              <AuthInput type="text" name='username' placeholder="введите никнейм"/>
@@ -105,7 +105,7 @@ const SigninForm = () => {
                                     
                                     <div className="authform__main_item">
                                         <Tooltip
-                                            title='текст подсказка'
+                                            title='ваш пароль'
                                             position='top'
                                             trigger='mouseenter'>
                                              <AuthInput type="password" name='password' placeholder="введите пароль"/>

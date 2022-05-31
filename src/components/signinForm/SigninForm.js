@@ -114,7 +114,7 @@ const SigninForm = () => {
                                 <Form className="authform__main_body">
                                     <div className="authform__main_item">
                                         <Tooltip
-                                            title='текст подсказка'
+                                            title='ваш e-mail'
                                             position='top'
                                             trigger='mouseenter'>
                                             <AuthInput type="text" name='email' placeholder="введите e-mail"/>
@@ -125,7 +125,7 @@ const SigninForm = () => {
                                     </div>
                                     <div className="authform__main_item">
                                         <Tooltip
-                                            title='текст подсказка'
+                                            title='минимум 6 символов, латинские бувы и цифры'
                                             position='top'
                                             trigger='mouseenter'>
                                             <AuthInput type="text" name='username' placeholder="введите никнейм"/>
@@ -137,7 +137,7 @@ const SigninForm = () => {
                                     </div>
                                     <div className="authform__main_item">
                                         <Tooltip
-                                            title='текст подсказка'
+                                            title='ваше имя'
                                             position='top'
                                             trigger='mouseenter'>
                                             <AuthInput type="text" name='first_name' placeholder="введите имя"/>
@@ -149,7 +149,7 @@ const SigninForm = () => {
                                     </div>
                                     <div className="authform__main_item">
                                         <Tooltip
-                                            title='текст подсказка'
+                                            title='ваше фамилия'
                                             position='top'
                                             trigger='mouseenter'>
                                             <AuthInput type="text" name='last_name' placeholder="введите фамилию"/>
@@ -161,7 +161,7 @@ const SigninForm = () => {
                                     </div>
                                     <div className="authform__main_item">
                                         <Tooltip
-                                            title='текст подсказка'
+                                            title='пароль должен содержать минимум 8 символов, прописные и строчные буквы на латинице, спец. символы и цифры'
                                             position='top'
                                             trigger='mouseenter'
                                             >
