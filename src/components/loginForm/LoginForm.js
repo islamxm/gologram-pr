@@ -44,11 +44,11 @@ const modifiedSuccessIcon = (
 )
 
 
-const SigninForm = () => {
+const LoginForm = () => {
 
     const [errorText, setErrorText] = useState('');
     const nav = useNavigate();
-    service.getProfileAdvanced('17102ca34fad7c3a4af0752c42ac17e87b9e6837').then(res => console.log(res))
+    
     
 
     return (
@@ -83,7 +83,8 @@ const SigninForm = () => {
                                     if(res.auth_token) {
                                         Cookies.set('token', res.auth_token)
                                         nav('/profile-self', {replace: true})
-                                    }
+                                        console.log(Cookies.get('token'))
+                                    } 
                                     setSubmitting(false)
                                 })
                             }}>
@@ -159,4 +160,4 @@ const SigninForm = () => {
 }
 
 
-export default SigninForm;
+export default LoginForm;
