@@ -125,7 +125,7 @@ const SigninForm = () => {
                                     </div>
                                     <div className="authform__main_item">
                                         <Tooltip
-                                            title='минимум 6 символов, латинские бувы и цифры'
+                                            title='минимум 3 символов, латинские бувы и цифры'
                                             position='top'
                                             trigger='mouseenter'>
                                             <AuthInput type="text" name='username' placeholder="введите никнейм"/>
