@@ -1,7 +1,6 @@
 //MAIN IMPORT
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import AuthProvider from './providers/authProvider';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 
@@ -20,15 +19,8 @@ import App from './components/app/App';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  // <AuthProvider>
-    
-  // </AuthProvider>
-
-    <Router>
-      <App>
-
-      </App>
-    </Router>
-
+  <Router>
+    <App/>
+  </Router>
 );  
 

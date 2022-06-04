@@ -1,23 +1,19 @@
 //GLOBAL PACKAGES
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Formik, Form} from 'formik';
 import * as Yup from 'yup';
 import {CloseOutlined, CheckOutlined} from '@ant-design/icons';
 import AuthInput from '../authInput/AuthInput';
-import Cookies from 'js-cookie';
-import {
-    Tooltip,
-  } from 'react-tippy';
-
-
+import {Tooltip} from 'react-tippy';
 
 //LOCAL COMPONENTS
 import authService from '../../services/authService';
 import { regulars } from '../../services/regulars';
-
 import Button from '../button/Button';
 // import AuthInvite from '../authInvite/AuthInvite';
+
+import useAuth from '../../hooks/useAuth';
 
 
 
@@ -39,15 +35,16 @@ const modifiedErrorIcon = (
     <CloseOutlined style={{color: 'red'}}/>
 )
 
-const modifiedSuccessIcon = (
-    <CheckOutlined style={{color: 'green'}}/>
-)
-
 
 const LoginForm = () => {
 
+    const {setGlobalToken} = useAuth();
+
     const [errorText, setErrorText] = useState('');
     const nav = useNavigate();
+    const location = useLocation();
+
+
     
     
 
@@ -77,13 +74,10 @@ const LoginForm = () => {
                             })}
                             onSubmit={(values, {setSubmitting}) => {
                                 service.logIn(values).then(res => {
-                                    console.log(res);
-                                    console.log(res.non_field_errors)
                                     setErrorText(res.non_field_errors ? res.non_field_errors.join() : null)
                                     if(res.auth_token) {
-                                        Cookies.set('token', res.auth_token)
+                                        setGlobalToken(res.auth_token);
                                         nav('/profile-self', {replace: true})
-                                        console.log(Cookies.get('token'))
                                     } 
                                     setSubmitting(false)
                                 })

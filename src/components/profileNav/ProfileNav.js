@@ -47,7 +47,7 @@ const ProfileNav = () => {
                     </NavLink>
                 </div>
                 <div className="profileNav__item profileNav__item--avatar">
-                    <NavLink to='/profile-self' end style={({isActive}) => ({color: isActive ? '#000' : '#aaa'})}>
+                    <NavLink to='/' end style={({isActive}) => ({color: isActive ? '#000' : '#aaa'})}>
                         <div className="profileNav__item_img">
                             <img src={avatar} alt="" />
                         </div>

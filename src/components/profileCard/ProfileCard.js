@@ -4,7 +4,7 @@ import Services from '../../services/authService';
 import Button from '../button/Button';
 import {
     SettingOutlined} from '@ant-design/icons';
-
+import useAuth from '../../hooks/useAuth';
 
 
 import './ProfileCard.scss';
@@ -16,6 +16,8 @@ const service = new Services();
 
 const ProfileCard = () => {
 
+    const {token} = useAuth();
+
     // const [avatar, setAvatar] = useState(null);
     const [description, setDescription] = useState(null);
     const [firstName, setFirstName] = useState(null);
@@ -23,26 +25,22 @@ const ProfileCard = () => {
     const [link, setLink] = useState(null);
     const [status, setStatus] = useState(null);
     const [prof, setProf] = useState(null);
-
     const [follows, setFollows] = useState(null);
     const [followers, setFollowers] = useState(null);
 
 
-    console.log(Cookies.get('token'));
-
-    service.getProfileAdvanced(Cookies.get('token'))
+    service.getProfileAdvanced(token)
         .then(res => {
-            console.log(res);
             setFirstName(res.first_name);
             setLink(res.link);
             setStatus(res.profile_status);
             setProf(res.profile_type);
         })
-    service.getUserFollowers(Cookies.get('token'))
+    service.getUserFollowers(token)
             .then(res => {
                 setFollowers(res.followers.length);
             })
-    service.getUserFollows(Cookies.get('token'))
+    service.getUserFollows(token)
             .then(res => {
                 setFollows(res.following.length)
             })
