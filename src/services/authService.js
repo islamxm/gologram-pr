@@ -40,14 +40,38 @@ export default class authService {
                 'Authorization': `Token ${token}`
             }
         })
-
-        return await response.json();
     }
     
     getProfileAdvanced = async (token) => {
         let response = await fetch(endpoints.profile, {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': `Token ${token}`
+            }
+        })
+
+        return await response.json();
+    }
+
+    changeProfileInfo = async (token, body) => {
+        let response = await fetch(endpoints.updateProfileInfo, {
             method: 'POST',
-            body:'',
+            body: JSON.stringify(body),
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': `Token ${token}`
+            }
+        })
+
+        return await response.json();
+    }
+
+    changePassword = async (token, body) => {
+        let response = await fetch(endpoints.changePass, {
+            method: 'POST',
+            body: JSON.stringify(body),
+            mode: 'cors',
             headers: {
                 'Content-type': 'application/json',
                 'Authorization': `Token ${token}`
@@ -58,12 +82,13 @@ export default class authService {
     }
 
 
-    getUserFollowers = async (token) => {
-        let response = await fetch(endpoints.userFollowers, {
+    changeAvatar = async (token, body) => {
+        let response = await fetch(endpoints.changeAv, {
             method: 'POST',
-            body:'',
+            body: body,
+            mode: 'cors',
             headers: {
-                'Content-type': 'application/json',
+                // 'Content-type': 'multipart/form-data',
                 'Authorization': `Token ${token}`
             }
         })
@@ -71,17 +96,35 @@ export default class authService {
         return await response.json();
     }
 
-    getUserFollows = async (token) => {
-        let response = await fetch(endpoints.useFollows, {
-            method: 'POST',
-            body: '',
-            headers: {
-                'Content-type': 'application/json',
-                'Authorization': `Token ${token}`
-            }
-        })
 
-        return await response.json();
-    }
+    // getUserFollowers = async (token) => {
+    //     let response = await fetch(endpoints.userFollowers, {
+    //         method: 'POST',
+    //         body:'',
+    //         headers: {
+    //             'Content-type': 'application/json',
+    //             'Authorization': `Token ${token}`
+    //         }
+    //     })
+
+    //     return await response.json();
+    // }
+
+    // getUserFollows = async (token) => {
+    //     let response = await fetch(endpoints.useFollows, {
+    //         method: 'POST',
+    //         body: '',
+    //         headers: {
+    //             'Content-type': 'application/json',
+    //             'Authorization': `Token ${token}`
+    //         }
+    //     })
+
+    //     return await response.json();
+    // }
+
+    
+
+    
 
 }

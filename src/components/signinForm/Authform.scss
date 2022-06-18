@@ -31,6 +31,103 @@
         }
         &_item {
             padding: 10px 0;
+
+            &_name {
+                text-align: left;
+                font-weight: 500;
+                margin-bottom: 5px;
+            }
+
+            &_select {
+                display: flex;
+                justify-content: flex-start;
+                flex-wrap: wrap;
+
+                &_error {
+                    width: 100%;
+                    text-align: left;
+                    color: red;
+                    font-size: 12px;
+                    line-height: 15px;
+                }
+                
+                .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+                    border-width: 2px;
+                    border-color: rgba(255, 139, 0, 0.4);
+                    box-shadow: none;
+                }
+                .ant-select {
+                    width: 100%;
+
+                    
+
+                    .ant-select-selector {
+                        height: auto;
+                        display: flex;
+                        align-items: center;
+                        padding: 7px 0;
+                        border: 2px solid transparent;
+                        border-radius: 6px;
+                        background-color: #F7F7F7;
+                        font-size: 18px;
+                        line-height: 25px;
+                        max-height: 50px;
+                        &:hover {
+                            border-color: rgba(255, 139, 0, 0.4) !important;
+                            // border-width: 2px;
+                        }
+                        .ant-select-selection-search {
+                            display: flex;
+                            align-items: center;
+                            input {
+                                height: auto;
+                                text-align: left;
+                            }
+                        }
+
+                        .ant-select-selection-item {
+                            text-align: left;
+                            padding-left: 10px;
+                            max-height: 50px;
+                            display: flex;
+                            align-items: center;
+                            
+                        }
+
+                        .ant-select-selection-placeholder {
+                            text-align: left;
+                            padding-left: 10px;
+                        }
+                    }
+                }
+
+                &_item {
+                    
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    input {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        visibility: hidden;
+                        z-index: -1;
+                        pointer-events: none;
+                    }
+
+                    &_label {
+                        font-size: 18px;
+                        // line-height: 25px;
+                        display: block;
+                        width: 100%;
+                        
+                    }
+
+                    input:checked ~ label {
+                        // color: var(--orange) !important;
+                    }
+                }
+            }
         }
         
 

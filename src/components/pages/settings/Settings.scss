@@ -1,0 +1,65 @@
+@import '../../../styles/global.scss';
+
+.settings {
+    padding-top: 95px;
+    padding-bottom: 40px;
+
+    &__in {
+        overflow: hidden;
+        width: 100%;
+    }
+
+    &__body {
+        
+
+
+        .ant-tabs {
+
+        }
+        .ant-tabs-content-holder {
+            padding: 28px 20px;
+        }
+
+        .ant-tabs-nav {
+            width: 350px;
+            padding: 20px 0 20px 20px;
+        }
+
+        
+
+        .ant-tabs-ink-bar {
+            background-color: 
+            #FF9E10;
+        }
+
+        .ant-tabs-tab {
+            font-size: 20px;
+            line-height: 25px;
+            transition: all .2s ease;
+            white-space: normal;
+            text-align: left !important;
+
+            &:hover {
+                .ant-tabs-tab-btn {
+                    color:#FF9E10;
+                    
+                }
+            }
+            
+        }
+
+        .ant-tabs-tab.ant-tabs-tab-active {
+            
+            font-weight: 600;
+
+            .ant-tabs-tab-btn {
+                color: 
+                #FF9E10;
+
+                &:hover {
+                    color: #FF9E10;
+                }
+            }
+        }
+    }
+}

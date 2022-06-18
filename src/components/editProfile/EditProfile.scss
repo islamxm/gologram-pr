@@ -1,0 +1,167 @@
+.editProfile {
+    
+    &__form {
+
+        &_item-avatar {
+            align-items: center !important;
+            margin-bottom: 40px !important;
+
+            &_img {
+                display: flex;
+                justify-content: flex-end;
+                flex: 0 0 auto;
+                width: 120px;
+                padding-right: 20px;
+                
+                &_el {
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 100%;
+                    overflow: hidden;
+                    background-color: #AFAFAF;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        display: flex;
+                    }
+                }
+            }
+
+            &_body {
+
+                &_username {
+                    font-weight: 700;
+                    line-height: 28px;
+                    font-size: 24px;
+                    padding: 2px 0;
+                }
+
+                &_change {
+                    color: #FF9E10;
+                    font-size: 18px;
+                    line-height: 22px;
+                    border: none;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        &_item_body.radio__list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            .radio__list_error {
+                color: red;
+                font-size: 12px;
+                line-height: 15px;
+                width: 100%;
+                text-align: left;
+            }
+        }
+
+        &_item_radio {
+            width: 48%;
+            margin-bottom: 10px;
+            
+            input {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index:-1;
+                visibility: hidden;
+                pointer-events: none;
+            }
+
+            input:checked ~ .editProfile__form_item_radio_label{
+                background-color: #FF9E10;
+                
+                .editProfile__form_item_radio_label_text {
+                    color: #fff;
+                    opacity: 1;
+                }
+            }
+
+            &_label {
+                border-radius: 6px;
+                background-color: #eee;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all .2s ease-in-out;
+                padding: 12px 0;
+
+                &_text {
+                    // width: 100%;
+                    white-space: nowrap;
+                    font-weight: 500;
+                    opacity: .5;
+                    font-size: 16px;
+                    line-height: 20px;
+                    
+                    transition: all .3s ease-in-out;
+                }
+            }
+        }
+
+        &_item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+
+            &_name {
+                width: 250px;
+                text-align: right;
+                font-weight: 700;
+                font-size: 18px;
+                line-height: 25px;
+                padding-top: 12px;
+                padding-bottom: 12px;
+                padding-right: 20px;
+                flex: 0 0 auto;
+            }
+
+            &_body {
+                max-width: 400px;
+                width: 100%;
+                &_field {
+                    margin-bottom: 15px;
+
+                    &_error {
+                        color: red;
+                        font-size: 12px;
+                        line-height: 15px;
+                    }
+                }
+
+                &_text {
+                    font-weight: 400;
+                    font-size: 14px;
+                    line-height: 16px;
+                    color: #AFAFAF;
+                }
+            }
+        }
+
+        &_action {
+            display: flex;
+            justify-content: flex-end;
+
+            &_item {
+                margin: 0 5px;
+                min-width: 25%;
+
+                &:first-child {
+                    margin-left: 0;
+                }
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}

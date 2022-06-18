@@ -33,11 +33,19 @@
             border: none;
             transition: all .3s ease;
             border-radius: 6px;
+            font-size: 18px;
+            line-height: 25px;
             border: 2px solid transparent; 
 
             &:focus {
                 border-color: rgba(#FF8B00, .4);
             }
+        }
+
+        input:read-only {
+            opacity: 0.5;
+            pointer-events: none;
+            background-color: #ccc;
         }
     }
 

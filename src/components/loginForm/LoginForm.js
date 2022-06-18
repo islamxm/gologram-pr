@@ -31,19 +31,22 @@ import './Authform.scss';
 const service = new authService();
 
 
-const modifiedErrorIcon = (
-    <CloseOutlined style={{color: 'red'}}/>
-)
+// const modifiedErrorIcon = (
+//     <CloseOutlined style={{color: 'red'}}/>
+// )
 
 
 const LoginForm = () => {
 
+
     const {setGlobalToken} = useAuth();
 
     const [errorText, setErrorText] = useState('');
+    const [errorUsername, setErrorUsername] = useState('');
+    const [errorPassword, setErrorPassword] = useState('');
+
     const nav = useNavigate();
     const location = useLocation();
-
 
     
     
@@ -64,22 +67,20 @@ const LoginForm = () => {
                                 username: '',
                                 password: '',
                             }}
-                            validationSchema={Yup.object({
-                                username: Yup.string()
-                                        .matches(regulars.regNickname)
-                                        .required(modifiedErrorIcon),
-                                password: Yup.string()
-                                        .matches(regulars.regPassword)
-                                        .required(modifiedErrorIcon),
-                            })}
                             onSubmit={(values, {setSubmitting}) => {
                                 service.logIn(values).then(res => {
-                                    setErrorText(res.non_field_errors ? res.non_field_errors.join() : null)
-                                    if(res.auth_token) {
-                                        setGlobalToken(res.auth_token);
+                                    setSubmitting(true);
+                                    console.log(res);
+                                    setErrorUsername(res.data?.validate_errors?.username ? res.data.validate_errors.username.join() : null);
+                                    setErrorPassword(res.data?.validate_errors?.password ? res.data.validate_errors.password.join() : null);
+                                    setErrorText(res.data?.validate_errors?.non_field_errors ? res.data.validate_errors.non_field_errors.join() : null);
+                                    if(res.data.auth_token) {
+                                        setGlobalToken(res.data.auth_token);
                                         nav('/profile-self', {replace: true})
+                                        // console.log(res.data.auth_token);
                                     } 
-                                    setSubmitting(false)
+                                    setSubmitting(false);
+                                    
                                 })
                             }}>
 
@@ -94,7 +95,7 @@ const LoginForm = () => {
                                         </Tooltip>
                                        
                                         <div className="authform__main_item_ex">
-                                            {errorText}
+                                            {errorUsername}{errorText}
                                         </div>
                                     </div>
                                     
@@ -107,7 +108,7 @@ const LoginForm = () => {
                                         </Tooltip>
                                         
                                         <div className="authform__main_item_ex">
-                                            {errorText}
+                                            {errorPassword}{errorText}
                                         </div>
                                     </div>
                                     

@@ -15,6 +15,7 @@ import None from '../none/None';
 //hoc
 import {CheckAuth} from '../../hoc/CheckAuth';
 import {AuthProvider} from '../../hoc/AuthProvider';
+import Settings from '../pages/settings/Settings';
 
 
 
@@ -30,15 +31,11 @@ function App() {
                         <Route exact path='/signin' element={<Signin/>}/>
                         <Route exact path='/login' element={<Login/>}/>
 
-
                         <Route exact path='/' element={<CheckAuth><ProfileSelf/></CheckAuth>}/>
+                        <Route exact path='/profile-self' element={<CheckAuth><ProfileSelf/></CheckAuth>}/>
 
-
+                        <Route exact path='/settings' element={<CheckAuth><Settings/></CheckAuth>}/>
                         
-                        {/* <Route exact path='/profile-self' element={<CheckAuth><ProfileSelf/></CheckAuth>}/> */}
-
-
-
                         <Route exact path='*' element={<None/>}/>
                     </Routes>
                 </AuthProvider>

@@ -1,49 +1,31 @@
 //GLOBAL PACKAGES
 import { useState } from 'react';
 import { Link, useNavigate} from 'react-router-dom';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import {CloseOutlined, CheckOutlined} from '@ant-design/icons';
+import { Formik, Form, Field} from 'formik';
 import AuthInput from '../authInput/AuthInput';
+import { Select } from 'antd';
+
+import SexSelect from '../sexSelect/SexSelect';
+
+
 import {
     Tooltip,
-  } from 'react-tippy';
-
-
-
-
+} from 'react-tippy';
 //LOCAL COMPONENTS
 import authService from '../../services/authService';
-import { regulars } from '../../services/regulars';
-
 import Button from '../button/Button';
 // import AuthInvite from '../authInvite/AuthInvite';
-
-
-
-
 //IMAGES
 import logoMain from '../../img/logo-main.svg';
 import googlePlay from '../../img/google-play-badge.png';
 import appleBadge from '../../img/apple-badge.svg';
 
-
 //STYLES
 import './Authform.scss';
 import 'react-tippy/dist/tippy.css';
 
-
 const service = new authService();
-
-
-const modifiedErrorIcon = (
-    <CloseOutlined style={{color: 'red'}}/>
-)
-
-const modifiedSuccessIcon = (
-    <CheckOutlined style={{color: 'green'}}/>
-)
-
+const { Option } = Select;
 
 
 
@@ -56,6 +38,7 @@ const SigninForm = () => {
     const [firstnameText, setFirstnameText] = useState(null);
     const [lastnameText, setLastnameText] = useState(null);
     const [passwordText, setPasswordText] = useState(null);
+    const [sexText, setSexText] = useState(null);
 
     return (
         <div className="authform">
@@ -67,7 +50,6 @@ const SigninForm = () => {
                                 <img src={logoMain} alt="" />
                             </div>
                         </div>
-
                         <Formik
                             initialValues={{
                                 email: '',
@@ -75,37 +57,27 @@ const SigninForm = () => {
                                 first_name: '',
                                 last_name: '',
                                 password: '',
+                                sex: ''
                             }}
-                            validationSchema={Yup.object({
-                                email: Yup.string()
-                                        .matches(regulars.regEmail)
-                                        .required(),
-                                username: Yup.string()
-                                        .matches(regulars.regNickname)
-                                        .required(modifiedErrorIcon),
-                                first_name: Yup.string()
-                                        .matches(regulars.regName)
-                                        .required(modifiedErrorIcon),
-                                last_name: Yup.string()
-                                        .matches(regulars.regName)
-                                        .required(modifiedErrorIcon),
-                                password: Yup.string()
-                                        .matches(regulars.regPassword)
-                                        .required(modifiedErrorIcon),
-                            })}
                             onSubmit={(values, {setSubmitting}) => {
+                                console.log(values);
                                 service.signIn(values).then(res => {
                                     console.log(res);
-
-                                    setEmailText(typeof(res.email) === 'object' ? res.email.join() : null);
-                                    setUsernameText(typeof(res.username) === 'object' ? res.username.join() : null);
-                                    setFirstnameText(typeof(res.first_name) === 'object' ? res.first_name.join() : null);
-                                    setLastnameText(typeof(res.last_name) === 'object' ? res.last_name.join() : null);
-                                    setPasswordText(typeof(res.password) === 'object' ? res.password.join() : null);
-                                    console.log(res.id)
-                                    if(res.id) {
+                                    
+                                    setEmailText(res.data.validate_errors?.email ? res.data.validate_errors.email : null);
+                                    setUsernameText(res.data.validate_errors?.username ? res.data.validate_errors.username : null);
+                                    setFirstnameText(res.data.validate_errors?.first_name ? res.data.validate_errors.first_name : null);
+                                    setLastnameText(res.data.validate_errors?.last_name ? res.data.validate_errors.last_name : null);
+                                    setPasswordText(res.data.validate_errors?.password ? res.data.validate_errors.password : null);
+                                    setSexText(res.data.validate_errors?.sex ? res.data.validate_errors.sex : null);
+                                    if(res.response.code === 201) {
                                         nav('/login', {replace: true});
                                     }
+
+                                    if(res.response.code !== 201) {
+                                        console.log(res.response.status);
+                                    }
+
                                     setSubmitting(false);
                                 })
                             }}>
@@ -172,6 +144,18 @@ const SigninForm = () => {
                                             {passwordText}
                                         </div>
                                     </div>
+                                    <div className="authform__main_item">
+                                        {/* <div className="authform__main_item_name">Ваш пол</div> */}
+                                        <div className="authform__main_item_select">
+                                            <SexSelect/>
+                                        </div>
+                                        
+
+                                        <div className="authform__main_item_ex">
+                                            {sexText}
+                                        </div>
+                                    </div>
+                                    
                                     <div className="authform__action">
                                         <Button type='submit' disabled={isSubmitting} buttonText='Регистрация' classList={'button__orange'}/>
                                         

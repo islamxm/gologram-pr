@@ -1,22 +1,21 @@
 import { NavLink } from "react-router-dom";
-
+import { Dropdown } from "antd";
+import ProfileDropdownMenu from "../profileDropdownMenu/ProfileDropdownMenu";
+import useAuth from "../../hooks/useAuth";
 
 //icons
-import {
-    SearchOutlined, 
+import { 
     MessageFilled ,
     PlusCircleFilled,
     GlobalOutlined,
-    HeartFilled} from '@ant-design/icons';
-    
-import {HomeFilled} from '@ant-design/icons';
-
-import avatar from '../../img/avatar.png';
+    HeartFilled,
+    HomeFilled,
+    } from '@ant-design/icons';
 
 import './ProfileNav.scss';
 
-
 const ProfileNav = () => {
+    const {avatar} = useAuth();
 
     return (
         <div className="profileNav">
@@ -47,11 +46,15 @@ const ProfileNav = () => {
                     </NavLink>
                 </div>
                 <div className="profileNav__item profileNav__item--avatar">
-                    <NavLink to='/' end style={({isActive}) => ({color: isActive ? '#000' : '#aaa'})}>
-                        <div className="profileNav__item_img">
-                            <img src={avatar} alt="" />
-                        </div>
-                    </NavLink>
+                    <Dropdown
+                        overlay={<ProfileDropdownMenu/>}>
+                            <NavLink to='/' end style={({isActive}) => ({color: isActive ? '#000' : '#aaa'})}>
+                                <div className="profileNav__item_img">
+                                    <img src={avatar} alt="" />
+                                </div>
+                            </NavLink>
+                    </Dropdown>
+                    
                 </div>
             </div>
         </div>

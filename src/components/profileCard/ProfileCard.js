@@ -1,14 +1,11 @@
-import { useState } from 'react';
-import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 import Services from '../../services/authService';
 import Button from '../button/Button';
 import {
     SettingOutlined} from '@ant-design/icons';
 import useAuth from '../../hooks/useAuth';
 
-
 import './ProfileCard.scss';
-import avatar from '../../img/avatar.png';
 
 
 
@@ -16,34 +13,60 @@ const service = new Services();
 
 const ProfileCard = () => {
 
-    const {token} = useAuth();
+    const userData = useAuth();
+    const navigate = useNavigate();
 
-    // const [avatar, setAvatar] = useState(null);
-    const [description, setDescription] = useState(null);
-    const [firstName, setFirstName] = useState(null);
-    const [lastName, setLastName] = useState(null);
-    const [link, setLink] = useState(null);
-    const [status, setStatus] = useState(null);
-    const [prof, setProf] = useState(null);
-    const [follows, setFollows] = useState(null);
-    const [followers, setFollowers] = useState(null);
+    const translateType = (item) => {
+        switch (item) {
+            case 'blogger':
+                return 'блогер'
+            case 'self_employed':
+                return 'Самозанятый'
+            case 'individual_entrepreneurship':
+                return 'ИП'
+            case 'startapp':
+                return 'cтартап'
+            case 'small_business':
+                return 'малый бизнес'
+            case 'medium_business':
+                return 'средний бизнес'
+            case 'large_business':
+                return 'крупный бизнес'
+        }
+    }
 
 
-    service.getProfileAdvanced(token)
-        .then(res => {
-            setFirstName(res.first_name);
-            setLink(res.link);
-            setStatus(res.profile_status);
-            setProf(res.profile_type);
+    const translateStatus = (item) => {
+        switch(item) {
+            case 'work':
+                return 'работаю'
+            case 'rest':
+                return 'Отдыхаю'
+            case 'leave':
+                return 'в отпуске'
+            case 'traffic_jam':
+                return 'В пробке'
+            case 'driving_from_work':
+                return 'Еду с работы'
+            case 'creation':
+                return 'занимаюсь творчеством'
+        }
+    }
+
+    service.getProfileAdvanced(userData.token)
+        .then(({data}) => {
+            userData.setGlobalAvatar(data.avatar);
+            userData.setGlobalUsername(data.username);
+            userData.setGlobalFirstName(data.first_name);
+            userData.setGlobalLastName(data.last_name);
+            userData.setGlobalLink(data.link);
+            userData.setGlobalProfileStatus(data.profile_status);
+            userData.setGlobalProfileType(data.profile_type);
+            userData.setGlobalDescription(data.description);
+            userData.setGlobalFollowers(data.followers.length);
+            userData.setGlobalFollowing(data.following.length);
         })
-    service.getUserFollowers(token)
-            .then(res => {
-                setFollowers(res.followers.length);
-            })
-    service.getUserFollows(token)
-            .then(res => {
-                setFollows(res.following.length)
-            })
+    
 
     return (
         <div className="profileCard">
@@ -51,45 +74,50 @@ const ProfileCard = () => {
                 <div className="profileCard__in">
                     <div className="profileCard__item profileCard__img">
                         <div className="profileCard__img_el">
-                            <img src={avatar} alt="" />
+                            <img src={userData.avatar} alt="" />
                         </div>
                     </div>
                     <div className="profileCard__item profileCard__body">
                         <div 
-                            className="profileCard__body_item profileCard__body_item--nickname">nickname</div>
+                            className="profileCard__body_item profileCard__body_item--username">{userData.username}</div>
                         <div 
-                            className="profileCard__body_item profileCard__body_item--name">{firstName}</div>
+                            className="profileCard__body_item profileCard__body_item--name">{userData.firstName} {userData.lastName}</div>
                         <div 
-                            className="profileCard__body_item profileCard__body_item--prof">{prof}</div>
+                            className="profileCard__body_item profileCard__body_item--prof">{translateType(userData.profileType)}</div>
                         <div 
-                            className={status ? "profileCard__body_item profileCard__body_item--status active" : "profileCard__body_item profileCard__body_item--status"}>{status ? status : 'нет статуса'}</div>
+                            className={userData.profileStatus ? "profileCard__body_item profileCard__body_item--status active" : "profileCard__body_item profileCard__body_item--status"}>
+                                {userData.profileStatus ? translateStatus(userData.profileStatus) : 'нет статуса'}
+                            </div>
                         <a 
-                            href={link} 
-                            className="profileCard__body_item profileCard__body_item--link">{link ? link : 'нет ссылки'}</a>
+                            href={userData.link} 
+                            className="profileCard__body_item profileCard__body_item--link">{userData.link ? userData.link : 'нет ссылки'}</a>
+                        <div className="profileCard__body_item profileCard__body_item--descr">
+                            {userData.description ? userData.description : null}
+                        </div>
                     </div>
                     <div className="profileCard__item profileCard__action">
                         <div className="profileCard__action_item">
                             <div className="">
-                                <Button classList=' button__border' buttonText='Редактировать профиль'/>
+                                <Button onClickHandle={() => navigate('/settings')} classList=' button__border' buttonText='Редактировать профиль'/>
                             </div>
                         </div>
                         <div className="profileCard__action_item">
                             <div className="profileCard__action_item_btn">
-                                <Button classList='' icon={<SettingOutlined/>}/>
+                                <Button onClickHandle={() => navigate('/settings')} classList='' icon={<SettingOutlined/>}/>
                             </div>
                         </div>
                     </div>
                     <div className="profileCard__item profileCard__info">
                         <div className="profileCard__info_item">
-                            <div className="profileCard__info_item_value">0</div>
+                            <div className="profileCard__info_item_value">{userData.posts}</div>
                             <div className="profileCard__info_item_name">публикации</div>
                         </div>
                         <div className="profileCard__info_item">
-                            <div className="profileCard__info_item_value">{followers}</div>
+                            <div className="profileCard__info_item_value">{userData.followers}</div>
                             <div className="profileCard__info_item_name">подписчиков</div>
                         </div>
                         <div className="profileCard__info_item">
-                            <div className="profileCard__info_item_value">{follows}</div>
+                            <div className="profileCard__info_item_value">{userData.following}</div>
                             <div className="profileCard__info_item_name">подписки</div>
                         </div>
                     </div>

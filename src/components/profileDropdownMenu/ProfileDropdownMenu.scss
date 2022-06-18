@@ -1,0 +1,47 @@
+.profileDropdownMenu {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px #aaa;
+    overflow: hidden;
+    &__item {
+        
+
+        &_link {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+
+            &:hover {
+                background-color: #eee;
+            }
+
+            &_icon {
+                color: #000;
+                margin-right: 10px;
+            }
+
+            &_text {
+                color: #000;
+                font-size: 18px;
+                line-height: 22px;
+            }
+        }
+    }
+
+    &__item-logout {
+
+        .profileDropdownMenu__item_link {
+            
+
+            .profileDropdownMenu__item_link_icon {
+                color: red;
+            }
+
+            .profileDropdownMenu__item_link_text {
+                color: red;
+            }
+        }
+        
+    }
+}

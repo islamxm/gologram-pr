@@ -9,13 +9,7 @@ import './AuthInput.scss';
 
 
 
-const modifiedErrorIcon = (
-    <CloseOutlined style={{color: 'red'}}/>
-)
 
-const modifiedSuccessIcon = (
-    <CheckOutlined style={{color: 'green'}}/>
-)
 
 
 const AuthInput = ({...props}) => {
@@ -31,12 +25,12 @@ const AuthInput = ({...props}) => {
                         {...props} {...field}>
                     </input>
                 </div>
-                <div className="authInput__status">
+                {/* <div className="authInput__status">
                     {meta.touched && meta.error ? modifiedErrorIcon : null}
-                </div>
+                </div> */}
             </div>
             {/* Сюда нужно вывести ошибку от сервера */}
-            <div className="authInput__ex"></div>
+            {/* <div className="authInput__ex"></div> */}
         </div>
     )
 }
