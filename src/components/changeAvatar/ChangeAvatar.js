@@ -12,7 +12,6 @@ const service = new authService();
 
 const ChangeAvatar = () => {
     const userData = useAuth()
-    const [currentAvatar, setCurrentAvatar] = useState(userData.avatar ? userData.avatar : null);
     
     return (
         <div className="changeAvatar">
