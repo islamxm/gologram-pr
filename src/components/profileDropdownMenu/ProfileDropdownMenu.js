@@ -15,11 +15,14 @@ const ProfileDropdownMenu = () => {
     const navigate = useNavigate();
 
     const userData = useAuth();
+    const {setGlobalReqLoad} = userData;
     
     const logoutHandler = (e) => {
         e.preventDefault();
+        setGlobalReqLoad(true)
         service.logOut(userData.token).then((res) => {
             userData.removeGlobalToken(userData.token);
+            setGlobalReqLoad(false);
             navigate('/', {replace: true})
         })
     }

@@ -76,7 +76,7 @@
             }
 
             input:checked ~ .editProfile__form_item_radio_label{
-                background-color: #FF9E10;
+                opacity: 1;
                 
                 .editProfile__form_item_radio_label_text {
                     color: #fff;
@@ -86,19 +86,19 @@
 
             &_label {
                 border-radius: 6px;
-                background-color: #eee;
+                background-color: #FF9E10;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
                 transition: all .2s ease-in-out;
                 padding: 12px 0;
-
+                color: #fff;
+                opacity: .3;
                 &_text {
                     // width: 100%;
                     white-space: nowrap;
                     font-weight: 500;
-                    opacity: .5;
                     font-size: 16px;
                     line-height: 20px;
                     
@@ -122,6 +122,10 @@
                 padding-bottom: 12px;
                 padding-right: 20px;
                 flex: 0 0 auto;
+
+                span {
+                    color: red;
+                }
             }
 
             &_body {
@@ -141,7 +145,7 @@
                     font-weight: 400;
                     font-size: 14px;
                     line-height: 16px;
-                    color: #AFAFAF;
+                    color: #000;
                 }
             }
         }

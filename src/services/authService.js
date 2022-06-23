@@ -1,5 +1,4 @@
 import { Endpoints } from "./endpoints";
-
 const endpoints = new Endpoints();
 
 export default class authService {
@@ -43,16 +42,22 @@ export default class authService {
     }
     
     getProfileAdvanced = async (token) => {
-        let response = await fetch(endpoints.profile, {
-            method: 'GET',
-            headers: {
-                'Content-type': 'application/json',
-                'Authorization': `Token ${token}`
-            }
-        })
-
-        return await response.json();
+        try {
+            let response = await fetch(endpoints.profile, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `Token ${token}`
+                }
+            })
+            
+            return await response.json();
+        } catch(err) {
+            console.log(err);
+            return await false; 
+        }
     }
+
 
     changeProfileInfo = async (token, body) => {
         let response = await fetch(endpoints.updateProfileInfo, {

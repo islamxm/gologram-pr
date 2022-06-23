@@ -39,6 +39,49 @@
                 color: red;
                 text-align: left;
             }
+
+            &_checkbox {
+
+                &_input {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    visibility: hidden;
+                    z-index: -1;
+                    pointer-events: none;
+                }
+
+                &_input:checked ~ .authform__main_item_checkbox_label {
+
+                    .authform__main_item_checkbox_label_icon {
+                        background-color: var(--orange);
+                        border-color: var(--orange);
+                        color: #fff;
+                    }
+                }
+
+                &_label {
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+
+                    &_icon {
+                        width: 25px;
+                        height: 25px;
+                        border-radius: 5px;
+                        border: 1px solid #ccc;
+                        margin-right: 10px;
+                        transition: all .3s ease-in-out;
+                        color: transparent;
+
+                    }
+
+                    &_text {
+                        font-size: 18px;
+                        line-height: 22px;
+                    }
+                }
+            }
         }
         
 

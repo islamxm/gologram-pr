@@ -1,10 +1,10 @@
 //GLOBAL PACKAGES
 import { useState } from 'react';
 import { Link, useNavigate} from 'react-router-dom';
-import { Formik, Form, Field} from 'formik';
-import AuthInput from '../authInput/AuthInput';
+import { Formik, Form} from 'formik';
+import AuthInput from '../authFields/AuthInput';
 import { Select } from 'antd';
-
+import useAuth from '../../hooks/useAuth';
 import SexSelect from '../sexSelect/SexSelect';
 
 
@@ -25,14 +25,11 @@ import './Authform.scss';
 import 'react-tippy/dist/tippy.css';
 
 const service = new authService();
-const { Option } = Select;
-
-
 
 const SigninForm = () => {
 
     let nav = useNavigate();
-    
+    const {setGlobalReqLoad} = useAuth();
     const [emailText, setEmailText] = useState(null);
     const [usernameText, setUsernameText ] = useState(null);
     const [firstnameText, setFirstnameText] = useState(null);
@@ -60,10 +57,8 @@ const SigninForm = () => {
                                 sex: ''
                             }}
                             onSubmit={(values, {setSubmitting}) => {
-                                console.log(values);
+                                setGlobalReqLoad(true);
                                 service.signIn(values).then(res => {
-                                    console.log(res);
-                                    
                                     setEmailText(res.data.validate_errors?.email ? res.data.validate_errors.email : null);
                                     setUsernameText(res.data.validate_errors?.username ? res.data.validate_errors.username : null);
                                     setFirstnameText(res.data.validate_errors?.first_name ? res.data.validate_errors.first_name : null);
@@ -73,11 +68,10 @@ const SigninForm = () => {
                                     if(res.response.code === 201) {
                                         nav('/login', {replace: true});
                                     }
-
                                     if(res.response.code !== 201) {
                                         console.log(res.response.status);
                                     }
-
+                                    setGlobalReqLoad(false);
                                     setSubmitting(false);
                                 })
                             }}>

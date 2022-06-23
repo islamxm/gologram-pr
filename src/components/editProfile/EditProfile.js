@@ -1,17 +1,22 @@
 import './EditProfile.scss';
 import '../../components/signinForm/Authform.scss'
 import { Formik, Field, Form } from 'formik';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import messages from '../messages/messages';
 import useAuth from '../../hooks/useAuth';
-import AuthInput from '../authInput/AuthInput';
+import AuthInput from '../authFields/AuthInput';
 import Button from '../button/Button';
 import authService from '../../services/authService';
 import SexSelect from '../sexSelect/SexSelect';
+import AuthTextarea from '../authFields/AuthTextarea';
+
+
 const service = new authService();
+
 
 const EditProfile = () => {
     const userData = useAuth();
-    
+    const {setGlobalReqLoad} = userData;
 
     const [usernameText, setUsernameText ] = useState(null);
     const [firstnameText, setFirstnameText] = useState(null);
@@ -22,22 +27,53 @@ const EditProfile = () => {
     const [statusText, setStatusText] = useState(null);
     const [descritionText, setDescriptionText] = useState(null);
 
+    const [username, setUsername] = useState(null);
+    const [firstname, setFirstname] = useState(null);
+    const [lastname, setLastname] = useState(null);
+    const [sex, setSex] = useState(null);
+    const [link, setLink] = useState(null);
+    const [description, setDescription] = useState(null);
+    const [profiletype, setProfiletype] = useState(null);
+    const [profilestatus, setProfilestatus] = useState(null);
+
+
+
+    useEffect(() => {
+        setGlobalReqLoad(true);
+        service.getProfileAdvanced(userData.token)
+        .then(({data}) => {
+            setUsername(data.username);
+            setFirstname(data.first_name);
+            setLastname(data.last_name);
+            setSex(data.sex);
+            setLink(data.link);
+            setDescription(data.description);
+            setProfiletype(data.profile_type);
+            setProfilestatus(data.profile_status);
+            setGlobalReqLoad(false);
+        })
+    }, [])
+    
+    
+    
+    
+
     return (
         <div className="editProfile">
             <Formik
-                initialValues={{
-                    username: userData.username,
-                    first_name: userData.firstName,
-                    last_name: userData.lastName,
-                    description: userData.description !== 'null' ? userData.description : '',
-                    sex: userData.sex,
-                    link: userData.link !== 'null' ? userData.link : '',
-                    profile_type: userData.profileType !== 'null' ? userData.profileType : '',
-                    profile_status: userData.profileStatus !== 'null' ? userData.profileStatus : '',
+                enableReinitialize={true}
+                initialValues={{    
+                    username: username,
+                    first_name: firstname,
+                    last_name: lastname,
+                    description: description,
+                    sex: sex,
+                    link: link,
+                    profile_type: profiletype,
+                    profile_status: profilestatus,
                 }}
                 onSubmit={(values, {setSubmitting}) => {
-                    
-                    // console.log(values);
+                    setGlobalReqLoad(true);
                     service.changeProfileInfo(userData.token, values).then(res => {
                         setSubmitting(true);
                         if(res.response.code === 200 && res.response.status === 'successfully') {
@@ -49,21 +85,20 @@ const EditProfile = () => {
                             userData.setGlobalLink(values.link);
                             userData.setGlobalProfileType(values.profile_type);
                             userData.setGlobalProfileStatus(values.profile_status);
+                            messages.success();
                         } else {
+                            setUsernameText(res.data?.validate_errors?.username ? res.data.validate_errors.username : null);
+                            setFirstnameText(res.data?.validate_errors?.first_name ? res.data.validate_errors.first_name : null);
+                            setLastnameText(res.data?.validate_errors?.last_name ? res.data.validate_errors.last_name : null);
+                            setSexText(res.data?.validate_errors?.sex ? res.data.validate_errors.sex : null);
+                            setLinkText(res.data?.validate_errors?.link ? res.data.validate_errors.link : null);
+                            setTypeText(res.data?.validate_errors?.profile_type ? res.data.validate_errors.profile_type : null);
+                            setStatusText(res.data?.validate_errors?.profile_status ? res.data.validate_errors.profile_status : null);
+                            setDescriptionText(res.data?.validate_errors?.description ? res.data.validate_errors.description : null);
                             console.log('error');
+                            messages.error();
                         }
-
-
-                        setUsernameText(res.data?.validate_errors?.username ? res.data.validate_errors.username : null);
-                        setFirstnameText(res.data?.validate_errors?.first_name ? res.data.validate_errors.first_name : null);
-                        setLastnameText(res.data?.validate_errors?.last_name ? res.data.validate_errors.last_name : null);
-                        setSexText(res.data?.validate_errors?.sex ? res.data.validate_errors.sex : null);
-                        setLinkText(res.data?.validate_errors?.link ? res.data.validate_errors.link : null);
-                        setTypeText(res.data?.validate_errors?.profile_type ? res.data.validate_errors.profile_type : null);
-                        setStatusText(res.data?.validate_errors?.profile_status ? res.data.validate_errors.profile_status : null);
-                        setDescriptionText(res.data?.validate_errors?.description ? res.data.validate_errors.description : null);
-                        console.log(res);
-                        setSubmitting(false);
+                        setGlobalReqLoad(false);  
                     })
                     
 
@@ -72,7 +107,7 @@ const EditProfile = () => {
                     <Form
                         className="editProfile__form">
                             <div className="editProfile__form_item"> 
-                                <div className="editProfile__form_item_name">Имя</div>
+                                <div className="editProfile__form_item_name">Имя<span>*</span></div>
                                 <div className="editProfile__form_item_body">
                                     <div className="editProfile__form_item_body_field">
                                         <AuthInput type="text" name="first_name"/>
@@ -85,7 +120,7 @@ const EditProfile = () => {
                                 </div>
                             </div>
                             <div className="editProfile__form_item"> 
-                                <div className="editProfile__form_item_name">Фамилия</div>
+                                <div className="editProfile__form_item_name">Фамилия<span>*</span></div>
                                 <div className="editProfile__form_item_body">
                                     <div className="editProfile__form_item_body_field">
                                         <AuthInput type="text" name="last_name"/>
@@ -97,7 +132,7 @@ const EditProfile = () => {
                                 </div>
                             </div>
                             <div className="editProfile__form_item">
-                                <div className="editProfile__form_item_name">Ник</div>
+                                <div className="editProfile__form_item_name">Ник<span>*</span></div>
                                 <div className="editProfile__form_item_body">
                                     <div className="editProfile__form_item_body_field">
                                         <AuthInput type="text" name="username"/>
@@ -105,7 +140,7 @@ const EditProfile = () => {
                                             {usernameText}
                                         </div>
                                     </div>
-                                   
+                                    
                                 </div>
                             </div>
                             <div className="editProfile__form_item">
@@ -123,7 +158,7 @@ const EditProfile = () => {
                                 <div className="editProfile__form_item_name">О себе</div>
                                 <div className="editProfile__form_item_body">
                                     <div className="editProfile__form_item_body_field">
-                                        <AuthInput type="text" name="description"/>
+                                        <AuthTextarea type="text" name="description"/>
                                         <div className="editProfile__form_item_body_field_error">
                                             {descritionText}
                                         </div>
@@ -131,7 +166,7 @@ const EditProfile = () => {
                                 </div>
                             </div>
                             <div className="editProfile__form_item">
-                                <div className="editProfile__form_item_name">Пол</div>
+                                <div className="editProfile__form_item_name">Пол<span>*</span></div>
                                 <div className="editProfile__form_item_body radio__list">
                                     <div className="editProfile__form_item_radio">
                                         <Field
@@ -152,6 +187,9 @@ const EditProfile = () => {
                                         <label htmlFor="women" className="editProfile__form_item_radio_label">
                                             <div className="editProfile__form_item_radio_label_text">женщина</div>
                                         </label>
+                                    </div>
+                                    <div className="editProfile__form_item_body_field_error">
+                                        {sexText}
                                     </div>
                                 </div>
                             </div>
@@ -240,13 +278,23 @@ const EditProfile = () => {
                             <div className="editProfile__form_item">
                                 <div className="editProfile__form_item_name">Вид вашей деятельности</div>
                                 <div className="editProfile__form_item_body radio__list">
+                                <div className="editProfile__form_item_radio">
+                                        <Field 
+                                            type='radio' 
+                                            value='simple_user' 
+                                            name='profile_type' 
+                                            id='pt1'/>
+                                        <label htmlFor="pt1" className="editProfile__form_item_radio_label">
+                                            <div className="editProfile__form_item_radio_label_text">Пользователь</div>
+                                        </label>
+                                    </div>
                                     <div className="editProfile__form_item_radio">
                                         <Field 
                                             type='radio' 
                                             value='blogger' 
                                             name='profile_type' 
-                                            id='pt1'/>
-                                        <label htmlFor="pt1" className="editProfile__form_item_radio_label">
+                                            id='pt2'/>
+                                        <label htmlFor="pt2" className="editProfile__form_item_radio_label">
                                             <div className="editProfile__form_item_radio_label_text">Блоггер</div>
                                         </label>
                                     </div>
@@ -255,8 +303,8 @@ const EditProfile = () => {
                                             type='radio' 
                                             value='self_employed' 
                                             name='profile_type' 
-                                            id='pt2'/>
-                                        <label htmlFor="pt2" className="editProfile__form_item_radio_label">
+                                            id='pt3'/>
+                                        <label htmlFor="pt3" className="editProfile__form_item_radio_label">
                                             <div className="editProfile__form_item_radio_label_text">Самозанятый</div>
                                         </label>
                                     </div>
@@ -265,8 +313,8 @@ const EditProfile = () => {
                                             type='radio' 
                                             value='individual_entrepreneurship' 
                                             name='profile_type' 
-                                            id='pt3'/>
-                                        <label htmlFor="pt3" className="editProfile__form_item_radio_label">
+                                            id='pt4'/>
+                                        <label htmlFor="pt4" className="editProfile__form_item_radio_label">
                                             <div className="editProfile__form_item_radio_label_text">ИП</div>
                                         </label>
                                     </div>
@@ -275,8 +323,8 @@ const EditProfile = () => {
                                             type='radio' 
                                             value='startapp' 
                                             name='profile_type' 
-                                            id='pt4'/>
-                                        <label htmlFor="pt4" className="editProfile__form_item_radio_label">
+                                            id='pt5'/>
+                                        <label htmlFor="pt5" className="editProfile__form_item_radio_label">
                                             <div className="editProfile__form_item_radio_label_text">Стартап</div>
                                         </label>
                                     </div>
@@ -285,8 +333,8 @@ const EditProfile = () => {
                                             type='radio' 
                                             value='small_business' 
                                             name='profile_type' 
-                                            id='pt5'/>
-                                        <label htmlFor="pt5" className="editProfile__form_item_radio_label">
+                                            id='pt6'/>
+                                        <label htmlFor="pt6" className="editProfile__form_item_radio_label">
                                             <div className="editProfile__form_item_radio_label_text">Малый бизнес</div>
                                         </label>
                                     </div>
@@ -295,8 +343,8 @@ const EditProfile = () => {
                                             type='radio' 
                                             value='medium_business' 
                                             name='profile_type' 
-                                            id='pt6'/>
-                                        <label htmlFor="pt6" className="editProfile__form_item_radio_label">
+                                            id='pt7'/>
+                                        <label htmlFor="pt7" className="editProfile__form_item_radio_label">
                                             <div className="editProfile__form_item_radio_label_text">Средний бизнес</div>
                                         </label>
                                     </div>
@@ -305,13 +353,16 @@ const EditProfile = () => {
                                             type='radio' 
                                             value='large_business' 
                                             name='profile_type' 
-                                            id='pt7'/>
-                                        <label htmlFor="pt7" className="editProfile__form_item_radio_label">
+                                            id='pt8'/>
+                                        <label htmlFor="pt8" className="editProfile__form_item_radio_label">
                                             <div className="editProfile__form_item_radio_label_text">Крупный бизнес</div>
                                         </label>
                                     </div>
                                     <div className="radio__list_error">
                                         {typeText}
+                                    </div>
+                                    <div className="editProfile__form_item_body_text">
+                                        **Вид деятельности можно выбрать только один раз. Сконцентрируйтесь.
                                     </div>
                                 </div>
                             </div>

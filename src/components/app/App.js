@@ -12,6 +12,7 @@ import Login from '../pages/login/Login';
 import Signin from '../pages/signin/Signin';
 import ProfileSelf from '../pages/profileSelf/ProfileSelf';
 import None from '../none/None';
+import PageLoading from '../pageLoading/PageLoading';
 //hoc
 import {CheckAuth} from '../../hoc/CheckAuth';
 import {AuthProvider} from '../../hoc/AuthProvider';
@@ -27,6 +28,7 @@ function App() {
         <div className="wrapper">
             <main className="main">
                 <AuthProvider>
+                    <PageLoading/>
                     <Routes>
                         <Route exact path='/signin' element={<Signin/>}/>
                         <Route exact path='/login' element={<Login/>}/>

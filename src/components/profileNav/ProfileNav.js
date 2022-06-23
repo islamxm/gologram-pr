@@ -2,8 +2,8 @@ import { NavLink } from "react-router-dom";
 import { Dropdown } from "antd";
 import ProfileDropdownMenu from "../profileDropdownMenu/ProfileDropdownMenu";
 import useAuth from "../../hooks/useAuth";
-
-//icons
+import { useEffect, useState } from "react";
+import authService from "../../services/authService";
 import { 
     MessageFilled ,
     PlusCircleFilled,
@@ -11,11 +11,22 @@ import {
     HeartFilled,
     HomeFilled,
     } from '@ant-design/icons';
-
 import './ProfileNav.scss';
 
+
+
+
+const service = new authService();
+
 const ProfileNav = () => {
-    const {avatar} = useAuth();
+    const {token} = useAuth();
+    const [avatar, setAvatar] = useState(null);
+
+    useEffect(() => {
+        service.getProfileAdvanced(token).then(({data}) => {
+            setAvatar(data.avatar);
+        })
+    }, [])
 
     return (
         <div className="profileNav">
@@ -41,7 +52,7 @@ const ProfileNav = () => {
                     </NavLink>
                 </div>
                 <div className="profileNav__item">
-                    <NavLink to='/navigator' end style={({isActive}) => ({color: isActive ? '#000' : '#aaa'})}>
+                    <NavLink to='/actions' end style={({isActive}) => ({color: isActive ? '#000' : '#aaa'})}>
                         <HeartFilled className="profileNav__item_icon" style={{fontSize: '30px'}}/>
                     </NavLink>
                 </div>

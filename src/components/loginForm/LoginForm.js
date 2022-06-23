@@ -1,20 +1,18 @@
 //GLOBAL PACKAGES
-import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form} from 'formik';
-import * as Yup from 'yup';
-import {CloseOutlined, CheckOutlined} from '@ant-design/icons';
-import AuthInput from '../authInput/AuthInput';
+
+import AuthCheckbox from '../authCheckbox/AuthCheckbox';
+import AuthPassword from '../authFields/AuthPassword';
+import AuthInput from '../authFields/AuthInput';
 import {Tooltip} from 'react-tippy';
 
 //LOCAL COMPONENTS
 import authService from '../../services/authService';
-import { regulars } from '../../services/regulars';
 import Button from '../button/Button';
-// import AuthInvite from '../authInvite/AuthInvite';
 
 import useAuth from '../../hooks/useAuth';
-
 
 
 
@@ -31,25 +29,15 @@ import './Authform.scss';
 const service = new authService();
 
 
-// const modifiedErrorIcon = (
-//     <CloseOutlined style={{color: 'red'}}/>
-// )
-
-
 const LoginForm = () => {
+    
 
-
-    const {setGlobalToken} = useAuth();
-
+    const {setGlobalToken, setGlobalReqLoad, setGlobalTokenCookie} = useAuth();
     const [errorText, setErrorText] = useState('');
     const [errorUsername, setErrorUsername] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
 
     const nav = useNavigate();
-    const location = useLocation();
-
-    
-    
 
     return (
         <div className="authform">
@@ -66,21 +54,26 @@ const LoginForm = () => {
                             initialValues={{
                                 username: '',
                                 password: '',
+                                save: false,
                             }}
                             onSubmit={(values, {setSubmitting}) => {
+                                setGlobalReqLoad(true);
                                 service.logIn(values).then(res => {
                                     setSubmitting(true);
-                                    console.log(res);
                                     setErrorUsername(res.data?.validate_errors?.username ? res.data.validate_errors.username.join() : null);
                                     setErrorPassword(res.data?.validate_errors?.password ? res.data.validate_errors.password.join() : null);
                                     setErrorText(res.data?.validate_errors?.non_field_errors ? res.data.validate_errors.non_field_errors.join() : null);
-                                    if(res.data.auth_token) {
-                                        setGlobalToken(res.data.auth_token);
-                                        nav('/profile-self', {replace: true})
-                                        // console.log(res.data.auth_token);
+                                    if(res.data?.auth_token) {
+                                        if(values.save) {
+                                            setGlobalTokenCookie(res.data.auth_token);
+                                            nav('/profile-self', {replace: true})
+                                        } else {
+                                            setGlobalToken(res.data.auth_token);
+                                            nav('/profile-self', {replace: true})
+                                        }  
                                     } 
                                     setSubmitting(false);
-                                    
+                                    setGlobalReqLoad(false);
                                 })
                             }}>
 
@@ -104,12 +97,17 @@ const LoginForm = () => {
                                             title='ваш пароль'
                                             position='top'
                                             trigger='mouseenter'>
-                                             <AuthInput type="password" name='password' placeholder="введите пароль"/>
+                                             {/* <AuthInput type="password" name='password' placeholder="введите пароль"/> */}
+                                             <AuthPassword name='password' placeholder='введите пароль'/>
                                         </Tooltip>
                                         
                                         <div className="authform__main_item_ex">
                                             {errorPassword}{errorText}
                                         </div>
+                                    </div>
+
+                                    <div className="authform__main_item">
+                                        <AuthCheckbox type='checkbox' name='save'/>
                                     </div>
                                     
                                     <div className="authform__action">

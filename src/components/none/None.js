@@ -1,13 +1,18 @@
 import './None.scss';
 import none from '../../img/none.gif';
+import ProfileHeader from '../profileHeader/ProfileHeader';
 
 const None = () => {
 
     return (
-        <div className="none">
-            <img src={none} alt="" />
-            <div className="none__message">Эта страница пока что в разработке :D</div>
-        </div>
+        <>
+            <ProfileHeader/>
+            <div className="none">
+                <img src={none} alt="" />
+                <div className="none__message">Эта страница пока что в разработке :D</div>
+            </div>
+        </>
+        
     )
 }
 

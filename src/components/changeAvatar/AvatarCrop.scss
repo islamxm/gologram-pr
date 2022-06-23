@@ -1,0 +1,45 @@
+.AvatarCrop {
+    // overflow: hidden;
+    border-radius: 6px;
+    padding-bottom: 0;
+    .crop-container {
+        
+        .reactEasyCrop_Container {
+            // posre
+
+            .reactEasyCrop_Image {
+                // position: static;
+            }
+        }
+    }
+
+    .ant-modal-content {
+        border-radius: 6px;
+        overflow: hidden;
+        .ant-modal-close-x {
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            background-color: var(--orange);
+        }
+
+        .ant-modal-header {
+            display: none;
+        }
+
+        .ant-modal-body {
+            overflow: hidden;
+            padding: 0;
+            height: 400px;
+        }
+
+
+        .ant-modal-footer {
+            display: none;
+        }
+    }
+}
