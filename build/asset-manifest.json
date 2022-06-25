@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.d4eb0bff.css",
-    "main.js": "/static/js/main.19ba4ea1.js",
-    "static/media/main_banner-1.png": "/static/media/main_banner-1.a0dc98d3b0d712bdfd93.png",
-    "static/media/main_banner-2.png": "/static/media/main_banner-2.276f9d46f2be7d31b241.png",
-    "static/media/none.gif": "/static/media/none.3fb26d9b3c3c823ae786.gif",
-    "static/media/logo-main.svg": "/static/media/logo-main.4ba81ae4b4e82cffe80b61911128e551.svg",
-    "static/media/google-play-badge.png": "/static/media/google-play-badge.efe9512ef04abc18b581.png",
-    "static/media/apple-badge.svg": "/static/media/apple-badge.2ac2876e9ce7751235fabcfdb4d2dda0.svg",
-    "index.html": "/index.html",
-    "main.d4eb0bff.css.map": "/static/css/main.d4eb0bff.css.map",
-    "main.19ba4ea1.js.map": "/static/js/main.19ba4ea1.js.map"
+    "main.css": "/gologram-pr/static/css/main.d4eb0bff.css",
+    "main.js": "/gologram-pr/static/js/main.77a2bcb0.js",
+    "static/media/main_banner-1.png": "/gologram-pr/static/media/main_banner-1.a0dc98d3b0d712bdfd93.png",
+    "static/media/main_banner-2.png": "/gologram-pr/static/media/main_banner-2.276f9d46f2be7d31b241.png",
+    "static/media/none.gif": "/gologram-pr/static/media/none.3fb26d9b3c3c823ae786.gif",
+    "static/media/logo-main.svg": "/gologram-pr/static/media/logo-main.4ba81ae4b4e82cffe80b61911128e551.svg",
+    "static/media/google-play-badge.png": "/gologram-pr/static/media/google-play-badge.efe9512ef04abc18b581.png",
+    "static/media/apple-badge.svg": "/gologram-pr/static/media/apple-badge.2ac2876e9ce7751235fabcfdb4d2dda0.svg",
+    "index.html": "/gologram-pr/index.html",
+    "main.d4eb0bff.css.map": "/gologram-pr/static/css/main.d4eb0bff.css.map",
+    "main.77a2bcb0.js.map": "/gologram-pr/static/js/main.77a2bcb0.js.map"
   },
   "entrypoints": [
     "static/css/main.d4eb0bff.css",
-    "static/js/main.19ba4ea1.js"
+    "static/js/main.77a2bcb0.js"
   ]
 }
