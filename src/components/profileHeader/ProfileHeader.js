@@ -1,9 +1,12 @@
+import './ProfileHeader.scss';
+
 import { Row, Col } from 'antd';
+
 import Search from '../search/Search';
 import ProfileNav from '../profileNav/ProfileNav';
 import logoMain from '../../img/logo-main.svg';
 
-import './ProfileHeader.scss';
+
 
 const ProfileHeader = () => {
     return (

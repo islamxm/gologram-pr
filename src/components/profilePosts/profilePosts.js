@@ -1,8 +1,7 @@
-import Cookies from 'js-cookie';
-import { Tabs } from 'antd';
-import authService from '../../services/authService';
 import './profilePosts.scss';
 import 'antd/dist/antd.css';
+
+import { Tabs } from 'antd';
 import {
     AppstoreOutlined,
     CameraOutlined,
@@ -12,10 +11,11 @@ import {
     UserOutlined 
   } from '@ant-design/icons';
 
+import authService from '../../services/authService';
+
+
 
 const { TabPane } = Tabs;
-
-
 const service = new authService();
 
 const EmptyPost = () => {

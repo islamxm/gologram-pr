@@ -1,30 +1,24 @@
+import '../changeAvatar/AvatarCrop.scss';
+import './ProfileCard.scss';
+
 import { useNavigate } from 'react-router-dom';
-import Services from '../../services/authService';
-import Button from '../button/Button';
 import Cropper from 'react-easy-crop';
 import { useCallback, useEffect, useState } from 'react';
 import { Dropdown, Modal } from 'antd';
-import '../changeAvatar/AvatarCrop.scss';
-import {getCroppedImg} from '../changeAvatar/canvasUtils';
-import messages from '../messages/messages';
 import {
     SettingOutlined, PictureOutlined, CameraOutlined} from '@ant-design/icons';
+
+import Services from '../../services/authService';
+import Button from '../button/Button';
+import {getCroppedImg} from '../changeAvatar/canvasUtils';
+import messages from '../messages/messages';
 import useAuth from '../../hooks/useAuth';
 
-import './ProfileCard.scss';
+
 
 
 
 const service = new Services();
-
-
-
-const menu = (
-    <ul className='profileCard__img_menu'>
-        <li className='profileCard__img_menu_item'>Изменить фото</li>
-        <li className='profileCard__img_menu_item delete disabled'>Удалить</li>
-    </ul>
-)
 
 
 

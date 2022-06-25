@@ -1,6 +1,6 @@
-import {SearchOutlined} from '@ant-design/icons';
-
 import './Search.scss';
+
+import {SearchOutlined} from '@ant-design/icons';
 
 const Search = () => {
     return (

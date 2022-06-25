@@ -1,20 +1,16 @@
-//GLOBAL PACKAGES
-import { useState, useEffect } from 'react';
+import './Authform.scss';
+
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form} from 'formik';
+import {Tooltip} from 'react-tippy';
 
 import AuthCheckbox from '../authCheckbox/AuthCheckbox';
 import AuthPassword from '../authFields/AuthPassword';
 import AuthInput from '../authFields/AuthInput';
-import {Tooltip} from 'react-tippy';
-
-//LOCAL COMPONENTS
 import authService from '../../services/authService';
 import Button from '../button/Button';
-
 import useAuth from '../../hooks/useAuth';
-
-
 
 //IMAGES
 import logoMain from '../../img/logo-main.svg';
@@ -22,16 +18,12 @@ import googlePlay from '../../img/google-play-badge.png';
 import appleBadge from '../../img/apple-badge.svg';
 
 
-//STYLES
-import './Authform.scss';
 
 
 const service = new authService();
 
 
 const LoginForm = () => {
-    
-
     const {setGlobalToken, setGlobalReqLoad, setGlobalTokenCookie} = useAuth();
     const [errorText, setErrorText] = useState('');
     const [errorUsername, setErrorUsername] = useState('');

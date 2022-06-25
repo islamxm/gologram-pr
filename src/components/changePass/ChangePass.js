@@ -2,7 +2,6 @@ import './ChangePass.scss';
 
 import { useState } from 'react';
 import { Formik, Form} from 'formik';
-import { useNavigate } from 'react-router-dom';
 
 import useAuth from '../../hooks/useAuth';
 import AuthPassword from '../authFields/AuthPassword';

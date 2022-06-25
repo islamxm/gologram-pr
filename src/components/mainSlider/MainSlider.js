@@ -1,8 +1,8 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, EffectFade } from 'swiper';
-
 import 'swiper/css/bundle';
 import './MainSlider.scss';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, EffectFade } from 'swiper';
 
 import slideImg1 from '../../img/main_banner-1.png';
 import slideImg2 from '../../img/main_banner-2.png';

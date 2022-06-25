@@ -1,14 +1,7 @@
-import { useField } from 'formik';
-import { Input } from 'antd';
-
-import vars from '../vars/vars';
 import './AuthInput.scss';
 
-
-
-
-
-
+import { useField } from 'formik';
+import { Input } from 'antd';
 
 
 const AuthTextarea = ({...props}) => {

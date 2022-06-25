@@ -1,15 +1,7 @@
-import { useField } from 'formik';
-import {CloseOutlined, CheckOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-import { Input } from 'antd';
-
-import vars from '../vars/vars';
-
 import './AuthInput.scss';
 
-
-
-
-
+import { useField } from 'formik';
+import { Input } from 'antd';
 
 
 const AuthPassword = ({...props}) => {

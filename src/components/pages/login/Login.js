@@ -1,13 +1,10 @@
-//GLOBAL 
-import { Row, Col } from 'antd';
-
-//MODULES
-import MainSlider from '../../mainSlider/MainSlider';
-import LoginForm from '../../loginForm/LoginForm';
-
-//STYLES
 import '../../../styles/global.scss';
 import './Login.scss';
+
+import { Row, Col } from 'antd';
+
+import MainSlider from '../../mainSlider/MainSlider';
+import LoginForm from '../../loginForm/LoginForm';
 
 
 const Login = () => {

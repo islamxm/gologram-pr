@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import { Tabs } from 'antd';
+import './Settings.scss';
 
+import { Tabs } from 'antd';
 
 import ProfileHeader from '../../profileHeader/ProfileHeader';
 import EditProfile from '../../editProfile/EditProfile';
 import ChangePass from '../../changePass/ChangePass';
 import ChangeAvatar from '../../changeAvatar/ChangeAvatar';
-import './Settings.scss';
 
 const { TabPane } = Tabs;
 

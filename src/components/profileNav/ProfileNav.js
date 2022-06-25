@@ -1,9 +1,8 @@
+import './ProfileNav.scss';
+
 import { NavLink } from "react-router-dom";
+import { useEffect } from "react";
 import { Dropdown } from "antd";
-import ProfileDropdownMenu from "../profileDropdownMenu/ProfileDropdownMenu";
-import useAuth from "../../hooks/useAuth";
-import { useEffect, useState } from "react";
-import authService from "../../services/authService";
 import { 
     MessageFilled ,
     PlusCircleFilled,
@@ -11,7 +10,11 @@ import {
     HeartFilled,
     HomeFilled,
     } from '@ant-design/icons';
-import './ProfileNav.scss';
+
+import ProfileDropdownMenu from "../profileDropdownMenu/ProfileDropdownMenu";
+import useAuth from "../../hooks/useAuth";
+import authService from "../../services/authService";
+
 
 
 

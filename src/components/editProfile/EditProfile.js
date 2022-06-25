@@ -1,13 +1,14 @@
 import './EditProfile.scss';
 import '../../components/signinForm/Authform.scss'
+
 import { Formik, Field, Form } from 'formik';
 import { useState, useEffect } from 'react';
+
 import messages from '../messages/messages';
 import useAuth from '../../hooks/useAuth';
 import AuthInput from '../authFields/AuthInput';
 import Button from '../button/Button';
 import authService from '../../services/authService';
-import SexSelect from '../sexSelect/SexSelect';
 import AuthTextarea from '../authFields/AuthTextarea';
 
 
@@ -188,7 +189,7 @@ const EditProfile = () => {
                                             <div className="editProfile__form_item_radio_label_text">женщина</div>
                                         </label>
                                     </div>
-                                    <div className="editProfile__form_item_body_field_error">
+                                    <div className="radio__list_error">
                                         {sexText}
                                     </div>
                                 </div>

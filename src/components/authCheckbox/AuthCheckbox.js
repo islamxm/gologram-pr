@@ -1,12 +1,9 @@
 import {CheckOutlined} from '@ant-design/icons';
 import { useField } from 'formik';
 
-
-
 const AuthCheckbox = ({...props}) => {
 
     const [field, meta] = useField(props);
-
 
     return (
         <div className="authform__main_item_checkbox">

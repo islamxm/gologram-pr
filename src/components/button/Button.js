@@ -1,11 +1,11 @@
+import './Button.scss';
 
 import {LoadingOutlined} from '@ant-design/icons';
 
-import './Button.scss';
 
 const Button = (props) => {
 
-    const {classList, type, icon, text, disabled, buttonText, onClickHandle} = props;
+    const {classList, type, icon, disabled, buttonText, onClickHandle} = props;
     
     return(
         <button 

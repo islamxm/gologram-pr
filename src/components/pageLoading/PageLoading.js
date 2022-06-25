@@ -2,6 +2,7 @@ import {
     LoadingOutlined
   } from '@ant-design/icons';
 import './PageLoading.scss';
+
 import useAuth from '../../hooks/useAuth';
 
 const PageLoading = () => {

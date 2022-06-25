@@ -1,29 +1,25 @@
-//GLOBAL PACKAGES
+import './Authform.scss';
+import 'react-tippy/dist/tippy.css';
+
 import { useState } from 'react';
 import { Link, useNavigate} from 'react-router-dom';
 import { Formik, Form} from 'formik';
-import AuthInput from '../authFields/AuthInput';
-import AuthPassword from '../authFields/AuthPassword';
-import { Select } from 'antd';
-import useAuth from '../../hooks/useAuth';
-import SexSelect from '../sexSelect/SexSelect';
-
-
 import {
     Tooltip,
 } from 'react-tippy';
-//LOCAL COMPONENTS
+
+import AuthInput from '../authFields/AuthInput';
+import AuthPassword from '../authFields/AuthPassword';
+import useAuth from '../../hooks/useAuth';
+import SexSelect from '../sexSelect/SexSelect';
 import authService from '../../services/authService';
 import Button from '../button/Button';
-// import AuthInvite from '../authInvite/AuthInvite';
+
 //IMAGES
 import logoMain from '../../img/logo-main.svg';
 import googlePlay from '../../img/google-play-badge.png';
 import appleBadge from '../../img/apple-badge.svg';
 
-//STYLES
-import './Authform.scss';
-import 'react-tippy/dist/tippy.css';
 
 const service = new authService();
 

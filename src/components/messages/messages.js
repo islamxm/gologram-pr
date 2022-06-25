@@ -1,5 +1,6 @@
-import {message} from 'antd';
 import './messages.scss';
+
+import {message} from 'antd';
 
 const messages = {
     success: () => {

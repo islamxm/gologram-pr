@@ -1,4 +1,5 @@
 import './None.scss';
+
 import none from '../../img/none.gif';
 import ProfileHeader from '../profileHeader/ProfileHeader';
 
