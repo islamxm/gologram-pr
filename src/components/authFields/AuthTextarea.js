@@ -6,7 +6,7 @@ import { Input } from 'antd';
 
 const AuthTextarea = ({...props}) => {
 
-    const [field, meta] = useField(props);
+    const [field] = useField(props);
 
 
     return (

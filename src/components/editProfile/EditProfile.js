@@ -17,7 +17,6 @@ const service = new authService();
 
 const EditProfile = () => {
     const userData = useAuth();
-    const {setGlobalReqLoad} = userData;
 
     const [usernameText, setUsernameText ] = useState(null);
     const [firstnameText, setFirstnameText] = useState(null);
@@ -38,9 +37,8 @@ const EditProfile = () => {
     const [profilestatus, setProfilestatus] = useState(null);
 
 
-
     useEffect(() => {
-        setGlobalReqLoad(true);
+        userData.setGlobalReqLoad(true);
         service.getProfileAdvanced(userData.token)
         .then(({data}) => {
             setUsername(data.username);
@@ -51,13 +49,11 @@ const EditProfile = () => {
             setDescription(data.description);
             setProfiletype(data.profile_type);
             setProfilestatus(data.profile_status);
-            setGlobalReqLoad(false);
+            userData.setGlobalReqLoad(false);
         })
-    }, [])
-    
-    
-    
-    
+    // eslint-disable-next-line 
+    },[])
+
 
     return (
         <div className="editProfile">
@@ -74,7 +70,7 @@ const EditProfile = () => {
                     profile_status: profilestatus,
                 }}
                 onSubmit={(values, {setSubmitting}) => {
-                    setGlobalReqLoad(true);
+                    userData.setGlobalReqLoad(true);
                     service.changeProfileInfo(userData.token, values).then(res => {
                         setSubmitting(true);
                         if(res.response.code === 200 && res.response.status === 'successfully') {
@@ -99,7 +95,7 @@ const EditProfile = () => {
                             console.log('error');
                             messages.error();
                         }
-                        setGlobalReqLoad(false);  
+                        userData.setGlobalReqLoad(false);  
                     })
                     
 

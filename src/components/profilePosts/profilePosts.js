@@ -11,12 +11,8 @@ import {
     UserOutlined 
   } from '@ant-design/icons';
 
-import authService from '../../services/authService';
-
-
-
 const { TabPane } = Tabs;
-const service = new authService();
+
 
 const EmptyPost = () => {
 

@@ -24,7 +24,7 @@ export const AuthProvider = ({children}) => {
     const [followers, setFollowers] = useState(0);
     const [following, setFollowing] = useState(0);
 
-    const [posts, setPosts] = useState(0);
+    // const [posts, setPosts] = useState(0);
 
 
 
@@ -105,7 +105,7 @@ export const AuthProvider = ({children}) => {
         sex,
         profileStatus,
         profileType,
-        posts,
+        
         followers,
         following,
         setGlobalToken, 

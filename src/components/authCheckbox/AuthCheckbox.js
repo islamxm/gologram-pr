@@ -3,7 +3,7 @@ import { useField } from 'formik';
 
 const AuthCheckbox = ({...props}) => {
 
-    const [field, meta] = useField(props);
+    const [field] = useField(props);
 
     return (
         <div className="authform__main_item_checkbox">
