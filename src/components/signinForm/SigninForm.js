@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link, useNavigate} from 'react-router-dom';
 import { Formik, Form} from 'formik';
 import AuthInput from '../authFields/AuthInput';
+import AuthPassword from '../authFields/AuthPassword';
 import { Select } from 'antd';
 import useAuth from '../../hooks/useAuth';
 import SexSelect from '../sexSelect/SexSelect';
@@ -131,7 +132,7 @@ const SigninForm = () => {
                                             position='top'
                                             trigger='mouseenter'
                                             >
-                                            <AuthInput type="password" name='password' placeholder="введите пароль"/>
+                                            <AuthPassword name='password' placeholder="введите пароль"/>
                                         </Tooltip>
                                         
                                         <div className="authform__main_item_ex">
@@ -149,10 +150,8 @@ const SigninForm = () => {
                                             {sexText}
                                         </div>
                                     </div>
-                                    
                                     <div className="authform__action">
                                         <Button type='submit' disabled={isSubmitting} buttonText='Регистрация' classList={'button__orange'}/>
-                                        
                                     </div>
                                 </Form>
                             )}

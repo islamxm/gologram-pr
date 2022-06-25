@@ -1,8 +1,6 @@
 
 import {LoadingOutlined} from '@ant-design/icons';
 
-import authService from '../../services/authService';
-
 import './Button.scss';
 
 const Button = (props) => {

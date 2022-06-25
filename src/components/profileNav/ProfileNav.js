@@ -19,12 +19,12 @@ import './ProfileNav.scss';
 const service = new authService();
 
 const ProfileNav = () => {
-    const {token} = useAuth();
-    const [avatar, setAvatar] = useState(null);
+    const {token, avatar, setGlobalAvatar} = useAuth();
+    // const [avatar, setAvatar] = useState(null);
 
     useEffect(() => {
         service.getProfileAdvanced(token).then(({data}) => {
-            setAvatar(data.avatar);
+            setGlobalAvatar(data.avatar);
         })
     }, [])
 
