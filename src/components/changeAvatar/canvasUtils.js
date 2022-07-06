@@ -3,7 +3,8 @@ export const createImage = (url) =>
     const image = new Image()
     image.addEventListener('load', () => resolve(image))
     image.addEventListener('error', (error) => reject(error))
-    image.setAttribute('crossOrigin', 'anonymous') // needed to avoid cross-origin issues on CodeSandbox
+    // needed to avoid cross-origin issues on CodeSandbox
+    image.setAttribute('crossOrigin', 'anonymous')
     image.src = url
   })
 
@@ -28,9 +29,12 @@ export function rotateSize(width, height, rotation) {
 /**
  * This function was adapted from the one in the ReadMe of https://github.com/DominicTobias/react-image-crop
  */
+
+
 export async function getCroppedImg(
   imageSrc,
   pixelCrop,
+  imageFilter,
   rotation = 0,
   flip = { horizontal: false, vertical: false }
 ) {
@@ -62,8 +66,10 @@ export async function getCroppedImg(
   ctx.translate(-image.width / 2, -image.height / 2)
 
   // draw rotated image
+  ctx.filter = `${imageFilter}`;
   ctx.drawImage(image, 0, 0)
-
+  
+  
   // croppedAreaPixels values are bounding box relative
   // extract the cropped image using these values
   const data = ctx.getImageData(
@@ -73,22 +79,33 @@ export async function getCroppedImg(
     pixelCrop.height
   )
 
+
   // set canvas width to final desired crop size - this will clear existing context
   canvas.width = pixelCrop.width
   canvas.height = pixelCrop.height
 
+  
+  
   // paste generated rotate image at the top left corner
+  
   ctx.putImageData(data, 0, 0)
-
+  
+  
+  
   // As Base64 string
-  // return canvas.toDataURL('image/jpeg');
+  return canvas.toDataURL('image/jpeg');
+  // console.log(`imageSrc: ${imageSrc}`)
+  // console.log(`image: ${image}`)
+  // console.log(image);
+
+  // return image;
 
   // As a blob
-  return new Promise((resolve, reject) => {
-    canvas.toBlob((file) => {
-      resolve(URL.createObjectURL(file))
-    }, 'image/jpeg')
-  })
+  // return new Promise((resolve, reject) => {
+  //   canvas.toBlob((file) => {
+  //     resolve(URL.createObjectURL(file))
+  //   }, 'image/jpeg')
+  // })
 }
 
 export async function getRotatedImage(imageSrc, rotation = 0) {
@@ -115,4 +132,12 @@ export async function getRotatedImage(imageSrc, rotation = 0) {
       resolve(URL.createObjectURL(file))
     }, 'image/png')
   })
+}
+
+
+export async function  urltoFile(url, filename, mimeType){
+  return await (fetch(url)
+      .then(function(res){return res.arrayBuffer();})
+      .then(function(buf){return new File([buf], filename, {type:mimeType});})
+  );
 }

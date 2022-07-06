@@ -268,7 +268,7 @@ const ProfileCard = () => {
                     </div>
                     <div className="profileCard__item profileCard__info">
                         <div className="profileCard__info_item">
-                            <div className="profileCard__info_item_value">{userData.posts}</div>
+                            <div className="profileCard__info_item_value">0</div>
                             <div className="profileCard__info_item_name">публикации</div>
                         </div>
                         <div className="profileCard__info_item">

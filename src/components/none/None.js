@@ -2,9 +2,14 @@ import './None.scss';
 
 import none from '../../img/none.gif';
 import ProfileHeader from '../profileHeader/ProfileHeader';
-
+import { useEffect } from 'react';
+import useAuth from '../../hooks/useAuth';
 const None = () => {
 
+    const {setGlobalReqLoad} = useAuth();
+    useEffect(() => {
+        setGlobalReqLoad(false)
+    },[])
     return (
         <>
             <ProfileHeader/>

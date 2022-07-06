@@ -82,7 +82,7 @@ const EditProfile = () => {
                             userData.setGlobalLink(values.link);
                             userData.setGlobalProfileType(values.profile_type);
                             userData.setGlobalProfileStatus(values.profile_status);
-                            messages.success();
+                            messages.success('Настройки успешно сохранены');
                         } else {
                             setUsernameText(res.data?.validate_errors?.username ? res.data.validate_errors.username : null);
                             setFirstnameText(res.data?.validate_errors?.first_name ? res.data.validate_errors.first_name : null);
@@ -93,7 +93,7 @@ const EditProfile = () => {
                             setStatusText(res.data?.validate_errors?.profile_status ? res.data.validate_errors.profile_status : null);
                             setDescriptionText(res.data?.validate_errors?.description ? res.data.validate_errors.description : null);
                             console.log('error');
-                            messages.error();
+                            messages.error('Произошла ошибка');
                         }
                         userData.setGlobalReqLoad(false);  
                     })

@@ -9,4 +9,6 @@ export class Endpoints  {
     changeAv = `http://${this.BASE_DOMAIN}/api/v1/users/updateProfileAvatar/`;
     userFollowers = `http://${this.BASE_DOMAIN}/api/v1/users/getUserFollowersForToken/`;
     useFollows = `http://${this.BASE_DOMAIN}/api/v1/users/getUserFollowingForToken/`;
+    addFileToStorage = `http://${this.BASE_DOMAIN}/api/v1/storage/uploadContent/`;
+    createPost = `http://${this.BASE_DOMAIN}/api/v1/posts/createPublications/`
 }

@@ -3,11 +3,11 @@ import './messages.scss';
 import {message} from 'antd';
 
 const messages = {
-    success: () => {
-        message.success('Настройки успешно сохранены');
+    success: (text) => {
+        message.success(text);
     },
-    error: () => {
-        message.error('Произошла ошибка');
+    error: (text) => {
+        message.error(text);
     }
 }
 

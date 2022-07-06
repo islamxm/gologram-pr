@@ -77,3 +77,49 @@
         color: #2C2C2C;
     }
 }
+
+.button.button__danger {
+    background-color: red;
+
+    .button__text {
+        color: #fff;
+    }
+
+    &:hover {
+        background-color: #fe7777;
+    }
+}
+
+.button.button__transparent.button__danger {
+    border: 1px solid red;
+    background-color: transparent;
+
+    .button__text {
+        color: red;
+    }
+
+    &:hover {
+        background-color: red;
+
+        .button__text {
+            color: #fff;
+        }
+    }
+}
+
+.button.button__transparent.button__orange {
+    border: 1px solid var(--orange);
+    background-color: transparent;
+
+    .button__text {
+        color: var(--orange);
+    }
+
+    &:hover {
+        background-color: var(--orange);
+
+        .button__text {
+            color: #fff;
+        }
+    }
+}

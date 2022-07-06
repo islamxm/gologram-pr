@@ -21,6 +21,13 @@
             margin-right: 0;
         }
 
+        &:hover {
+
+            .profileNav__item_icon {
+                color: #000 !important;
+            }
+        }
+
         &_icon {
             transition: all .2s ease;
             &:hover {

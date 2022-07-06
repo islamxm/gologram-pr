@@ -33,11 +33,11 @@ const ChangePass = () => {
                         setErrorOld(res.data?.validate_errors?.current_password ? res.data.validate_errors.current_password : null);
 
                         if(res.response.status === 'successfully' && res.response.code === 200) {
-                            messages.success();
+                            messages.success('Настройки успешно сохранены');
                             values.current_password = '';
                             values.new_password = '';
                         } else {
-                            messages.error();
+                            messages.error('Произошла ошибка');
                         }
                     })
                     

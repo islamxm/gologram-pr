@@ -1,0 +1,53 @@
+.addPostTest {
+    background-color: #fff;
+    padding-bottom: 0;
+    border: 1px solid black;
+
+    .ant-modal-content {
+
+        .ant-modal-close {
+            display: none;
+        }
+
+        .ant-modal-body {
+            padding: 0;
+        }
+
+        .ant-modal-footer {
+            display: none;
+        }
+    }
+    &__in {
+        
+        
+    }
+
+    &__head {
+        padding: 10px;
+        text-align: center;
+        font-size: 20px;
+        line-height: 100%;
+        border: 1px solid #000;
+    }
+
+    &__body {
+        border: 1px solid black;
+        height: 500px;
+
+        &_upload {
+
+        }
+
+        &_files {
+            background-color: skyblue;
+        }
+    }
+
+    &__foot {
+        border: 1px solid black;
+        height: 60px;
+        padding: 0 10px;
+        display: flex;
+        
+    }
+} 

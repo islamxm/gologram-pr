@@ -102,32 +102,37 @@ export default class authService {
     }
 
 
-    // getUserFollowers = async (token) => {
-    //     let response = await fetch(endpoints.userFollowers, {
-    //         method: 'POST',
-    //         body:'',
-    //         headers: {
-    //             'Content-type': 'application/json',
-    //             'Authorization': `Token ${token}`
-    //         }
-    //     })
+    uploadFilesToStorage = async (token, body) => {
+        let response = await fetch(endpoints.addFileToStorage, {
+            method: 'POST',
+            body: body,
+            mode: 'cors',
+            headers: {
+                // 'Content-type': 'multipart/form-data',
+                'Authorization': `Token ${token}`
+            }
+        })
 
-    //     return await response.json();
-    // }
+        return await response.json();
+    }
 
-    // getUserFollows = async (token) => {
-    //     let response = await fetch(endpoints.useFollows, {
-    //         method: 'POST',
-    //         body: '',
-    //         headers: {
-    //             'Content-type': 'application/json',
-    //             'Authorization': `Token ${token}`
-    //         }
-    //     })
+    createPost = async (data, descr, token) => {
+        const obj = {
+            attachments: data,
+            text: descr
+        }
+        let response = await fetch(endpoints.createPost, {
+            method: 'POST',
+            body: JSON.stringify(obj),
+            mode: 'cors',
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': `Token ${token}`
+            }
+        })
 
-    //     return await response.json();
-    // }
-
+        return await response.json();
+    }
     
 
     

@@ -42,7 +42,6 @@ const ChangeAvatar = () => {
 
     const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels)
-        console.log(croppedAreaPixels);
     }, [])
 
 
@@ -55,19 +54,22 @@ const ChangeAvatar = () => {
             croppedAreaPixels,
           )
           setCroppedImage(croppedImage)
+          
           urltoFile(croppedImage, 'meme.png', 'image/png').then(function(file){
             const data = new FormData();
             data.append('avatar', file);
+            console.log(data);
+            console.log(file)
             service.changeAvatar(token, data).then(res => {
                 setGlobalReqLoad(true);
                 if(res && res.response.code === 200 && res.response.status === 'successfully') {
                     setGlobalAvatar(res.input_data.avatar);
                     setGlobalReqLoad(false);
-                    messages.success();
+                    messages.success('Аватар успешно изменен');
                 } else {
                     console.log(res.response.code);
                     setGlobalReqLoad(false);
-                    messages.error();
+                    messages.error('Произошла ошибка');
                 }
                 
             })

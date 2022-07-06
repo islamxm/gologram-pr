@@ -1,7 +1,7 @@
 import './ProfileNav.scss';
 
 import { NavLink } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Dropdown } from "antd";
 import { 
     MessageFilled ,
@@ -16,6 +16,10 @@ import useAuth from "../../hooks/useAuth";
 import authService from "../../services/authService";
 
 
+import {Modal} from 'antd';
+import AddPost from '../addPost/addPost';
+import AddPostTest from '../addPost/addPostTest';
+
 
 
 
@@ -23,13 +27,21 @@ const service = new authService();
 
 const ProfileNav = () => {
     const {token, avatar, setGlobalAvatar} = useAuth();
-    // const [avatar, setAvatar] = useState(null);
+    const [isModalVis, setModalVis] = useState(false);
 
     useEffect(() => {
         service.getProfileAdvanced(token).then(({data}) => {
             setGlobalAvatar(data.avatar);
         })
     }, [])
+  
+    const showModal = () => {
+        setModalVis(true);
+    }
+
+    const closeModal = () => {
+        setModalVis(false);
+    }
 
     return (
         <div className="profileNav">
@@ -45,9 +57,11 @@ const ProfileNav = () => {
                     </NavLink>
                 </div>
                 <div className="profileNav__item">
-                    <NavLink to='/add-story' end style={({isActive}) => ({color: isActive ? '#000' : '#aaa'})}>
-                        <PlusCircleFilled className="profileNav__item_icon" style={{fontSize: '30px'}}/>
-                    </NavLink>
+                    {/* <NavLink onClick={showModal} to='/add-story' end style={({isActive}) => ({color: isActive ? '#000' : '#aaa'})}>
+                        
+                    </NavLink> */}
+                    <PlusCircleFilled onClick={showModal} className="profileNav__item_icon" style={{fontSize: '30px', color: '#aaa'}}/>
+                    <AddPost isVis={isModalVis} onCancel={closeModal}/>
                 </div>
                 <div className="profileNav__item">
                     <NavLink to='/navigator' end style={({isActive}) => ({color: isActive ? '#000' : '#aaa'})}>
