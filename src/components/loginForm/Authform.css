@@ -1,0 +1,106 @@
+.authform {
+  max-width: 375px;
+  width: 100%;
+}
+
+.authform__panel {
+  background: #FFFFFF;
+  border: 1px solid #EFEFEF;
+  border-radius: 10px;
+}
+
+.authform__item {
+  padding: 8px 0;
+}
+
+.authform__item_in {
+  padding: 40px;
+}
+
+.authform__main_top_logo {
+  margin-bottom: 30px;
+}
+
+.authform__main_item {
+  padding: 10px 0;
+}
+
+.authform__main_item_ex {
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 12px;
+  color: red;
+  text-align: left;
+}
+
+.authform__main_item_checkbox_input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.authform__main_item_checkbox_input:checked ~ .authform__main_item_checkbox_label .authform__main_item_checkbox_label_icon {
+  background-color: var(--orange);
+  border-color: var(--orange);
+  color: #fff;
+}
+
+.authform__main_item_checkbox_label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+.authform__main_item_checkbox_label_icon {
+  width: 25px;
+  height: 25px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+  color: transparent;
+}
+
+.authform__main_item_checkbox_label_text {
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.authform__action {
+  padding: 8px 0;
+}
+
+.authform__ex {
+  padding: 20px 40px;
+}
+
+.authform__ex_link {
+  font-weight: 700;
+  color: var(--mainBlue);
+}
+
+.authform__download {
+  padding: 20px 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.authform__download_item {
+  width: 48%;
+}
+/*# sourceMappingURL=Authform.css.map */

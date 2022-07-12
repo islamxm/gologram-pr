@@ -1,0 +1,106 @@
+.profilePosts__in {
+  overflow: hidden;
+  border-radius: 20px;
+  background-color: #fff;
+}
+
+.profilePosts__in .ant-tabs-nav {
+  padding: 15px 0 0 0;
+}
+
+.profilePosts__in .ant-tabs-ink-bar {
+  background-color: #FF8B00;
+  background-color: #000;
+}
+
+.profilePosts__in .ant-tabs-nav-list {
+  width: 100%;
+}
+
+.profilePosts__in .ant-tabs-nav-list .ant-tabs-tab {
+  width: calc(100% / 5);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.profilePosts__in .ant-tabs-nav-list .ant-tabs-tab.ant-tabs-tab-active .profilePosts__tabs_item {
+  opacity: 1;
+}
+
+.profilePosts__in .ant-tabs-nav-list .ant-tabs-tab.ant-tabs-tab-active .profilePosts__tabs_item_text {
+  color: #000;
+}
+
+.profilePosts__in .ant-tabs-nav-list .ant-tabs-tab.ant-tabs-tab-active .profilePosts__tabs_item_icon {
+  color: #000;
+}
+
+.profilePosts__tabs {
+  padding: 0 30px;
+}
+
+.profilePosts__tabs_item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 14px;
+  line-height: 100%;
+  opacity: .4;
+}
+
+.profilePosts__tabs_item_icon {
+  color: #000;
+}
+
+.profilePosts__tabs_item_text {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #000;
+}
+
+.emptyPost {
+  height: 40vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.emptyPost__wrapper {
+  font-size: 30px;
+  line-height: 35px;
+  opacity: .5;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.emptyPost__text {
+  text-align: center;
+  opacity: .5;
+  margin: 10px 0;
+}
+/*# sourceMappingURL=profilePosts.css.map */

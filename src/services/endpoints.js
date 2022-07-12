@@ -11,4 +11,5 @@ export class Endpoints  {
     useFollows = `http://${this.BASE_DOMAIN}/api/v1/users/getUserFollowingForToken/`;
     addFileToStorage = `http://${this.BASE_DOMAIN}/api/v1/storage/uploadContent/`;
     createPost = `http://${this.BASE_DOMAIN}/api/v1/posts/createPublications/`
+    pullPosts = `http://${this.BASE_DOMAIN}/api/v1/posts/getPublications/`;
 }

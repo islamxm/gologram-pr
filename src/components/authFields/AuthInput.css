@@ -1,0 +1,90 @@
+.authInput.disabled {
+  pointer-events: none;
+  opacity: .5;
+}
+
+.authInput input {
+  font-size: 18px;
+  line-height: 22px;
+  padding: 10px !important;
+}
+
+.authInput .ant-input-affix-wrapper.ant-input-affix-wrapper-focused {
+  -webkit-box-shadow: 0 0 4px #ff8b00;
+          box-shadow: 0 0 4px #ff8b00;
+}
+
+.authInput .ant-input-affix-wrapper {
+  padding: 0;
+  border: 1px solid transparent;
+  background-color: #f7f7f7;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.authInput .ant-input-affix-wrapper:hover {
+  border-color: var(--orange);
+}
+
+.authInput .ant-input-affix-wrapper .ant-input {
+  border: none !important;
+  background-color: #f7f7f7;
+}
+
+.authInput .ant-input-affix-wrapper .ant-input:focus {
+  outline: none !important;
+  border: none !important;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+}
+
+.authInput .ant-input-affix-wrapper .ant-input-suffix .anticon {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 0 10px;
+}
+
+.authInput .ant-input-textarea textarea {
+  border: 1px solid transparent;
+  background-color: #f7f7f7;
+  border-radius: 4px;
+  min-height: 150px;
+  font-size: 18px;
+  line-height: 22px;
+  padding: 10px;
+  max-height: 500px;
+  white-space: pre-wrap;
+}
+
+.authInput .ant-input-textarea textarea:hover {
+  border-color: var(--orange);
+}
+
+.authInput .ant-input-textarea textarea:focus {
+  -webkit-box-shadow: 0 0 4px #ff8b00;
+          box-shadow: 0 0 4px #ff8b00;
+}
+
+.authInput > .ant-input {
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background-color: #f7f7f7;
+}
+
+.authInput > .ant-input:hover {
+  border-color: var(--orange);
+}
+
+.authInput > .ant-input:focus {
+  -webkit-box-shadow: 0 0 4px #ff8b00;
+          box-shadow: 0 0 4px #ff8b00;
+}
+/*# sourceMappingURL=AuthInput.css.map */

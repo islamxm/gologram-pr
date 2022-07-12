@@ -1,0 +1,197 @@
+.editProfile__form_item-avatar {
+  -webkit-box-align: center !important;
+      -ms-flex-align: center !important;
+          align-items: center !important;
+  margin-bottom: 40px !important;
+}
+
+.editProfile__form_item-avatar_img {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+  width: 120px;
+  padding-right: 20px;
+}
+
+.editProfile__form_item-avatar_img_el {
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  overflow: hidden;
+  background-color: #AFAFAF;
+}
+
+.editProfile__form_item-avatar_img_el img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.editProfile__form_item-avatar_body_username {
+  font-weight: 700;
+  line-height: 28px;
+  font-size: 24px;
+  padding: 2px 0;
+}
+
+.editProfile__form_item-avatar_body_change {
+  color: #FF9E10;
+  font-size: 18px;
+  line-height: 22px;
+  border: none;
+  cursor: pointer;
+}
+
+.editProfile__form_item_body.radio__list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.editProfile__form_item_body.radio__list .radio__list_error {
+  color: red;
+  font-size: 12px;
+  line-height: 15px;
+  width: 100%;
+  text-align: left;
+}
+
+.editProfile__form_item_radio {
+  width: 48%;
+  margin-bottom: 10px;
+}
+
+.editProfile__form_item_radio input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.editProfile__form_item_radio input:checked ~ .editProfile__form_item_radio_label {
+  background-color: var(--orange);
+}
+
+.editProfile__form_item_radio input:checked ~ .editProfile__form_item_radio_label .editProfile__form_item_radio_label_text {
+  color: #fff;
+}
+
+.editProfile__form_item_radio_label {
+  border-radius: 6px;
+  background-color: transparent;
+  border: 1px solid var(--orange);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  cursor: pointer;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+  padding: 12px 0;
+  color: #fff;
+}
+
+.editProfile__form_item_radio_label_text {
+  color: var(--orange);
+  white-space: nowrap;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+
+.editProfile__form_item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.editProfile__form_item_name {
+  width: 250px;
+  text-align: right;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-right: 20px;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+}
+
+.editProfile__form_item_name span {
+  color: red;
+}
+
+.editProfile__form_item_body {
+  max-width: 400px;
+  width: 100%;
+}
+
+.editProfile__form_item_body_field {
+  margin-bottom: 15px;
+}
+
+.editProfile__form_item_body_field_error {
+  color: red;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.editProfile__form_item_body_text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #000;
+}
+
+.editProfile__form_action {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.editProfile__form_action_item {
+  margin: 0 5px;
+  min-width: 25%;
+}
+
+.editProfile__form_action_item:first-child {
+  margin-left: 0;
+}
+
+.editProfile__form_action_item:last-child {
+  margin-right: 0;
+}
+/*# sourceMappingURL=EditProfile.css.map */

@@ -28,7 +28,7 @@ const ProfileCard = () => {
     const {token, setGlobalReqLoad, setGlobalAvatar, avatar} = useAuth()
     const navigate = useNavigate();
 
-
+    console.log(userData.token);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [imageSrc, setImageSrc] = useState(null);
     const [crop, setCrop] = useState({ x: 0, y: 0 });

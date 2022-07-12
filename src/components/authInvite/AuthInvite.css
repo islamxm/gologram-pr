@@ -1,0 +1,13 @@
+.authInvite {
+  padding: 8px 0;
+}
+
+.authInvite__head {
+  font-weight: 500;
+  color: var(--mainBoldGray);
+}
+
+.authInvite__item {
+  padding: 8px 0;
+}
+/*# sourceMappingURL=AuthInvite.css.map */

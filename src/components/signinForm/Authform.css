@@ -1,0 +1,172 @@
+.authform {
+  max-width: 375px;
+  width: 100%;
+}
+
+.authform__panel {
+  background: #FFFFFF;
+  border: 1px solid #EFEFEF;
+  border-radius: 10px;
+}
+
+.authform__item {
+  padding: 8px 0;
+}
+
+.authform__item_in {
+  padding: 40px;
+}
+
+.authform__main_top_logo {
+  margin-bottom: 30px;
+}
+
+.authform__main_item {
+  padding: 10px 0;
+}
+
+.authform__main_item_name {
+  text-align: left;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.authform__main_item_select {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.authform__main_item_select_error {
+  width: 100%;
+  text-align: left;
+  color: red;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.authform__main_item_select .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  border-width: 2px;
+  border-color: rgba(255, 139, 0, 0.4);
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.authform__main_item_select .ant-select {
+  width: 100%;
+}
+
+.authform__main_item_select .ant-select .ant-select-selector {
+  height: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 7px 0;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  background-color: #F7F7F7;
+  font-size: 18px;
+  line-height: 25px;
+  max-height: 50px;
+}
+
+.authform__main_item_select .ant-select .ant-select-selector:hover {
+  border-color: rgba(255, 139, 0, 0.4) !important;
+}
+
+.authform__main_item_select .ant-select .ant-select-selector .ant-select-selection-search {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.authform__main_item_select .ant-select .ant-select-selector .ant-select-selection-search input {
+  height: auto;
+  text-align: left;
+}
+
+.authform__main_item_select .ant-select .ant-select-selector .ant-select-selection-item {
+  text-align: left;
+  padding-left: 10px;
+  max-height: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.authform__main_item_select .ant-select .ant-select-selector .ant-select-selection-placeholder {
+  text-align: left;
+  padding-left: 10px;
+}
+
+.authform__main_item_select_item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.authform__main_item_select_item input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.authform__main_item_select_item_label {
+  font-size: 18px;
+  display: block;
+  width: 100%;
+}
+
+.authform__action {
+  padding: 8px 0;
+}
+
+.authform__ex {
+  padding: 20px 40px;
+}
+
+.authform__ex_link {
+  font-weight: 700;
+  color: var(--mainBlue);
+}
+
+.authform__download {
+  padding: 20px 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.authform__download_item {
+  width: 48%;
+}
+/*# sourceMappingURL=Authform.css.map */

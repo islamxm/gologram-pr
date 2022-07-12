@@ -44,7 +44,7 @@ export default class authService {
     getProfileAdvanced = async (token) => {
         try {
             let response = await fetch(endpoints.profile, {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
                     'Authorization': `Token ${token}`
@@ -132,6 +132,21 @@ export default class authService {
         })
 
         return await response.json();
+    }
+
+
+    pullPosts = async (token, data) => {
+        
+        let response = await fetch(`http://77.222.42.174/api/v1/posts/getPublications/`, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Authorization': `Token ${token}`,
+                'Content-type': 'application/json',
+            },
+        })
+
+        return response.json()
     }
     
 

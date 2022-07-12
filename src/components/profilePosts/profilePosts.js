@@ -11,8 +11,10 @@ import {
     UserOutlined 
   } from '@ant-design/icons';
 
-const { TabPane } = Tabs;
+import PostList from '../list/postList/postList';
 
+
+const { TabPane } = Tabs;
 
 const EmptyPost = () => {
 
@@ -29,6 +31,8 @@ const EmptyPost = () => {
 
 const ProfilePosts = () => {
 
+   
+
     return (
         <div className="profilePosts">
             <div className="container">
@@ -42,8 +46,9 @@ const ProfilePosts = () => {
                                 </div>
                                 
                                 } key={1}>
-                                <EmptyPost/>
+                                <PostList/>
                             </TabPane>
+                            
                             <TabPane tab={
                                 <div className='profilePosts__tabs_item'>
                                     <div className="profilePosts__tabs_item_icon"><VideoCameraOutlined/></div>

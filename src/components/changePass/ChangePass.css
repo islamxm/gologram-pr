@@ -1,0 +1,73 @@
+.changePass__form_item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.changePass__form_item_name {
+  width: 250px;
+  text-align: right;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+  padding-top: 12px;
+  padding-right: 20px;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+}
+
+.changePass__form_item_body {
+  max-width: 400px;
+  width: 100%;
+}
+
+.changePass__form_item_body_field {
+  margin-bottom: 15px;
+}
+
+.changePass__form_item_body_field_error {
+  color: red;
+  font-size: 12px;
+  line-height: 15px;
+  width: 100%;
+  text-align: left;
+  margin-top: 5px;
+}
+
+.changePass__form_item_body_text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #AFAFAF;
+}
+
+.changePass__form_action {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.changePass__form_action_item {
+  min-width: 25%;
+  margin: 0 5px;
+}
+
+.changePass__form_action_item:first-child {
+  margin-left: 0;
+}
+
+.changePass__form_action_item:last-child {
+  margin-right: 0;
+}
+/*# sourceMappingURL=ChangePass.css.map */
