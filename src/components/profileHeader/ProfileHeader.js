@@ -1,7 +1,7 @@
 import './ProfileHeader.scss';
 
 import { Row, Col } from 'antd';
-
+import { useRef } from 'react';
 import Search from '../search/Search';
 import ProfileNav from '../profileNav/ProfileNav';
 import logoMain from '../../img/logo-main.svg';
@@ -9,6 +9,8 @@ import logoMain from '../../img/logo-main.svg';
 
 
 const ProfileHeader = () => {
+    
+
     return (
         <div className="profileHeader">
                 <div className="container">
@@ -18,6 +20,7 @@ const ProfileHeader = () => {
                                 <img src={logoMain} alt="" />
                             </div>
                         </Col>
+                        
                         <Col span={12} style={{ display: 'flex', alignItems: 'center',}}>
                             <div className="profile__item profile__search">
                                 <Search/>

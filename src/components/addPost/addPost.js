@@ -1,21 +1,17 @@
 // import ImageFilter from 'react-image-filter';
 import './addPost.scss';
-import {Modal, Slider, Input } from 'antd';
-import Cropper from 'react-easy-crop';
+import {Modal, Input } from 'antd';
 import {
     PictureOutlined
   } from '@ant-design/icons';
-import { getCroppedImg, urltoFile } from '../changeAvatar/canvasUtils';
-import { useState, useEffect, useCallback } from 'react';
+import { urltoFile } from '../changeAvatar/canvasUtils';
+import { useState, useEffect } from 'react';
 import authService from '../../services/authService';
 import CropDialog from './cropDialog';
 import Button from '../button/Button';
 import useAuth from '../../hooks/useAuth';
 import messages from '../messages/messages';
 import {LeftOutlined, RightOutlined, EditOutlined } from '@ant-design/icons';
-import AuthTextarea from '../authFields/AuthTextarea';
-import {Formik, Field, Form} from 'formik';
-
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import {Navigation, EffectFade} from 'swiper';
 import 'swiper/css';
@@ -25,22 +21,26 @@ const service = new authService();
 
 function readFile(file) {
     return new Promise((resolve, reject) => {
-      const reader = new FileReader()
+      let reader = new FileReader()
+      reader.onerror = reject;
+      reader.onload = function () {
+        resolve(reader.result)
+      }
       reader.readAsDataURL(file)
-      reader.onload = () => resolve(reader.result);
     })
 }
 
 const AddPost = ({isVis, onCancel}) => {
+    const userData = useAuth();
     
     const [step, setStep] = useState(1);
     const [images, setImages] = useState([]);
     const [selectedImg, setSelectedImg] = useState(null)
     const {setGlobalReqLoad, avatar, token} = useAuth();
-    const swiper = useSwiper();
     const [username, setUsername] = useState(null)
     const [postIds, setPostIds] = useState([]);
     const [descr, setDescr] = useState('');
+    
 
 
     useEffect(() => {
@@ -50,18 +50,11 @@ const AddPost = ({isVis, onCancel}) => {
     }, [])
 
     useEffect(() => {
-        console.log(step)
-    }, [step])
-
-    useEffect(() => {
-        
-        setTimeout(() => {
-            if(images.length > 0) {
-                setGlobalReqLoad(false)
-            } else {
-                return
-            }
-        }, 2000);
+        if(images.length > 0) {
+            setGlobalReqLoad(false)
+        } else {
+            return;
+        }
     
     }, [images])
 
@@ -71,7 +64,6 @@ const AddPost = ({isVis, onCancel}) => {
             setImages([]);
             setStep(1);
             setDescr('');
-            
         }
     }, [isVis])
 
@@ -93,28 +85,28 @@ const AddPost = ({isVis, onCancel}) => {
         }
         if(step === 3) {
             console.log(images);
-            addFilesToStorage(images)
+            addFilesToStorage(images);
         }
     }
 
 
-    const onFileChange = async (e) => { 
+    const onFileChange = (e) => { 
         if(e.target.files.length > 5) {
             messages.error('Максимально допустимое количество файлов - 5');
             return;
         } else {
-            let files = [...e.target.files]
             let newFiles = [];
-            files.map(async (file, index) => {
-                let src = await readFile(file);
-                newFiles.push({
-                    src: src,
+            let files = [...e.target.files];
+
+            files.map((file, index) =>  {
+                return newFiles.push({
+                    src: URL.createObjectURL(file),
                     id: index,
                     croppedImageUrl: null,
                     filter: ''
-                });
+                })
             })
-            setGlobalReqLoad(true)
+            setGlobalReqLoad(true);
             setImages(newFiles);
             setStep(2);
         }
@@ -254,9 +246,13 @@ const AddPost = ({isVis, onCancel}) => {
                                     <div className="addPost__editor_slider_nav addPost__editor_slider_nav-next">
                                         <RightOutlined />
                                     </div>
-                                    {images.map((image, index) => {
+                                    {images.map((image) => {
+                                        
+
+                                        
                                         return (
                                             <SwiperSlide className='addPost__editor_slider_slide' key={image.id}>
+                                                
                                                 <img 
                                                     id={image.id} 
                                                     src={image.croppedImageUrl ? image.croppedImageUrl : image.src} 

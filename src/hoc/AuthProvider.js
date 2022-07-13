@@ -23,8 +23,7 @@ export const AuthProvider = ({children}) => {
     const [sex, setSex] = useState(null);
     const [followers, setFollowers] = useState(0);
     const [following, setFollowing] = useState(0);
-
-    // const [posts, setPosts] = useState(0);
+    const [posts, setPosts] = useState(0);
 
 
 
@@ -93,6 +92,10 @@ export const AuthProvider = ({children}) => {
         setFollowers(num);
     }
 
+    const setGlobalPosts = (num) => {
+        setPosts(num);
+    }
+
     const value = {
         token, 
         reqLoad,
@@ -103,9 +106,9 @@ export const AuthProvider = ({children}) => {
         lastName,
         link,
         sex,
+        posts,
         profileStatus,
         profileType,
-        
         followers,
         following,
         setGlobalToken, 
@@ -122,7 +125,8 @@ export const AuthProvider = ({children}) => {
         setGlobalProfileType,
         setGlobalSex,
         setGlobalFollowing,
-        setGlobalFollowers
+        setGlobalFollowers,
+        setGlobalPosts
     };
 
     return (

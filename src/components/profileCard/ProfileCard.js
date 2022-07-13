@@ -25,10 +25,9 @@ const service = new Services();
 const ProfileCard = () => {
 
     const userData = useAuth();
-    const {token, setGlobalReqLoad, setGlobalAvatar, avatar} = useAuth()
+    const {token, setGlobalReqLoad, setGlobalAvatar, avatar, setGlobalPosts, posts} = useAuth()
     const navigate = useNavigate();
-
-    console.log(userData.token);
+    
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [imageSrc, setImageSrc] = useState(null);
     const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -83,9 +82,13 @@ const ProfileCard = () => {
             service.getProfileAdvanced(userData.token)
             .then((res) => {
                 if(!res) {
-                    
+                    messages.success('Произошла ошибка');
+                    return;
                 } else {
-                    
+                    console.log(res)
+                    service.pullPosts(token, {user_id: res.data.id}).then(res => {
+                        userData.setGlobalPosts(res.data.length);
+                    })
                     userData.setGlobalAvatar(res.data.avatar);
                     userData.setGlobalUsername(res.data.username);
                     userData.setGlobalFirstName(res.data.first_name);
@@ -100,6 +103,7 @@ const ProfileCard = () => {
                 setGlobalReqLoad(false);
                 
             })
+            
         
     }, [])
 
@@ -131,11 +135,11 @@ const ProfileCard = () => {
                 if(res && res.response.code === 200 && res.response.status === 'successfully') {
                     setGlobalAvatar(res.input_data.avatar);
                     setGlobalReqLoad(false);
-                    messages.success();
+                    messages.success('Аватар успешно изменен');
                 } else {
                     console.log(res.response.code);
                     setGlobalReqLoad(false);
-                    messages.error();
+                    messages.error('Не удалось изменить аватар');
                 }
                 
             })
@@ -268,7 +272,7 @@ const ProfileCard = () => {
                     </div>
                     <div className="profileCard__item profileCard__info">
                         <div className="profileCard__info_item">
-                            <div className="profileCard__info_item_value">0</div>
+                            <div className="profileCard__info_item_value">{userData.posts}</div>
                             <div className="profileCard__info_item_name">публикации</div>
                         </div>
                         <div className="profileCard__info_item">

@@ -1,19 +1,13 @@
 import './postList.scss';
 import { useEffect, useState } from 'react';
 import {
-    AppstoreOutlined,
     CameraOutlined,
-    VideoCameraOutlined,
-    CaretRightOutlined,
-    DownloadOutlined,
-    UserOutlined ,
     CopyFilled,
     HeartFilled,
     MessageFilled
   } from '@ant-design/icons';
 import authSevice from '../../../services/authService';
 import useAuth from '../../../hooks/useAuth';
-import axios from 'axios';
 import messages from '../../messages/messages';
 
 const service = new authSevice();
@@ -37,65 +31,90 @@ const PostList = () => {
 
     
     useEffect(() => {
-        service.pullPosts(token, {user_id: 3}).then(res => {
-            let psts = [];
-            
+        service.getProfileAdvanced(token).then(res => {
             if(res.response.code === 200) {
-                psts = res.data.map(post => post).reverse();
-                
-                setPosts(psts);
-                
+                service.pullPosts(token, {user_id: res.data.id}).then(res => {
+                    let psts = [];
+                    if(res.response.code === 200) {
+                        psts = res.data.map(post => post).reverse();
+                        
+                        setPosts(psts);
+                        
+                    } else {
+                        messages.error('Произошла ошибка')
+                    }
+                })
             } else {
-                messages.error('Произошла ошибка')
+                console.log('error');
             }
-
-            console.log(posts);
             
         })
+        // service.pullPosts(token, {user_id: 3}).then(res => {
+        //     let psts = [];
+        //     console.log(res);
+            
+        //     if(res.response.code === 200) {
+        //         psts = res.data.map(post => post).reverse();
+                
+        //         setPosts(psts);
+                
+        //     } else {
+        //         messages.error('Произошла ошибка')
+        //     }
+
+        //     console.log(posts);
+            
+        // })
     }, [])
 
 
     return (
-        <div className="postList">
-            <div className="postList__in">
-                {
-                    posts.length > 0 ? (
-                        posts.map(post => (
-                            <div className="postList__item" key={post.id}>
-                                {post.attachments.length > 1 ? (
-                                    <div className="postList__item_cnt">
-                                        <CopyFilled />
+        
+            posts.length > 0 ? (
+                <div className="postList">
+                    <div className="postList__in">
+                        {
+                        
+                            posts.map(post => (
+                                <div className="postList__item" key={post.id}>
+                                    {post.attachments.length > 1 ? (
+                                        <div className="postList__item_cnt">
+                                            <CopyFilled />
+                                        </div>
+                                    ) : null} 
+                                    
+                                    <div className="postList__item_info">
+                                        <div className="postList__item_info_item postList__item_info_item-likes">
+                                            <div className="postList__item_info_item_icon">
+                                                <HeartFilled />
+                                            </div>
+                                            <div className="postList__item_info_item_value">
+                                                {post.likes.length}
+                                            </div>
+                                        </div>
+                                        <div className="postList__item_info_item postList__item_info_item-comments">
+                                            <div className="postList__item_info_item_icon">
+                                                <MessageFilled />
+                                            </div>
+                                            <div className="postList__item_info_item_value">
+                                                {post.commentaries.length}
+                                            </div>
+                                        </div>
                                     </div>
-                                ) : null} 
-                                
-                                <div className="postList__item_info">
-                                    <div className="postList__item_info_item postList__item_info_item-likes">
-                                        <div className="postList__item_info_item_icon">
-                                            <HeartFilled />
-                                        </div>
-                                        <div className="postList__item_info_item_value">
-                                            {post.likes.length}
-                                        </div>
-                                    </div>
-                                    <div className="postList__item_info_item postList__item_info_item-comments">
-                                        <div className="postList__item_info_item_icon">
-                                            <MessageFilled />
-                                        </div>
-                                        <div className="postList__item_info_item_value">
-                                            {post.commentaries.length}
-                                        </div>
+                                    <div className="postList__item_prev">
+                                        <img src={post.attachments[0].file} alt="" />
                                     </div>
                                 </div>
-                                <div className="postList__item_prev">
-                                    <img src={post.attachments[0].file} alt="" />
-                                </div>
-                            </div>
-                        ))
-                    ) : <EmptyPost/>
-                }
-                
-            </div>
-        </div>
+                            ))
+                        
+                        }
+                    
+                    </div>
+                </div>
+            ) : (
+                <EmptyPost/>
+            )
+        
     )
 }
 export default PostList;
