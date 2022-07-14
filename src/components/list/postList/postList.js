@@ -1,5 +1,6 @@
 import './postList.scss';
 import { useEffect, useState } from 'react';
+import {Link} from 'react-router-dom';
 import {
     CameraOutlined,
     CopyFilled,
@@ -47,24 +48,7 @@ const PostList = () => {
             } else {
                 console.log('error');
             }
-            
         })
-        // service.pullPosts(token, {user_id: 3}).then(res => {
-        //     let psts = [];
-        //     console.log(res);
-            
-        //     if(res.response.code === 200) {
-        //         psts = res.data.map(post => post).reverse();
-                
-        //         setPosts(psts);
-                
-        //     } else {
-        //         messages.error('Произошла ошибка')
-        //     }
-
-        //     console.log(posts);
-            
-        // })
     }, [])
 
 
@@ -82,25 +66,32 @@ const PostList = () => {
                                             <CopyFilled />
                                         </div>
                                     ) : null} 
+                                    <Link to={`/${post.id}`}>
+                                        <div className="postList__item_info">
+                                            {/* <div className="postList__item_thmb">
+                                                <button className="postList__item_thmb_btn">
+                                                    предпросмотр
+                                                </button>
+                                            </div> */}
+                                            <div className="postList__item_info_item postList__item_info_item-likes">
+                                                <div className="postList__item_info_item_icon">
+                                                    <HeartFilled />
+                                                </div>
+                                                <div className="postList__item_info_item_value">
+                                                    {post.likes.length}
+                                                </div>
+                                            </div>
+                                            <div className="postList__item_info_item postList__item_info_item-comments">
+                                                <div className="postList__item_info_item_icon">
+                                                    <MessageFilled />
+                                                </div>
+                                                <div className="postList__item_info_item_value">
+                                                    {post.commentaries.length}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Link>
                                     
-                                    <div className="postList__item_info">
-                                        <div className="postList__item_info_item postList__item_info_item-likes">
-                                            <div className="postList__item_info_item_icon">
-                                                <HeartFilled />
-                                            </div>
-                                            <div className="postList__item_info_item_value">
-                                                {post.likes.length}
-                                            </div>
-                                        </div>
-                                        <div className="postList__item_info_item postList__item_info_item-comments">
-                                            <div className="postList__item_info_item_icon">
-                                                <MessageFilled />
-                                            </div>
-                                            <div className="postList__item_info_item_value">
-                                                {post.commentaries.length}
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div className="postList__item_prev">
                                         <img src={post.attachments[0].file} alt="" />
                                     </div>

@@ -35,6 +35,27 @@
 
         }
 
+        &_thmb {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 2;
+            
+            &_btn {
+                cursor: pointer;
+                padding: 4px 10px;
+                background-color: rgba(0,0,0 , .5);
+                color: #fff;
+                border: none;
+                transition: all .3s ease;
+                border-radius: 20px;
+                font-weight: 200;
+                &:hover {
+                    background-color: rgba(0,0,0, 1);
+                }
+            }
+        }
+
         &_info {
             opacity: 0;
             transition: all .3s ease;

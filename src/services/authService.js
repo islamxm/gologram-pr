@@ -137,7 +137,7 @@ export default class authService {
 
     pullPosts = async (token, data) => {
         
-        let response = await fetch(`http://77.222.42.174/api/v1/posts/getPublications/`, {
+        let response = await fetch(endpoints.pullPosts, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -147,6 +147,19 @@ export default class authService {
         })
 
         return response.json()
+    }
+
+    pullPost = async (token, data) => {
+        let response = await fetch(endpoints.pullPost, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Authorization': `Token ${token}`,
+                'Content-type': 'application/json',
+            }
+        })
+
+        return response.json();
     }
     
 

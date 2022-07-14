@@ -1,0 +1,52 @@
+.modalMenu {
+    .ant-modal-content {
+        border-radius: 10px;
+        background-color: #fff;
+        overflow: hidden;
+
+        .ant-modal-close {
+            display: none;
+        }
+
+        .ant-modal-body {   
+            padding: 0;
+            
+        }
+
+        .ant-modal-footer {
+            display: none;
+        }
+    }
+
+    &__list {
+        margin-bottom: 0;
+    }
+
+    &__item {
+        padding: 15px 4px;
+        width: 100%;
+        text-align: center;
+        font-size: 18px;
+        line-height: 100%;
+        cursor: pointer;
+        border-bottom: 1px solid #e7e7e7;
+        transition: all .3s ease;
+        font-weight: 500;
+
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &:hover {
+            background-color: #e7e7e7;
+        }
+    }
+    &__item-danger {
+        color: red;
+    }
+
+    &__item-bold {
+        font-weight: 700;
+    }
+}

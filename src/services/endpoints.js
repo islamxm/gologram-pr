@@ -12,4 +12,5 @@ export class Endpoints  {
     addFileToStorage = `http://${this.BASE_DOMAIN}/api/v1/storage/uploadContent/`;
     createPost = `http://${this.BASE_DOMAIN}/api/v1/posts/createPublications/`
     pullPosts = `http://${this.BASE_DOMAIN}/api/v1/posts/getPublications/`;
+    pullPost = `http://${this.BASE_DOMAIN}/api/v1/posts/getPublication/`;
 }

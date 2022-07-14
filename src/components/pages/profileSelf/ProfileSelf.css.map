@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAEK,AAAD,cAAO,AAAA,gBAAgB,CAAC;EACpB,OAAO,EAAE,IAAI;EACb,eAAe,EAAE,MAAM;EACvB,WAAW,EAAE,MAAM;EAAC,KAAK,EAAE,IAAI;CAClC",
-    "sources": [
-        "ProfileSelf.scss"
-    ],
-    "names": [],
-    "file": "ProfileSelf.css"
-}

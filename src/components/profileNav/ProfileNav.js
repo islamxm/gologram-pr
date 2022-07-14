@@ -14,7 +14,7 @@ import {
 import ProfileDropdownMenu from "../profileDropdownMenu/ProfileDropdownMenu";
 import useAuth from "../../hooks/useAuth";
 import authService from "../../services/authService";
-
+import useModal from '../../hooks/useModal';
 
 import {Modal} from 'antd';
 import AddPost from '../addPost/addPost';
@@ -27,21 +27,13 @@ const service = new authService();
 
 const ProfileNav = () => {
     const {token, avatar, setGlobalAvatar} = useAuth();
-    const [isModalVis, setModalVis] = useState(false);
+    const {visible, showModal, hideModal} = useModal()
 
     useEffect(() => {
         service.getProfileAdvanced(token).then(({data}) => {
             setGlobalAvatar(data.avatar);
         })
     }, [])
-  
-    const showModal = () => {
-        setModalVis(true);
-    }
-
-    const closeModal = () => {
-        setModalVis(false);
-    }
 
     return (
         <div className="profileNav">
@@ -57,11 +49,8 @@ const ProfileNav = () => {
                     </NavLink>
                 </div>
                 <div className="profileNav__item">
-                    {/* <NavLink onClick={showModal} to='/add-story' end style={({isActive}) => ({color: isActive ? '#000' : '#aaa'})}>
-                        
-                    </NavLink> */}
                     <PlusCircleFilled onClick={showModal} className="profileNav__item_icon" style={{fontSize: '30px', color: '#aaa'}}/>
-                    <AddPost isVis={isModalVis} onCancel={closeModal}/>
+                    <AddPost isVis={visible} onCancel={hideModal}/>
                 </div>
                 <div className="profileNav__item">
                     <NavLink to='/navigator' end style={({isActive}) => ({color: isActive ? '#000' : '#aaa'})}>

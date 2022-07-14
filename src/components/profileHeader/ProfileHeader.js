@@ -1,5 +1,5 @@
 import './ProfileHeader.scss';
-
+import {Link} from 'react-router-dom';
 import { Row, Col } from 'antd';
 import { useRef } from 'react';
 import Search from '../search/Search';
@@ -16,9 +16,12 @@ const ProfileHeader = () => {
                 <div className="container">
                     <Row align="middle">
                         <Col span={4}>
+                            <Link to={'/'}>
                             <div className="profile__item profile__logo">
                                 <img src={logoMain} alt="" />
                             </div>
+                            </Link>
+                            
                         </Col>
                         
                         <Col span={12} style={{ display: 'flex', alignItems: 'center',}}>

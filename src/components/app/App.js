@@ -10,6 +10,7 @@ import PageLoading from '../pageLoading/PageLoading';
 import {CheckAuth} from '../../hoc/CheckAuth';
 import {AuthProvider} from '../../hoc/AuthProvider';
 import Settings from '../pages/settings/Settings';
+import Post from '../pages/post/Post';
 
 
 function App() {
@@ -26,9 +27,13 @@ function App() {
                         <Route exact path='/' element={<CheckAuth><ProfileSelf/></CheckAuth>}/>
                         <Route exact path='/profile-self' element={<CheckAuth><ProfileSelf/></CheckAuth>}/>
 
-                        <Route exact path='/settings' element={<CheckAuth><Settings/></CheckAuth>}/>
+                        <Route exact path='/settings' element={<CheckAuth><Settings/></CheckAuth>}/>                        
+                        <Route exact path='/direct' element={<None/>}/>
+                        <Route exact path='/home' element={<None/>}/>
+                        <Route exact path='/navigator' element={<None/>}/>
+                        <Route exact path='/actions' element={<None/>}/>
+                        <Route exact path='/:postId' element={<Post/>}/>
                         
-                        <Route exact path='*' element={<None/>}/>
                     </Routes>
                 </AuthProvider>
             </main>

@@ -19,24 +19,23 @@ import 'swiper/css/effect-fade';
 
 const service = new authService();
 
-function readFile(file) {
-    return new Promise((resolve, reject) => {
-      let reader = new FileReader()
-      reader.onerror = reject;
-      reader.onload = function () {
-        resolve(reader.result)
-      }
-      reader.readAsDataURL(file)
-    })
-}
+// function readFile(file) {
+//     return new Promise((resolve, reject) => {
+//       let reader = new FileReader()
+//       reader.onerror = reject;
+//       reader.onload = function () {
+//         resolve(reader.result)
+//       }
+//       reader.readAsDataURL(file)
+//     })
+// }
 
 const AddPost = ({isVis, onCancel}) => {
-    const userData = useAuth();
-    
+
     const [step, setStep] = useState(1);
     const [images, setImages] = useState([]);
     const [selectedImg, setSelectedImg] = useState(null)
-    const {setGlobalReqLoad, avatar, token} = useAuth();
+    const {setGlobalReqLoad, avatar, token, setGlobalPosts, posts} = useAuth();
     const [username, setUsername] = useState(null)
     const [postIds, setPostIds] = useState([]);
     const [descr, setDescr] = useState('');
@@ -55,7 +54,6 @@ const AddPost = ({isVis, onCancel}) => {
         } else {
             return;
         }
-    
     }, [images])
 
     useEffect(() => {
@@ -147,9 +145,9 @@ const AddPost = ({isVis, onCancel}) => {
                 data.append('file', newFile);
                 await service.uploadFilesToStorage(token, data).then(async res => {
                     postFiles.push(await res.data.pk)
-                    //console.log(await  'postFiles')
                 })
                 setPostIds(postFiles);
+                
             })
             
         })
@@ -159,38 +157,25 @@ const AddPost = ({isVis, onCancel}) => {
         setGlobalReqLoad(true)
         setTimeout(() => {
             if(postIds.length > 0) {
-                console.log(postIds)
-                
                 service.createPost(postIds, descr, token).then(res => {
-                    console.log(res);
+                    
                     if(res.response.code !== 200) {
                         messages.error(`${res.data.validate_errors.text.join()}`)
                         setGlobalReqLoad(false);
                     } else {
-                        console.log(res);
                         messages.success('Публикация успешно создана')
                         setGlobalReqLoad(false);
                         onCancel();
+                        service.pullPosts(token, {user_id: res.data.creater}).then(res => {
+                            if(res.response.code === 200) {
+                                setGlobalPosts(res.data.length);
+                            }   
+                        })
                     }
                 })
             }
-        }, 1000);
-        // if(postIds.length > 0) {
-        //     console.log(postIds)
-            
-        //     service.createPost(postIds, descr, token).then(res => {
-        //         console.log(res);
-        //         if(res.response.code !== 200) {
-        //             messages.error(`${res.data.validate_errors.text.join()}`)
-        //             setGlobalReqLoad(false);
-        //         } else {
-        //             console.log(res);
-        //             messages.success('Публикация успешно создана')
-        //             setGlobalReqLoad(false);
-        //             onCancel();
-        //         }
-        //     })
-        // }
+        }, 2000);
+        
     }, [postIds])
 
 

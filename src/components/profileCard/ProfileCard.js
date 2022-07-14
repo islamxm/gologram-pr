@@ -13,72 +13,26 @@ import Button from '../button/Button';
 import {getCroppedImg} from '../changeAvatar/canvasUtils';
 import messages from '../messages/messages';
 import useAuth from '../../hooks/useAuth';
-
-
-
-
+import useModal from '../../hooks/useModal';
+import translateType from '../../funcs/translateType';
+import translateStatus from '../../funcs/translateStatus';
 
 const service = new Services();
 
 
-
 const ProfileCard = () => {
-
     const userData = useAuth();
-    const {token, setGlobalReqLoad, setGlobalAvatar, avatar, setGlobalPosts, posts} = useAuth()
     const navigate = useNavigate();
-    
-    const [isModalVisible, setIsModalVisible] = useState(false);
+    const {visible, hideModal, showModal} = useModal();
     const [imageSrc, setImageSrc] = useState(null);
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
     const [croppedImage, setCroppedImage] = useState(null);
-
-
     
 
-    const translateType = (item) => {
-        switch (item) {
-            case 'simple_user':
-                return 'Пользователь'
-            case 'blogger':
-                return 'Блогер'
-            case 'self_employed':
-                return 'Самозанятый'
-            case 'individual_entrepreneurship':
-                return 'ИП'
-            case 'startapp':
-                return 'Стартап'
-            case 'small_business':
-                return 'Малый бизнес'
-            case 'medium_business':
-                return 'Средний бизнес'
-            case 'large_business':
-                return 'Крупный бизнес'
-        }
-    }
-
-
-    const translateStatus = (item) => {
-        switch(item) {
-            case 'work':
-                return 'работаю'
-            case 'rest':
-                return 'отдыхаю'
-            case 'leave':
-                return 'в отпуске'
-            case 'traffic_jam':
-                return 'в пробке'
-            case 'driving_from_work':
-                return 'еду с работы'
-            case 'creation':
-                return 'занимаюсь творчеством'
-        }
-    }
-
     useEffect(() => {
-            setGlobalReqLoad(true);
+            userData.setGlobalReqLoad(true);
             service.getProfileAdvanced(userData.token)
             .then((res) => {
                 if(!res) {
@@ -86,7 +40,7 @@ const ProfileCard = () => {
                     return;
                 } else {
                     console.log(res)
-                    service.pullPosts(token, {user_id: res.data.id}).then(res => {
+                    service.pullPosts(userData.token, {user_id: res.data.id}).then(res => {
                         userData.setGlobalPosts(res.data.length);
                     })
                     userData.setGlobalAvatar(res.data.avatar);
@@ -100,7 +54,7 @@ const ProfileCard = () => {
                     userData.setGlobalFollowers(res.data.followers.length);
                     userData.setGlobalFollowing(res.data.followings.length);
                 }
-                setGlobalReqLoad(false);
+                userData.setGlobalReqLoad(false);
                 
             })
             
@@ -108,10 +62,7 @@ const ProfileCard = () => {
     }, [])
 
     
-    const onClose = useCallback(() => {
-        setImageSrc(null);
-        setIsModalVisible(false); 
-    }, [])
+    
 
     const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels)
@@ -130,15 +81,15 @@ const ProfileCard = () => {
           urltoFile(croppedImage, 'meme.png', 'image/png').then(function(file){
             const data = new FormData();
             data.append('avatar', file);
-            service.changeAvatar(token, data).then(res => {
-                setGlobalReqLoad(true);
+            service.changeAvatar(userData.token, data).then(res => {
+                userData.setGlobalReqLoad(true);
                 if(res && res.response.code === 200 && res.response.status === 'successfully') {
-                    setGlobalAvatar(res.input_data.avatar);
-                    setGlobalReqLoad(false);
+                    userData.setGlobalAvatar(res.input_data.avatar);
+                    userData.setGlobalReqLoad(false);
                     messages.success('Аватар успешно изменен');
                 } else {
                     console.log(res.response.code);
-                    setGlobalReqLoad(false);
+                    userData.setGlobalReqLoad(false);
                     messages.error('Не удалось изменить аватар');
                 }
                 
@@ -174,15 +125,18 @@ const ProfileCard = () => {
     }
 
     const modalOpen = (e) => {
-        setIsModalVisible(true);
+        showModal();
     }
-    
+    const onClose = useCallback(() => {
+        setImageSrc(null);
+        hideModal();
+    }, [])
 
     return (
         <div className="profileCard">
             <div className="container">
                 <div className="profileCard__in">
-                    <Modal className='AvatarCrop' title='Сменить аватарку' visible={isModalVisible} onCancel={onClose}>
+                    <Modal className='AvatarCrop' title='Сменить аватарку' visible={visible} onCancel={onClose}>
                     {imageSrc ? (
                             <>
                                 <div className="crop-container">
@@ -238,19 +192,18 @@ const ProfileCard = () => {
                         
                     </div>
                     <div className="profileCard__item profileCard__body">
-                        <div 
-                            className="profileCard__body_item profileCard__body_item--username">{userData.username}</div>
-                        <div 
-                            className="profileCard__body_item profileCard__body_item--name">{userData.firstName} {userData.lastName}</div>
-                        <div 
-                            className="profileCard__body_item profileCard__body_item--prof">{translateType(userData.profileType)}</div>
-                        <div 
-                            className={userData.profileStatus ? "profileCard__body_item profileCard__body_item--status active" : "profileCard__body_item profileCard__body_item--status"}>
-                                {userData.profileStatus ? translateStatus(userData.profileStatus) : 'нет статуса'}
-                                {/* <Modal className='profileCard__body_item--status_modal' title='Изменить статус' visible={modalVis} onOk={handleOk} onCancel={handleCancel}>
-                                    <h2>Пункты статуса</h2>
-                                </Modal> */}
-                            </div>
+                        <div className="profileCard__body_item profileCard__body_item--username">
+                            {userData.username}
+                        </div>
+                        <div className="profileCard__body_item profileCard__body_item--name">
+                            {userData.firstName} {userData.lastName}
+                        </div>
+                        <div className="profileCard__body_item profileCard__body_item--prof">
+                            {translateType(userData.profileType)}
+                        </div>
+                        <div className={userData.profileStatus ? "profileCard__body_item profileCard__body_item--status active" : "profileCard__body_item profileCard__body_item--status"}>
+                            {userData.profileStatus ? translateStatus(userData.profileStatus) : 'нет статуса'}
+                        </div>
                         <a 
                             href={userData.link} target="_blank" rel='noreferrer'
                             className="profileCard__body_item profileCard__body_item--link">{userData.link ? userData.link : 'нет ссылки'}</a>
@@ -261,12 +214,10 @@ const ProfileCard = () => {
                     <div className="profileCard__item profileCard__action">
                         <div className="profileCard__action_item">
                             <div className="">
-                                <Button onClickHandle={() => navigate('/settings')} classList=' button__border' buttonText='Редактировать профиль'/>
-                            </div>
-                        </div>
-                        <div className="profileCard__action_item">
-                            <div className="profileCard__action_item_btn">
-                                <Button onClickHandle={() => navigate('/settings')} classList='' icon={<SettingOutlined/>}/>
+                                <Button 
+                                    onClickHandle={() => navigate('/settings')} 
+                                    classList=' button__border' 
+                                    buttonText='Редактировать профиль'/>
                             </div>
                         </div>
                     </div>

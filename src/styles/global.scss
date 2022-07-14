@@ -1,5 +1,8 @@
 @import './vars.scss';
 
+//MODULES
+@import './modules/modalMenu.scss';
+
 :root {
     --mainBgColor: #F7F7F7;
     --mainGray: #AFAFAF;
@@ -36,6 +39,7 @@ input, button, textarea {
     line-height: inherit;
     font-weight: inherit;
     color: inherit;
+    cursor: pointer;
 }
 
 body {
