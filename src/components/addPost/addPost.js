@@ -172,6 +172,7 @@ const AddPost = ({isVis, onCancel}) => {
                             }   
                         })
                     }
+                    
                 })
             }
         }, 2000);

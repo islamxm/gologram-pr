@@ -1,10 +1,32 @@
 .ant-message {
     font-size: 18px;
     line-height: 22px;
+    
     .ant-message-notice {
         .ant-message-notice-content {
             padding: 20px;
             border-radius: 10px;
+            color: #fff;
+            // background-color: #423c3b;
+            // background-color: #e6b98c;
+            // background-color: red;
+        }
+    }
+
+    .ant-message-error {
+        // background-color: red;
+        
+    }
+
+    .message-success {
+        .ant-message-notice-content {
+            background-color: green;
+        }
+    }
+
+    .message-error {
+        .ant-message-notice-content {
+            background-color: red;
         }
     }
 }

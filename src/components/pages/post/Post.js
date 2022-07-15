@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import useAuth from "../../../hooks/useAuth";
 import authService from "../../../services/authService";
 import messages from "../../messages/messages";
@@ -8,7 +8,7 @@ import Moment from 'react-moment';
 import 'moment-timezone';
 import 'moment/locale/ru';
 import './Post.scss';
-import { Modal, Dropdown } from "antd";
+import { Modal, Dropdown, Avatar, Spin } from "antd";
 import { Swiper, SwiperSlide,  } from 'swiper/react';
 import {Navigation, Pagination} from 'swiper';
 import { useState } from "react";
@@ -18,15 +18,16 @@ import { LeftOutlined,
         MessageOutlined, 
         HeartOutlined, 
         HeartFilled, 
-        MessageFilled, 
         SendOutlined,
-        SmileOutlined  } from '@ant-design/icons';
-import {BsBookmark} from 'react-icons/bs';
+        SmileOutlined ,
+        LoadingOutlined  } from '@ant-design/icons';
+import {BsBookmark, BsFillBookmarkFill} from 'react-icons/bs';
 import useModal from '../../../hooks/useModal';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import EmojiList from "../../emojiList/EmojiList";
+
 
 const service = new authService();
 
@@ -39,10 +40,13 @@ const Post = () => {
     const {visible, hideModal, showModal} = useModal();
     const [postData, setPostData] = useState(null);
     const [comment, setComment] = useState('');
+    const [commentList, setCommentList] = useState([]);
+    const [btnDisabled, setBtnDisabled] = useState(true)
+    const [btnLoading, setBtnLoading] = useState(false);
+    const [liked, setLiked] = useState(false);
+    const [saved, setSaved] = useState(false);
 
-    const handleComment = (e) => {
-        setComment(e.target.value)
-    }
+    
 
     const handleEmoji = (emoji) => {
         setComment((state) => {
@@ -74,6 +78,90 @@ const Post = () => {
             
         })    
     }, [])
+
+    const handleCommentText = (e) => {
+        setComment(e.target.value)
+        if(e.target.value !== '') {
+            setBtnDisabled(false);
+        } else {
+            setBtnDisabled(true);
+        }
+    }
+
+    const handleAddComment = () => {
+        if(comment !== '') {
+            const data = {
+                post_id: Number(postId),
+                text: comment
+            }
+            service.addComment(userData.token, data).then(res => {
+                setBtnLoading(true)
+                if(res.response.code === 200) {
+                    console.log(res);
+                    setComment('');
+                } else {
+                    console.log(res);
+                    setComment('');
+                }
+                
+            }).catch(err => {
+                setBtnLoading(false)
+                messages.error('Не удалось создать комментарий, попробуйте позже')
+                setComment('');
+                
+            })
+        } else {
+            
+        }
+    }
+
+    const commentTextareaRef = useRef();
+    const handleCommentFocus = () => {
+        commentTextareaRef.current.focus()
+    }
+
+    useEffect(() => {
+        if(comment === '') {
+            setBtnDisabled(true);
+        }
+    }, [comment])
+
+    const handleAddPostLike = () => {
+        if(!liked) {
+            const data = {
+                post_id: postId,
+                action: 'like'
+            }
+            service.addPostLike(userData.token, data).then(res => {
+                console.log(res)
+                setLiked(liked)
+            }).catch(err => {
+                messages.error('Не удалось поставить лайк, повторите позже')
+            })
+        }
+        if(liked) {
+            console.log('remove like')
+        }
+    }
+
+    const handleSavePost = () => {
+        if(!saved) {
+            const data = {
+                post_id: postId
+            }
+    
+            service.savePost(userData.token, data).then(res => {
+                console.log(res);
+                setSaved(saved);
+            }).catch(err => {
+                messages.error('Не удалось сохранить публикацию, повторите позже')
+            })
+        }
+        if(saved) {
+            console.log('remove from saved')
+        }
+    }
+    
 
 
 
@@ -114,9 +202,9 @@ const Post = () => {
                                         postData ? (
                                             <Link to={`/${postData.creater.username}`}>
                                             <div className="post__action_head_main_prf">
-                                                <div className="post__action_head_main_prf_avatar">
-                                                    <img src={postData.creater.avatar} alt={postData.creater.avatar} />
-                                                </div>
+                                                <Avatar className="post__action_head_main_prf_avatar"
+                                                    src={postData.creater.avatar}
+                                                    size={50} alt={'User Avatar'}/>
                                                 <div className="post__action_head_main_prf_username">{postData.creater.username}</div>
                                             </div>
                                             </Link>
@@ -142,9 +230,11 @@ const Post = () => {
 
                             <div className="post__action_body">
                                 <div className="post__action_body_main">
-                                    <div className="post__action_body_main_avatar">
-                                        <img src={postData.creater.avatar} alt={postData.creater.avatar}/>
-                                    </div>
+                                    <Avatar
+                                        className="post__action_body_main_avatar"
+                                        src={postData.creater.avatar}
+                                        size={50}
+                                        alt={'User avatar'}/>
                                     <div className="post__action_body_main_content">
                                         <div className="post__action_body_main_content_description">
                                             <span className="post__action_body_main_content_description_username">{postData.creater.username}</span>
@@ -152,34 +242,49 @@ const Post = () => {
                                         </div>
                                         <div className="post__action_body_main_content_ex">
                                             <Moment date={postData.date_public} fromNow/>
-                                               
-                                           
-                                            
                                         </div>
                                     </div>
                                     
                                 </div>
-                                <div className="post__action_body_cmts"></div>
+                                <div className="post__action_body_cmts">
+                                    <div className="post__action_body_cmts_item">
+                                        <Avatar 
+                                            className="post__action_body_cmts_item_avatar"
+                                            src={postData.creater.avatar}
+                                            size={50}
+                                            alt={'User avatar'}/>
+                                        <div className="post__action_body_cmts_item_content">
+                                            <span className="post__action_body_cmts_item_content_username">username</span><span className="post__action_body_cmts_item_content_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae molestias molestiae incidunt eum animi dignissimos enim a cum quis laboriosam tempora, dolores alias aliquid optio non eligendi facere, temporibus laudantium!</span>
+                                            <div className="post__action_body_cmts_item_content_ex">
+                                                <div className="post__action_body_cmts_item_content_ex_tm">
+                                                    день назад
+                                                </div>
+                                                <div className="post__action_body_cmts_item_content_ex_answer">Ответить</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             
                             <div className="post__action_bottom">
                                 <div className="post__action_bottom_intf">
                                     <div className="post__action_bottom_intf_btns">
                                         <div className="post__action_bottom_intf_btns_main">
-                                            <button className="post__action_bottom_intf_btns_item post__action_bottom_intf_btns_item-like">
-                                                <HeartOutlined />
+                                            <button onClick={handleAddPostLike} className={"post__action_bottom_intf_btns_item post__action_bottom_intf_btns_item-like " + (liked ? 'active' : '')}>
+                                                {liked ? <HeartFilled/> : <HeartOutlined />}
                                                 
                                             </button>
-                                            <button className="post__action_bottom_intf_btns_item post__action_bottom_intf_btns_item-comment">
+                                            <button onClick={handleCommentFocus} className="post__action_bottom_intf_btns_item post__action_bottom_intf_btns_item-comment">
                                                 <MessageOutlined />
                                             </button>
-                                            <button className="post__action_bottom_intf_btns_item post__action_bottom_intf_btns_item-repost">
+                                            <button className={"post__action_bottom_intf_btns_item post__action_bottom_intf_btns_item-repost "}>
                                                 <SendOutlined />
                                             </button>
                                         </div>
                                         <div className="post__action_bottom_intf_btns_ex">
-                                            <button className="post__action_bottom_intf_btns_item">
-                                            <BsBookmark/>
+                                            <button onClick={handleSavePost} className={"post__action_bottom_intf_btns_item post__action_bottom_intf_btns_item-save " + (saved ? 'active' : '')}>
+                                            
+                                            {saved ? <BsFillBookmarkFill/> : <BsBookmark/>}
                                             </button>
                                         </div>
                                     </div>
@@ -203,10 +308,10 @@ const Post = () => {
                                     </Dropdown>
 
                                     <div className="post__action_bottom_cmt_text">
-                                        <textarea value={comment} onChange={(e) => handleComment(e)} rows={1} placeholder="Добавьте комментарий"></textarea>
+                                        <textarea ref={commentTextareaRef} value={comment} onChange={(e) => handleCommentText(e)} rows={1} placeholder="Добавьте комментарий"></textarea>
                                     </div>
-                                    <button className="post__action_bottom_cmt_submit">
-                                        Отправить
+                                    <button className={"post__action_bottom_cmt_submit " + (btnDisabled || btnLoading ? 'disabled' : '')} onClick={handleAddComment}>
+                                        {btnLoading ? <Spin indicator={<LoadingOutlined style={{color: '#fff'}}/>}/> : 'Отправить'}
                                     </button>
                                 </div>
                             </div>

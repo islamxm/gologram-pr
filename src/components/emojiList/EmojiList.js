@@ -3,6 +3,7 @@ import './EmojiList.scss';
 
 const EmojiList = ({handleEmoji}) => {
 
+    
     return (
         <div className="emojiList">
             <div className="emojiList__part">

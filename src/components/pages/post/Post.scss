@@ -105,10 +105,6 @@
 
                     &_avatar {
                         margin-right: 10px;  
-                        width: 50px;
-                        height: 50px;
-                        overflow: hidden;
-                        border-radius: 100%;
 
                         img {
                             width: 100%;
@@ -170,14 +166,8 @@
                 display: flex;
                 align-items: flex-start;
                 
-
                 &_avatar {
-                    width: 50px;
-                    height: 50px;
-                    border-radius: 100%;
-                    overflow: hidden;
-                    flex: 0 0 auto;
-                    margin-right: 20px;
+                    margin-right: 10px;
 
                     img {
                         width: 100%;
@@ -215,7 +205,51 @@
             }
 
             &_cmts {
-                
+                padding: 20px;
+
+                &_item {
+                    display: flex;
+
+                    &_avatar {
+                        margin-right: 10px;
+                        flex: 0 0 auto;
+                    }
+
+                    &_content {
+                        font-size: 20px;
+                        &_username {
+                            font-weight: 700;
+                            margin-right: 10px;
+                        }
+
+                        &_text {
+
+                        }
+
+                        &_ex {
+                            padding: 15px 0;
+                            display: flex;
+                            flex-wrap: wrap;
+
+                            &_tm {
+                                color: #aaa;
+                                font-size: 15px;
+                                margin-right: 25px;
+                            }
+                            
+                            &_answer {
+                                font-size: 15px;
+                                color: #aaa;
+                                transition: all .3s ease;
+                                cursor: pointer;
+
+                                &:hover {
+                                    color: var(--orange);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -241,8 +275,12 @@
                         cursor: pointer;
                         transition: all .3s ease;
 
+                        // &:hover {
+                        //     transform: scale(1.1);
+                        // }
+
                         &:hover {
-                            transform: scale(1.1);
+                            opacity: .6;
                         }
 
                         &:first-child {
@@ -259,10 +297,10 @@
                         transform: rotate(-45deg);
                         margin-top: -5px;
 
-                        &:hover {
-                            transform: rotate(-45deg) scale(1.1);
+                        // &:hover {
+                        //     transform: rotate(-45deg) scale(1.1);
                             
-                        }
+                        // }
                     }
 
 
@@ -270,8 +308,27 @@
 
                     }
 
-                    &_item-like.liked {
-                        
+                    &_item-like.active {
+                        color: red;
+                        animation: active .3s ease;
+                    }
+
+
+                    @keyframes active {
+                        0% {
+                            transform: scale(1);
+                        }
+                        65% {
+                            transform: scale(1.2);
+                        }
+                        100% {
+                            transform: scale(1);
+                        }
+                    }
+                    
+
+                    &_item-save.active {
+                        animation: active .3s ease;
                     }
 
                     &_main {
@@ -331,9 +388,14 @@
                     background-color: #000;
                     color: #fff;
                     border: none;
-                    padding: 0 25px;
+                    // padding: 0 25px;
                     cursor: pointer;
                     transition: all .3s ease;
+                    width: 130px !important;
+                    flex: 0 0 auto;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
 
                     &:hover {
                         background-color: var(--orange);
@@ -347,7 +409,7 @@
 
                 &_submit.disabled {
                     pointer-events: none;
-                    opacity: 0.4;
+                    opacity: 0.3;
                 }
             }
         }
