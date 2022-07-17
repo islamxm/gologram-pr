@@ -244,6 +244,25 @@ export default class authService {
         
     }
 
+    replyComment = async (token, data) => {
+        try {
+            let response = await fetch(endpoints.replyComment, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Authorization': `Token ${token}`,
+                    'Content-type': 'application/json',
+                }
+            })
+
+            return response.json()
+        }
+        catch(err) {
+            console.log(err);
+            return false
+        }
+    }
+
     savePost = async (token, data) => {
         try {
             let response = await fetch(endpoints.savePost, {

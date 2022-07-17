@@ -47,7 +47,8 @@ const Post = () => {
     const [liked, setLiked] = useState(false);
     const [saved, setSaved] = useState(false);
     const [likesCount, setLikesCount] = useState(0);
-    const [reply, setReply] = useState(false);
+    const [repId, setRepId] = useState(null);
+    
 
     //new hook main user states
     const {userId,
@@ -145,10 +146,39 @@ const Post = () => {
         commentTextareaRef.current.focus()
     }
 
+    // ДОБАВИТЬ ОТМЕТКУ ЮЗЕРУ КОТОРОМУ ОТВЕЧАЕМ
+    const handleCommentReply = (commentId) => {
+        // const appeal = `@${username}`;
+        // setComment(appeal);
+        setRepId(commentId);
+        commentTextareaRef.current.focus();
+    }
+
     
     // ДОБАВЛЕНИЕ КОММЕНТА
-    const handleAddComment = () => {
-        if(comment !== '' && !reply) {
+    const handleAddComment = (replyId) => {
+        if(replyId && comment !== '') {
+            const data = {
+                comment_id: replyId,
+                text: comment
+            }
+            service.replyComment(userData.token, data).then(res => {
+                setBtnLoading(true);
+                if(res.response.code === 200) {
+                    setComment('');
+                    setBtnLoading(false)
+                    updateCommentList()
+                } else {
+                    setComment('');
+                    setBtnLoading(false)
+                }
+            }).catch(err => {
+                setBtnLoading(false);
+                messages.error('Не удалось ответить комментарию')
+                setComment('');
+            })
+        }
+        if(!replyId && comment !== '') {
             const data = {
                 post_id: Number(postId),
                 text: comment
@@ -159,7 +189,6 @@ const Post = () => {
                     setComment('');
                     setBtnLoading(false)
                     updateCommentList()
-                    
                 } else {
                     setComment('');
                     setBtnLoading(false)
@@ -239,12 +268,8 @@ const Post = () => {
         
     }
 
-
-    // ДОБАВИТЬ ОТМЕТКУ ЮЗЕРУ КОТОРОМУ ОТВЕЧАЕМ
-    const handleCommentReply = (username) => {
-        const appeal = `@${username}`;
-        setComment(appeal);
-    }
+    console.log(repId);
+    
 
 
     // УДАЛЕНИЕ ПОСТА
@@ -264,8 +289,6 @@ const Post = () => {
 
 
 
-
-
     
 
     // ДОБАВЛЕНИЕ ЭМОДЗИ К ТЕКСТУ КОММЕНТА
@@ -273,9 +296,12 @@ const Post = () => {
         setComment((state) => {
             return state + emoji
         })
-        setReply(true)
     }
 
+    console.log(postData)
+
+
+    
 
     return (
         <>
@@ -358,6 +384,13 @@ const Post = () => {
                                         <div className="post__action_body_main_content_description">
                                             <span className="post__action_body_main_content_description_username">{postData.creater.username}</span>
                                             <span className="post__action_body_main_content_description_text">{postData.text}</span>
+                                            <div className="post__action_body_main_content_description_hashtags">
+                                                {
+                                                    postData.hashtags.map(hashtag => (
+                                                        <a href="#" className="post__action_body_main_content_description_hashtags_item">{hashtag.hashtag}</a>
+                                                    ))
+                                                }
+                                            </div>
                                         </div>
                                         <div className="post__action_body_main_content_ex">
                                             <Moment date={postData.date_public} fromNow/>
@@ -369,7 +402,7 @@ const Post = () => {
                                     {
                                         commentList.length > 0 ? (
                                             commentList.map((comment, index) => (
-                                                <div className="post__action_body_cmts_item">
+                                                <div className="post__action_body_cmts_item" key={comment.id}>
                                                     <Avatar 
                                                         className="post__action_body_cmts_item_avatar"
                                                         src={comment.creater.avatar}
@@ -384,14 +417,43 @@ const Post = () => {
                                                             <div className="post__action_body_cmts_item_content_ex_tm">
                                                                 время публ. коммента
                                                             </div>
-                                                            <div onClick={(username) => handleCommentReply(comment.creater.username)} className="post__action_body_cmts_item_content_ex_answer">Ответить</div>
+                                                            {/* <div onClick={() => handleCommentReply(comment.id)} className="post__action_body_cmts_item_content_ex_answer">Ответить</div> */}
                                                         </div>
-                                                        {
-                                                            
-                                                        }
-                                                        <div className="post__action_body_cmts_item_content_answers">
-                                                            
-                                                        </div>
+                                                        {/* {
+                                                          comment.replies.length > 0 ? (
+                                                            <div className="post__action_body_cmts_item_content_reps">
+                                                                
+                                                                
+                                                                {
+                                                                    comment.replies.map((reply, index) => (
+                                                                        <div className="post__action_body_cmts_item" key={reply.id}>
+                                                                            <Avatar 
+                                                                                className="post__action_body_cmts_item_avatar"
+                                                                                src={reply.creater.avatar}
+                                                                                size={50}
+                                                                                alt={'User avatar'}/>
+                                                                            <div className="post__action_body_cmts_item_content">
+                                                                                <span className="post__action_body_cmts_item_content_username">{reply.creater.username}</span>
+                                                                                <span className="post__action_body_cmts_item_content_text">
+                                                                                    {reply.text}
+                                                                                </span>
+                                                                                <div className="post__action_body_cmts_item_content_ex">
+                                                                                    <div className="post__action_body_cmts_item_content_ex_tm">
+                                                                                        время публ. коммента
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    ))
+                                                                }
+                                                                
+                                                                
+
+
+                                                            </div>  
+                                                          )  : null 
+                                                        } */}
+                                                        
                                                     </div>
                                                 </div>
                                             ))
@@ -446,7 +508,7 @@ const Post = () => {
                                         
                                         <textarea ref={commentTextareaRef} value={comment} onChange={(e) => handleCommentText(e)} rows={1} placeholder="Добавьте комментарий"></textarea>
                                     </div>
-                                    <button className={"post__action_bottom_cmt_submit " + (btnDisabled || btnLoading ? 'disabled' : '')} onClick={handleAddComment}>
+                                    <button className={"post__action_bottom_cmt_submit " + (btnDisabled || btnLoading ? 'disabled' : '')} onClick={() => handleAddComment(repId)}>
                                         {btnLoading ? <Spin indicator={<LoadingOutlined style={{color: '#fff'}}/>}/> : 'Отправить'}
                                     </button>
                                 </div>

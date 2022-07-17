@@ -13,7 +13,8 @@ export class Endpoints  {
     createPost = `http://${this.BASE_DOMAIN}/api/v1/posts/createPublications/`
     pullPosts = `http://${this.BASE_DOMAIN}/api/v1/posts/getPublications/`;
     pullPost = `http://${this.BASE_DOMAIN}/api/v1/posts/getPublication/`;
-    addComment = `http://${this.BASE_DOMAIN}/api/v1/posts/addComment/`; 
+    addComment = `http://${this.BASE_DOMAIN}/api/v1/posts/addComment/`;
+    replyComment = `http://${this.BASE_DOMAIN}/api/v1/posts/addReplyComment/`; 
     postLikeAction = `http://${this.BASE_DOMAIN}/api/v1/posts/likePublication/`; 
     savePost = `http://${this.BASE_DOMAIN}/api/v1/posts/savePublicationForUser/`;
     deletePost = `http://${this.BASE_DOMAIN}/api/v1/posts/deletePublication/`

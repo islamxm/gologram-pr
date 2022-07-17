@@ -224,12 +224,19 @@
                         &_text {
                             
                         }
+
+                        &_hashtags {
+                            padding: 10px 0;
+                            &_item {
+                                color:#87bdd8;
+                            }
+                        }
                     }
 
                     &_ex {
                         color: #aaa;
                         font-weight: 500;
-                        padding: 25px 0; 
+                        padding: 10px 0; 
                     }
                 }
 
@@ -285,8 +292,44 @@
                                 }
                             }
                         }
+
+                        &_reps {
+
+                            
+                        }
+
+                        &_reps > .reply {
+                            display: flex;
+                            align-items: flex-start;
+
+                            .reply__avatar {
+                                flex: 0 0 auto;
+                                margin-right: 10px;
+                            }
+
+                            .reply__content {
+
+                                &_username {
+                                    font-size: 20px;
+                                    margin-right: 20px;
+                                    font-weight: 700;
+                                }
+
+                                &_text {
+
+                                }
+
+                                &_ex {
+                                    padding: 15px 0;
+                                    display: flex;
+                                    align-items: center;
+                                }
+                            }
+                        }
                     }
                 }
+
+                
             }
         }
 

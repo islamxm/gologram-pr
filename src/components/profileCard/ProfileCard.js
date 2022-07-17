@@ -81,8 +81,18 @@ const ProfileCard = () => {
         
     }, [])
 
+
+    console.log(userData.token)
     
-    
+    const testAddComment = () => {
+        const data = {
+            post_id: 47,
+            text: 'Коммент от другого пользователя'
+        }
+        service.addComment(userData.token, data).then(res => {
+            console.log(res);
+        })
+    }
 
     const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels)
@@ -121,6 +131,7 @@ const ProfileCard = () => {
         } 
         
     }, [imageSrc, croppedAreaPixels])
+
 
     const onFileChange = async (e) => {
         if (e.target.files && e.target.files.length > 0) {
