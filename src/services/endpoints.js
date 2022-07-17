@@ -13,8 +13,10 @@ export class Endpoints  {
     createPost = `http://${this.BASE_DOMAIN}/api/v1/posts/createPublications/`
     pullPosts = `http://${this.BASE_DOMAIN}/api/v1/posts/getPublications/`;
     pullPost = `http://${this.BASE_DOMAIN}/api/v1/posts/getPublication/`;
-    addComment = `http://${this.BASE_DOMAIN}/api/v1/posts/addComment/`; //Ошибка
-    addPostLike = `http://${this.BASE_DOMAIN}/api/v1/posts/likePublication/`; //Ошибка
-    savePost = `http://${this.BASE_DOMAIN}/api/v1/posts/savePublicationForUser/` //Ошибка
+    addComment = `http://${this.BASE_DOMAIN}/api/v1/posts/addComment/`; 
+    postLikeAction = `http://${this.BASE_DOMAIN}/api/v1/posts/likePublication/`; 
+    savePost = `http://${this.BASE_DOMAIN}/api/v1/posts/savePublicationForUser/`;
+    deletePost = `http://${this.BASE_DOMAIN}/api/v1/posts/deletePublication/`
+
 
 }

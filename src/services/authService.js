@@ -262,9 +262,27 @@ export default class authService {
         }
     }
 
-    addPostLike = async (token, data) => {
+    deletePost = async (token, data) => {
         try {
-            let response = await fetch(endpoints.addPostLike, {
+            let response = await fetch(endpoints.deletePost, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Authorization': `Token ${token}`,
+                    'Content-type': 'application/json',
+                }
+            })
+            return response.json();
+        }
+        catch(err) {
+            console.log(err);
+            return false;
+        }
+    }
+
+    postLikeAction = async (token, data) => {
+        try {
+            let response = await fetch(endpoints.postLikeAction, {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
@@ -282,4 +300,6 @@ export default class authService {
 
         }
     }
+
+    
 }

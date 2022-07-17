@@ -37,8 +37,12 @@ const PostList = () => {
                 service.pullPosts(token, {user_id: res.data.id}).then(res => {
                     let psts = [];
                     if(res.response.code === 200) {
-                        psts = res.data.map(post => post).reverse();
-                        
+                        psts = res.data.filter(post => {
+                            if(post.is_deleted === false) {
+                                return post
+                            }
+                        }).reverse();
+                        console.log(psts)
                         setPosts(psts);
                         
                     } else {

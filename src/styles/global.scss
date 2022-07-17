@@ -17,6 +17,11 @@
     margin: 0;
     box-sizing: border-box;
     outline: none;
+
+    &::selection {
+        background-color: var(--orange);
+        color: #fff;
+    }
 }
 
 a {

@@ -16,11 +16,13 @@ import useAuth from '../../hooks/useAuth';
 import useModal from '../../hooks/useModal';
 import translateType from '../../funcs/translateType';
 import translateStatus from '../../funcs/translateStatus';
+import useUserData from '../../hooks/useUserData';
 
 const service = new Services();
 
 
 const ProfileCard = () => {
+    const allUserData = useUserData();
     const userData = useAuth();
     const navigate = useNavigate();
     const {visible, hideModal, showModal} = useModal();
@@ -35,27 +37,45 @@ const ProfileCard = () => {
             userData.setGlobalReqLoad(true);
             service.getProfileAdvanced(userData.token)
             .then((res) => {
-                if(!res) {
-                    messages.success('Произошла ошибка');
-                    return;
+                if(res.response.code === 200) {
+                    allUserData.setAvatar(res.data.avatar)
+                    allUserData.setUsername(res.data.username)
+                    allUserData.setFirstName(res.data.first_name)
+                    allUserData.setLastName(res.data.last_name)
+                    allUserData.setLink(res.data.link)
+                    allUserData.setProfStatus(res.data.profile_status);
+                    allUserData.setProfType(res.data.profile_type)
+                    allUserData.setDescription(res.data.description)
+                    allUserData.setFollowers(res.data.followers.length > 0 ? res.data.followers.join() : 0)
+                    allUserData.setFollowings(res.data.followings.length > 0 ? res.data.followings.join() : 0)
+                    allUserData.setPosts(res.data.publications_count)
                 } else {
-                    console.log(res)
-                    service.pullPosts(userData.token, {user_id: res.data.id}).then(res => {
-                        userData.setGlobalPosts(res.data.length);
-                    })
-                    userData.setGlobalAvatar(res.data.avatar);
-                    userData.setGlobalUsername(res.data.username);
-                    userData.setGlobalFirstName(res.data.first_name);
-                    userData.setGlobalLastName(res.data.last_name);
-                    userData.setGlobalLink(res.data.link);
-                    userData.setGlobalProfileStatus(res.data.profile_status);
-                    userData.setGlobalProfileType(res.data.profile_type);
-                    userData.setGlobalDescription(res.data.description);
-                    userData.setGlobalFollowers(res.data.followers.length);
-                    userData.setGlobalFollowing(res.data.followings.length);
+                    messages.error('Не удалось получить данные')
                 }
+                // if(!res) {
+                //     messages.success('Произошла ошибка');
+                //     return;
+                // } else {
+                //     console.log(res)
+                //     service.pullPosts(userData.token, {user_id: res.data.id}).then(res => {
+                //         userData.setGlobalPosts(res.data.length);
+                //     })
+                //     userData.setGlobalAvatar(res.data.avatar);
+                //     userData.setGlobalUsername(res.data.username);
+                //     userData.setGlobalFirstName(res.data.first_name);
+                //     userData.setGlobalLastName(res.data.last_name);
+                //     userData.setGlobalLink(res.data.link);
+                //     userData.setGlobalProfileStatus(res.data.profile_status);
+                //     userData.setGlobalProfileType(res.data.profile_type);
+                //     userData.setGlobalDescription(res.data.description);
+                //     userData.setGlobalFollowers(res.data.followers.length);
+                //     userData.setGlobalFollowing(res.data.followings.length);
+                // }
                 userData.setGlobalReqLoad(false);
                 
+            }).catch(err => {
+                console.log(err);
+                messages.error('Не удалось получить данные')
             })
             
         
@@ -78,13 +98,13 @@ const ProfileCard = () => {
             croppedAreaPixels,
           )
           setCroppedImage(croppedImage)
-          urltoFile(croppedImage, 'meme.png', 'image/png').then(function(file){
+          urltoFile(croppedImage, 'avatar.png', 'image/png').then(function(file){
             const data = new FormData();
             data.append('avatar', file);
             service.changeAvatar(userData.token, data).then(res => {
                 userData.setGlobalReqLoad(true);
-                if(res && res.response.code === 200 && res.response.status === 'successfully') {
-                    userData.setGlobalAvatar(res.input_data.avatar);
+                if(res.response.code === 200) {
+                    allUserData.setAvatar(res.input_data.avatar);
                     userData.setGlobalReqLoad(false);
                     messages.success('Аватар успешно изменен');
                 } else {
@@ -92,12 +112,14 @@ const ProfileCard = () => {
                     userData.setGlobalReqLoad(false);
                     messages.error('Не удалось изменить аватар');
                 }
-                
+            }).catch(err => {
+                console.log(err)
             })
           })
-        } catch (e) {
-          console.error(e)
-        }
+        } catch(err) {
+            console.log(err);
+        } 
+        
     }, [imageSrc, croppedAreaPixels])
 
     const onFileChange = async (e) => {
@@ -186,29 +208,29 @@ const ProfileCard = () => {
                             </ul>
                         }>
                             <div className="profileCard__img_el">
-                                <img src={userData.avatar} alt="" />
+                                <img src={allUserData.avatar} alt="" />
                             </div>
                         </Dropdown>
                         
                     </div>
                     <div className="profileCard__item profileCard__body">
                         <div className="profileCard__body_item profileCard__body_item--username">
-                            {userData.username}
+                            {allUserData.username}
                         </div>
                         <div className="profileCard__body_item profileCard__body_item--name">
-                            {userData.firstName} {userData.lastName}
+                            {allUserData.firstName} {allUserData.lastName}
                         </div>
                         <div className="profileCard__body_item profileCard__body_item--prof">
-                            {translateType(userData.profileType)}
+                            {translateType(allUserData.profType)}
                         </div>
-                        <div className={userData.profileStatus ? "profileCard__body_item profileCard__body_item--status active" : "profileCard__body_item profileCard__body_item--status"}>
-                            {userData.profileStatus ? translateStatus(userData.profileStatus) : 'нет статуса'}
+                        <div className={allUserData.profStatus ? "profileCard__body_item profileCard__body_item--status active" : "profileCard__body_item profileCard__body_item--status"}>
+                            {allUserData.profStatus ? translateStatus(allUserData.profStatus) : 'нет статуса'}
                         </div>
                         <a 
-                            href={userData.link} target="_blank" rel='noreferrer'
-                            className="profileCard__body_item profileCard__body_item--link">{userData.link ? userData.link : 'нет ссылки'}</a>
+                            href={allUserData.link} target="_blank" rel='noreferrer'
+                            className="profileCard__body_item profileCard__body_item--link">{allUserData.link ? allUserData.link : 'нет ссылки'}</a>
                         <div className="profileCard__body_item profileCard__body_item--descr">
-                            {userData.description ? userData.description : null}
+                            {allUserData.description ? allUserData.description : null}
                         </div>
                     </div>
                     <div className="profileCard__item profileCard__action">
@@ -223,15 +245,15 @@ const ProfileCard = () => {
                     </div>
                     <div className="profileCard__item profileCard__info">
                         <div className="profileCard__info_item">
-                            <div className="profileCard__info_item_value">{userData.posts}</div>
+                            <div className="profileCard__info_item_value">{allUserData.posts}</div>
                             <div className="profileCard__info_item_name">публикации</div>
                         </div>
                         <div className="profileCard__info_item">
-                            <div className="profileCard__info_item_value">{userData.followers}</div>
+                            <div className="profileCard__info_item_value">{allUserData.followers}</div>
                             <div className="profileCard__info_item_name">подписчиков</div>
                         </div>
                         <div className="profileCard__info_item">
-                            <div className="profileCard__info_item_value">{userData.following}</div>
+                            <div className="profileCard__info_item_value">{allUserData.followings}</div>
                             <div className="profileCard__info_item_name">подписки</div>
                         </div>
                     </div>

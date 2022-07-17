@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import useAuth from "../../../hooks/useAuth";
 import authService from "../../../services/authService";
@@ -27,7 +27,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import EmojiList from "../../emojiList/EmojiList";
-
+import useUserData from "../../../hooks/useUserData";
 
 const service = new authService();
 
@@ -45,40 +45,91 @@ const Post = () => {
     const [btnLoading, setBtnLoading] = useState(false);
     const [liked, setLiked] = useState(false);
     const [saved, setSaved] = useState(false);
+    const [likesCount, setLikesCount] = useState(0);
+    const [reply, setReply] = useState(false);
 
-    
+    //new hook main user states
+    const {userId,
+           setUserId,
+           } = useUserData()
+        
+    const navigate = useNavigate();
 
-    const handleEmoji = (emoji) => {
-        setComment((state) => {
-            return state + emoji
-        })
-    }
-
+    // GET USER INFO
     useEffect(() => {
         userData.setGlobalReqLoad(false);
         service.getProfileAdvanced(userData.token).then(res => {
-            
             if(res.response.code === 200) {
-
-                const data = {
-                    user_id: res.data.id,
-                    post_id: postId
-                }
-                
-                service.pullPost(userData.token, data).then(res => {
-                    if(res.response.code === 200) {
-                        setPostData(res.data);
-                    } else {
-                        messages.error('Произошла ошибка')
-                    }
-                })
+                console.log(res)
+                setUserId(res.data.id);
             } else {
                 messages.error('Произошла ошибка')
             }
-            
+        }).catch(err => {
+            console.log(err);
         })    
     }, [])
 
+
+
+    // GET POST INFO
+    useEffect(() => {
+        console.log(userId, postId)
+        if(postId && userId) {
+            const data = {
+                user_id: userId,
+                post_id: Number(postId)
+            }
+            service.pullPost(userData.token, data).then(res => {
+                if(res.response.code === 200) {
+                    setPostData(res.data);
+                    setCommentList(res.data.commentaries);
+                    setLikesCount(res.data.likes.length);
+                } else {
+                    messages.error('Произошла ошибка')
+                }
+            }).catch(err => {
+                console.log(err);
+            }) 
+        }
+        
+    }, [userId, postId, userData.token])
+
+
+    // ОТКЛЮЧЕНИЕ КНОПКИ СОЗДАНИЯ КОММЕНТА ЕСЛИ ИНПУТ ПУСТОЙ
+    useEffect(() => {
+        if(comment === '') {
+            setBtnDisabled(true);
+        }
+    }, [comment])
+
+    // ПОЛУЧИТЬ КОЛИЧЕСТВО ЛАЙКОВ ПОСЛЕ ЛАЙКА/ДИЗЛАЙКА
+    useEffect(() => {
+
+    }, [likesCount])
+
+
+    // ОБНОВЛЕНИЕ СПИСКА КОММЕНТОВ ПОСЛЕ ДОБАВЛЕНИЯ НОВОГО
+    const updateCommentList = () => {
+        if(postId && userId) {
+            const data = {
+                user_id: userId,
+                post_id: Number(postId)
+            }
+            service.pullPost(userData.token, data).then(res => {
+                if(res.response.code === 200) {
+                    setCommentList(res.data.commentaries);
+                    
+                } else {
+                    messages.error('Не удалось обновить комментарии')
+                }
+            }).catch(err => {
+                console.log(err);
+            }) 
+        }
+    }
+
+    // ОБРАБОТЧИК ПЕЧАТАНИЯ КОММЕНТА
     const handleCommentText = (e) => {
         setComment(e.target.value)
         if(e.target.value !== '') {
@@ -88,8 +139,17 @@ const Post = () => {
         }
     }
 
+
+    // ФОКУС НА ИНПУТ ПОСЛЕ НАЖАТИЯ КНОПКИ КОММЕНТА
+    const commentTextareaRef = useRef();
+    const handleCommentFocus = () => {
+        commentTextareaRef.current.focus()
+    }
+
+    
+    // ДОБАВЛЕНИЕ КОММЕНТА
     const handleAddComment = () => {
-        if(comment !== '') {
+        if(comment !== '' && !reply) {
             const data = {
                 post_id: Number(postId),
                 text: comment
@@ -99,9 +159,13 @@ const Post = () => {
                 if(res.response.code === 200) {
                     console.log(res);
                     setComment('');
+                    setBtnLoading(false)
+                    updateCommentList()
+                    
                 } else {
                     console.log(res);
                     setComment('');
+                    setBtnLoading(false)
                 }
                 
             }).catch(err => {
@@ -111,58 +175,102 @@ const Post = () => {
                 
             })
         } else {
-            
-        }
-    }
-
-    const commentTextareaRef = useRef();
-    const handleCommentFocus = () => {
-        commentTextareaRef.current.focus()
-    }
-
-    useEffect(() => {
-        if(comment === '') {
             setBtnDisabled(true);
         }
-    }, [comment])
+    }
 
+    
+    
+    
+    // ПОСТАВИТЬ ИЛИ УБРАТЬ ЛАЙК
     const handleAddPostLike = () => {
         if(!liked) {
             const data = {
                 post_id: postId,
                 action: 'like'
             }
-            service.addPostLike(userData.token, data).then(res => {
-                console.log(res)
-                setLiked(liked)
+            service.postLikeAction(userData.token, data).then(res => {
+                if(res.response.code === 200) {
+                    setLiked(true)
+                }
             }).catch(err => {
                 messages.error('Не удалось поставить лайк, повторите позже')
             })
         }
         if(liked) {
-            console.log('remove like')
-        }
-    }
-
-    const handleSavePost = () => {
-        if(!saved) {
             const data = {
-                post_id: postId
+                post_id: postId,
+                action: 'unlike'
             }
-    
-            service.savePost(userData.token, data).then(res => {
-                console.log(res);
-                setSaved(saved);
+            service.postLikeAction(userData.token, data).then(res => {
+                if(res.response.code === 200) {
+                    setLiked(false)
+                }
             }).catch(err => {
-                messages.error('Не удалось сохранить публикацию, повторите позже')
+                messages.error('Не удалось отменить лайк, повторите позже')
             })
         }
-        if(saved) {
-            console.log('remove from saved')
-        }
     }
+
+
+    // СОХРАНИТЬ ИЛИ УДАЛИТЬ ПОСТ ИЗ СОХРАНЕННЫХ
+    const handleSavePost = () => {
+        const data = {
+            post_id: postId
+        }
+
+        service.savePost(userData.token, data).then(res => {
+            if(res.response.code === 200) {
+                setSaved(true);
+                console.log(res)
+            } else {
+                messages.error('Не удалось сохранить публикацию, повторите позже');
+            }
+        }).catch(err => {
+            console.log(err)
+            messages.error('Не удалось сохранить публикацию, повторите позже');
+        })
+        
+    }
+
+
+    // ДОБАВИТЬ ОТМЕТКУ ЮЗЕРУ КОТОРОМУ ОТВЕЧАЕМ
+    const handleCommentReply = (username) => {
+        const appeal = `@${username}`;
+        setComment(appeal);
+    }
+
+
+    // УДАЛЕНИЕ ПОСТА
+    const deletePost = () => {
+        
+        const data = {
+            post_id: postId
+        }
+        service.deletePost(userData.token, data).then(res => {
+            if(res.response.code === 200) {
+                console.log(res);
+                messages.success('Публикация успешно удалена');
+                navigate('/profile-self', {replace: true})
+            } else {
+                messages.error('Не удалось удалить публикацию')
+            }
+        })
+    }
+
+
+
+
+
     
 
+    // ДОБАВЛЕНИЕ ЭМОДЗИ К ТЕКСТУ КОММЕНТА
+    const handleEmoji = (emoji) => {
+        setComment((state) => {
+            return state + emoji
+        })
+        setReply(true)
+    }
 
 
     return (
@@ -218,7 +326,7 @@ const Post = () => {
                                     </button>
                                     <Modal centered visible={visible} onCancel={hideModal} className="modalMenu">
                                         <ul className="modalMenu__list">
-                                            <li className="modalMenu__item modalMenu__item-danger modalMenu__item-bold">Удалить публикацию</li>
+                                            <li className="modalMenu__item modalMenu__item-danger modalMenu__item-bold" onClick={deletePost}>Удалить публикацию</li>
                                             <li className="modalMenu__item">Какой-то пункт</li>
                                             <li className="modalMenu__item">Еще какой-то пункт</li>
                                             <li className="modalMenu__item modalMenu__item-bold" onClick={hideModal}>Отмена</li>
@@ -247,22 +355,38 @@ const Post = () => {
                                     
                                 </div>
                                 <div className="post__action_body_cmts">
-                                    <div className="post__action_body_cmts_item">
-                                        <Avatar 
-                                            className="post__action_body_cmts_item_avatar"
-                                            src={postData.creater.avatar}
-                                            size={50}
-                                            alt={'User avatar'}/>
-                                        <div className="post__action_body_cmts_item_content">
-                                            <span className="post__action_body_cmts_item_content_username">username</span><span className="post__action_body_cmts_item_content_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae molestias molestiae incidunt eum animi dignissimos enim a cum quis laboriosam tempora, dolores alias aliquid optio non eligendi facere, temporibus laudantium!</span>
-                                            <div className="post__action_body_cmts_item_content_ex">
-                                                <div className="post__action_body_cmts_item_content_ex_tm">
-                                                    день назад
+                                    {
+                                        commentList.length > 0 ? (
+                                            commentList.map((comment, index) => (
+                                                <div className="post__action_body_cmts_item">
+                                                    <Avatar 
+                                                        className="post__action_body_cmts_item_avatar"
+                                                        src={comment.creater.avatar}
+                                                        size={50}
+                                                        alt={'User avatar'}/>
+                                                    <div className="post__action_body_cmts_item_content">
+                                                        <span className="post__action_body_cmts_item_content_username">{comment.creater.username}</span>
+                                                        <span className="post__action_body_cmts_item_content_text">
+                                                            {comment.text}
+                                                        </span>
+                                                        <div className="post__action_body_cmts_item_content_ex">
+                                                            <div className="post__action_body_cmts_item_content_ex_tm">
+                                                                время публ. коммента
+                                                            </div>
+                                                            <div onClick={(username) => handleCommentReply(comment.creater.username)} className="post__action_body_cmts_item_content_ex_answer">Ответить</div>
+                                                        </div>
+                                                        {
+                                                            
+                                                        }
+                                                        <div className="post__action_body_cmts_item_content_answers">
+                                                            
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div className="post__action_body_cmts_item_content_ex_answer">Ответить</div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                            ))
+                                        ) : null
+                                    }
+                                    
                                 </div>
                             </div>
                             
@@ -289,7 +413,7 @@ const Post = () => {
                                         </div>
                                     </div>
                                     <div className="post__action_bottom_intf_lks">
-                                        {postData.likes.length} отметок "Нравится"
+                                        {likesCount} отметок "Нравится"
                                     </div>
                                     <div className="post__action_bottom_intf_tm">
                                         <Moment date={postData.date_public} fromNow/>
@@ -308,6 +432,7 @@ const Post = () => {
                                     </Dropdown>
 
                                     <div className="post__action_bottom_cmt_text">
+                                        
                                         <textarea ref={commentTextareaRef} value={comment} onChange={(e) => handleCommentText(e)} rows={1} placeholder="Добавьте комментарий"></textarea>
                                     </div>
                                     <button className={"post__action_bottom_cmt_submit " + (btnDisabled || btnLoading ? 'disabled' : '')} onClick={handleAddComment}>
