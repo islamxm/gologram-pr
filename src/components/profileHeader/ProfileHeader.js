@@ -1,7 +1,6 @@
 import './ProfileHeader.scss';
 import {Link} from 'react-router-dom';
 import { Row, Col } from 'antd';
-import { useRef } from 'react';
 import Search from '../search/Search';
 import ProfileNav from '../profileNav/ProfileNav';
 import logoMain from '../../img/logo-main.svg';

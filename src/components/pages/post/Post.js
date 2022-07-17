@@ -20,7 +20,8 @@ import { LeftOutlined,
         HeartFilled, 
         SendOutlined,
         SmileOutlined ,
-        LoadingOutlined  } from '@ant-design/icons';
+        LoadingOutlined,
+        CloseOutlined  } from '@ant-design/icons';
 import {BsBookmark, BsFillBookmarkFill} from 'react-icons/bs';
 import useModal from '../../../hooks/useModal';
 import 'swiper/css';
@@ -55,12 +56,13 @@ const Post = () => {
         
     const navigate = useNavigate();
 
+
+
     // GET USER INFO
     useEffect(() => {
         userData.setGlobalReqLoad(false);
         service.getProfileAdvanced(userData.token).then(res => {
             if(res.response.code === 200) {
-                console.log(res)
                 setUserId(res.data.id);
             } else {
                 messages.error('Произошла ошибка')
@@ -103,10 +105,7 @@ const Post = () => {
         }
     }, [comment])
 
-    // ПОЛУЧИТЬ КОЛИЧЕСТВО ЛАЙКОВ ПОСЛЕ ЛАЙКА/ДИЗЛАЙКА
-    useEffect(() => {
-
-    }, [likesCount])
+    
 
 
     // ОБНОВЛЕНИЕ СПИСКА КОММЕНТОВ ПОСЛЕ ДОБАВЛЕНИЯ НОВОГО
@@ -157,13 +156,11 @@ const Post = () => {
             service.addComment(userData.token, data).then(res => {
                 setBtnLoading(true)
                 if(res.response.code === 200) {
-                    console.log(res);
                     setComment('');
                     setBtnLoading(false)
                     updateCommentList()
                     
                 } else {
-                    console.log(res);
                     setComment('');
                     setBtnLoading(false)
                 }
@@ -192,6 +189,9 @@ const Post = () => {
             service.postLikeAction(userData.token, data).then(res => {
                 if(res.response.code === 200) {
                     setLiked(true)
+                    setLikesCount((currentState) => {
+                        return currentState + 1
+                    })
                 }
             }).catch(err => {
                 messages.error('Не удалось поставить лайк, повторите позже')
@@ -205,6 +205,13 @@ const Post = () => {
             service.postLikeAction(userData.token, data).then(res => {
                 if(res.response.code === 200) {
                     setLiked(false)
+                    setLikesCount((currentState) => {
+                        if(currentState >= 1) {
+                            return currentState - 1
+                        } else {
+                            return 0
+                        }
+                    })
                 }
             }).catch(err => {
                 messages.error('Не удалось отменить лайк, повторите позже')
@@ -222,7 +229,6 @@ const Post = () => {
         service.savePost(userData.token, data).then(res => {
             if(res.response.code === 200) {
                 setSaved(true);
-                console.log(res)
             } else {
                 messages.error('Не удалось сохранить публикацию, повторите позже');
             }
@@ -243,13 +249,11 @@ const Post = () => {
 
     // УДАЛЕНИЕ ПОСТА
     const deletePost = () => {
-        
         const data = {
             post_id: postId
         }
         service.deletePost(userData.token, data).then(res => {
             if(res.response.code === 200) {
-                console.log(res);
                 messages.success('Публикация успешно удалена');
                 navigate('/profile-self', {replace: true})
             } else {
@@ -321,8 +325,15 @@ const Post = () => {
                                     <div className="post__action_head_main_status"></div>
                                 </div>
                                 <div className="post__action_head_opt">
+                                    
                                     <button onClick={showModal} className="post__action_head_opt_btn">
                                         <MoreOutlined />
+                                    </button>
+
+                                    <button
+                                        onClick={() => navigate('/profile-self', {replace: false})}
+                                        className="post__action_head_opt_btn post__action_head_opt_btn-close">
+                                        <CloseOutlined />
                                     </button>
                                     <Modal centered visible={visible} onCancel={hideModal} className="modalMenu">
                                         <ul className="modalMenu__list">
