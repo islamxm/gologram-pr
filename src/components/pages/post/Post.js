@@ -77,7 +77,7 @@ const Post = () => {
 
     // GET POST INFO
     useEffect(() => {
-        console.log(userId, postId)
+
         if(postId && userId) {
             const data = {
                 user_id: userId,
@@ -267,8 +267,6 @@ const Post = () => {
         })
         
     }
-
-    console.log(repId);
     
 
 
@@ -298,8 +296,6 @@ const Post = () => {
         })
     }
 
-    console.log(postData)
-
 
     
 
@@ -318,8 +314,8 @@ const Post = () => {
                                 pagination={{el: '.post__media_pag', type: 'bullets', bulletClass: 'post__media_pag_item', bulletActiveClass: 'active'}}>
                                 {
                                     postData ? postData.attachments.map((media, index) => (
-                                        <SwiperSlide className="post__media_item">
-                                            <img src={media.file} alt={media.file} key={index} />
+                                        <SwiperSlide className="post__media_item" key={media.file}>
+                                            <img src={media.file} alt={media.file}/>
                                         </SwiperSlide>
                                     )) : null
                                 }
@@ -387,7 +383,7 @@ const Post = () => {
                                             <div className="post__action_body_main_content_description_hashtags">
                                                 {
                                                     postData.hashtags.map(hashtag => (
-                                                        <a href="#" className="post__action_body_main_content_description_hashtags_item">{hashtag.hashtag}</a>
+                                                        <a href="#" className="post__action_body_main_content_description_hashtags_item" key={`${hashtag.hashtag}${hashtag.id}`}>{hashtag.hashtag}</a>
                                                     ))
                                                 }
                                             </div>

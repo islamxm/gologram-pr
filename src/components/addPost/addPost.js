@@ -35,7 +35,7 @@ const AddPost = ({isVis, onCancel}) => {
     const [step, setStep] = useState(1);
     const [images, setImages] = useState([]);
     const [selectedImg, setSelectedImg] = useState(null)
-    const {setGlobalReqLoad, avatar, token, setGlobalPosts, posts} = useAuth();
+    const {setGlobalReqLoad, avatar, token, setPostsCount} = useAuth();
     const [username, setUsername] = useState(null)
     const [postIds, setPostIds] = useState([]);
     const [descr, setDescr] = useState('');
@@ -84,6 +84,7 @@ const AddPost = ({isVis, onCancel}) => {
         if(step === 3) {
             console.log(images);
             addFilesToStorage(images);
+            
         }
     }
 
@@ -168,7 +169,15 @@ const AddPost = ({isVis, onCancel}) => {
                         onCancel();
                         service.pullPosts(token, {user_id: res.data.creater}).then(res => {
                             if(res.response.code === 200) {
-                                setGlobalPosts(res.data.length);
+                                let pl = res.data.filter((post) => {
+                                    if(post.is_deleted === false) {
+                                        return post;
+                                    }
+                                })
+                                if(pl.length > 0) {
+                                    setPostsCount(pl.length);
+                                }
+                                
                             }   
                         })
                     }

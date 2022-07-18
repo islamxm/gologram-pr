@@ -27,7 +27,7 @@ const EmptyPost = () => {
 }
 
 const PostList = () => {
-    const {token} = useAuth();
+    const {token, postsCount} = useAuth();
     const [posts, setPosts] = useState([]);
 
     
@@ -53,7 +53,7 @@ const PostList = () => {
                 console.log('error');
             }
         })
-    }, [])
+    }, [postsCount])
 
 
     return (

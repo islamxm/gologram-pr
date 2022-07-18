@@ -43,7 +43,7 @@ const ProfileCard = () => {
                     allUserData.setFirstName(res.data.first_name)
                     allUserData.setLastName(res.data.last_name)
                     allUserData.setLink(res.data.link)
-                    allUserData.setProfStatus(res.data.profile_status);
+                    allUserData.setProfStatus(res.data.profile_status)
                     allUserData.setProfType(res.data.profile_type)
                     allUserData.setDescription(res.data.description)
                     allUserData.setFollowers(res.data.followers.length > 0 ? res.data.followers.join() : 0)
@@ -52,25 +52,6 @@ const ProfileCard = () => {
                 } else {
                     messages.error('Не удалось получить данные')
                 }
-                // if(!res) {
-                //     messages.success('Произошла ошибка');
-                //     return;
-                // } else {
-                //     console.log(res)
-                //     service.pullPosts(userData.token, {user_id: res.data.id}).then(res => {
-                //         userData.setGlobalPosts(res.data.length);
-                //     })
-                //     userData.setGlobalAvatar(res.data.avatar);
-                //     userData.setGlobalUsername(res.data.username);
-                //     userData.setGlobalFirstName(res.data.first_name);
-                //     userData.setGlobalLastName(res.data.last_name);
-                //     userData.setGlobalLink(res.data.link);
-                //     userData.setGlobalProfileStatus(res.data.profile_status);
-                //     userData.setGlobalProfileType(res.data.profile_type);
-                //     userData.setGlobalDescription(res.data.description);
-                //     userData.setGlobalFollowers(res.data.followers.length);
-                //     userData.setGlobalFollowing(res.data.followings.length);
-                // }
                 userData.setGlobalReqLoad(false);
                 
             }).catch(err => {
@@ -81,18 +62,6 @@ const ProfileCard = () => {
         
     }, [])
 
-
-    console.log(userData.token)
-    
-    const testAddComment = () => {
-        const data = {
-            post_id: 47,
-            text: 'Коммент от другого пользователя'
-        }
-        service.addComment(userData.token, data).then(res => {
-            console.log(res);
-        })
-    }
 
     const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
         setCroppedAreaPixels(croppedAreaPixels)
@@ -115,6 +84,7 @@ const ProfileCard = () => {
                 userData.setGlobalReqLoad(true);
                 if(res.response.code === 200) {
                     allUserData.setAvatar(res.input_data.avatar);
+                    userData.setGlobalAvatar(res.input_data.avatar);
                     userData.setGlobalReqLoad(false);
                     messages.success('Аватар успешно изменен');
                 } else {
