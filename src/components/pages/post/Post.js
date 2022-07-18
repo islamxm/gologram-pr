@@ -85,9 +85,12 @@ const Post = () => {
             }
             service.pullPost(userData.token, data).then(res => {
                 if(res.response.code === 200) {
+                    console.log(res.data);
                     setPostData(res.data);
                     setCommentList(res.data.commentaries);
                     setLikesCount(res.data.likes.length);
+                    setLiked(res.data.you_liked);
+                    setSaved(res.data.you_saved_to_save);
                 } else {
                     messages.error('Произошла ошибка')
                 }
@@ -251,21 +254,41 @@ const Post = () => {
 
     // СОХРАНИТЬ ИЛИ УДАЛИТЬ ПОСТ ИЗ СОХРАНЕННЫХ
     const handleSavePost = () => {
-        const data = {
-            post_id: postId
+        
+
+        if(saved) {
+            const data = {
+                post_id: postId,
+                action: 'unsave'
+            }
+            service.savePost(userData.token, data).then(res => {
+                if(res.response.code === 200) {
+                    setSaved(false);
+                } else {
+                    messages.error('Не удалось сохранить публикацию, повторите позже');
+                }
+            }).catch(err => {
+                console.log(err)
+                messages.error('Не удалось сохранить публикацию, повторите позже');
+            })
         }
 
-        service.savePost(userData.token, data).then(res => {
-            if(res.response.code === 200) {
-                setSaved(true);
-            } else {
-                messages.error('Не удалось сохранить публикацию, повторите позже');
+        if(!saved) {
+            const data = {
+                post_id: postId,
+                action: 'save'
             }
-        }).catch(err => {
-            console.log(err)
-            messages.error('Не удалось сохранить публикацию, повторите позже');
-        })
-        
+            service.savePost(userData.token, data).then(res => {
+                if(res.response.code === 200) {
+                    setSaved(true);
+                } else {
+                    messages.error('Не удалось сохранить публикацию, повторите позже');
+                }
+            }).catch(err => {
+                console.log(err)
+                messages.error('Не удалось сохранить публикацию, повторите позже');
+            })
+        }
     }
     
 
@@ -411,7 +434,7 @@ const Post = () => {
                                                         </span>
                                                         <div className="post__action_body_cmts_item_content_ex">
                                                             <div className="post__action_body_cmts_item_content_ex_tm">
-                                                                время публ. коммента
+                                                                <Moment date={comment.date_public} fromNow/>
                                                             </div>
                                                             {/* <div onClick={() => handleCommentReply(comment.id)} className="post__action_body_cmts_item_content_ex_answer">Ответить</div> */}
                                                         </div>
