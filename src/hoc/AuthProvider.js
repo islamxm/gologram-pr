@@ -13,16 +13,6 @@ export const AuthProvider = ({children}) => {
         Cookies.get('galogram-token') : 
         null);
     const [avatar, setAvatar] = useState(null);
-    const [username, setUsername] = useState(null);
-    const [description, setDescription] = useState(null);
-    const [firstName, setFirstName] = useState(null);
-    const [lastName, setLastName] = useState(null);
-    const [link, setLink] = useState(null);
-    const [profileStatus, setProfileStatus] = useState(null);
-    const [profileType, setProfileType] = useState(null);
-    const [sex, setSex] = useState(null);
-    const [followers, setFollowers] = useState(0);
-    const [following, setFollowing] = useState(0);
     const [postsCount, setPostsCount] = useState(0);
 
 
@@ -52,45 +42,7 @@ export const AuthProvider = ({children}) => {
         setAvatar(item);
     }
 
-    const setGlobalUsername = (item) => {
-        setUsername(item);
-    }
-
-    const setGlobalDescription = (item) => {
-        setDescription(item);
-    }
-
-    const setGlobalFirstName = (item) => {
-        setFirstName(item);
-    }
-
-    const setGlobalLastName = (item) => {
-        setLastName(item);
-    }
-
-    const setGlobalLink = (item) => {
-        setLink(item);
-    }
-
-    const setGlobalSex = (item) => {
-        setSex(item);
-    }
-
-    const setGlobalProfileStatus = (item) => {
-        setProfileStatus(item);
-    }
-
-    const setGlobalProfileType = (item) => {
-        setProfileType(item);
-    }
-
-    const setGlobalFollowing = (num) => {
-        setFollowing(num);
-    }
-
-    const setGlobalFollowers = (num) => {
-        setFollowers(num);
-    }
+    
 
     
 

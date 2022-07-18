@@ -11,12 +11,42 @@ import Button from '../button/Button';
 import authService from '../../services/authService';
 import AuthTextarea from '../authFields/AuthTextarea';
 
+import useUserData from '../../hooks/useUserData';
+
 
 const service = new authService();
 
 
 const EditProfile = () => {
     const userData = useAuth();
+    const {avatar,
+        username,
+        description,
+        firstName,
+        lastName,
+        followers,
+        followings,
+        userId,
+        isConfirmed,
+        link,
+        profStatus,
+        profType,
+        posts,
+        sex,
+        setAvatar,
+        setUsername,
+        setDescription,
+        setFirstName,
+        setLastName,
+        setFollowers,
+        setFollowings,
+        setUserId,
+        setIsConfirmed,
+        setLink,
+        setProfStatus,
+        setProfType,
+        setPosts,
+        setSex} = useUserData();
 
     const [usernameText, setUsernameText ] = useState(null);
     const [firstnameText, setFirstnameText] = useState(null);
@@ -27,14 +57,14 @@ const EditProfile = () => {
     const [statusText, setStatusText] = useState(null);
     const [descritionText, setDescriptionText] = useState(null);
 
-    const [username, setUsername] = useState(null);
-    const [firstname, setFirstname] = useState(null);
-    const [lastname, setLastname] = useState(null);
-    const [sex, setSex] = useState(null);
-    const [link, setLink] = useState(null);
-    const [description, setDescription] = useState(null);
-    const [profiletype, setProfiletype] = useState(null);
-    const [profilestatus, setProfilestatus] = useState(null);
+    // const [username, setUsername] = useState(null);
+    // const [firstname, setFirstname] = useState(null);
+    // const [lastname, setLastname] = useState(null);
+    // const [sex, setSex] = useState(null);
+    // const [link, setLink] = useState(null);
+    // const [description, setDescription] = useState(null);
+    // const [profiletype, setProfiletype] = useState(null);
+    // const [profilestatus, setProfilestatus] = useState(null);
 
 
     useEffect(() => {
@@ -42,13 +72,13 @@ const EditProfile = () => {
         service.getProfileAdvanced(userData.token)
         .then(({data}) => {
             setUsername(data.username);
-            setFirstname(data.first_name);
-            setLastname(data.last_name);
+            setFirstName(data.first_name);
+            setLastName(data.last_name);
             setSex(data.sex);
             setLink(data.link);
             setDescription(data.description);
-            setProfiletype(data.profile_type);
-            setProfilestatus(data.profile_status);
+            setProfType(data.profile_type);
+            setProfStatus(data.profile_status);
             userData.setGlobalReqLoad(false);
         })
     // eslint-disable-next-line 
@@ -61,27 +91,27 @@ const EditProfile = () => {
                 enableReinitialize={true}
                 initialValues={{    
                     username: username,
-                    first_name: firstname,
-                    last_name: lastname,
+                    first_name: firstName,
+                    last_name: lastName,
                     description: description,
                     sex: sex,
                     link: link,
-                    profile_type: profiletype,
-                    profile_status: profilestatus,
+                    profile_type: profType,
+                    profile_status: profStatus,
                 }}
                 onSubmit={(values, {setSubmitting}) => {
                     userData.setGlobalReqLoad(true);
                     service.changeProfileInfo(userData.token, values).then(res => {
                         setSubmitting(true);
                         if(res.response.code === 200 && res.response.status === 'successfully') {
-                            userData.setGlobalUsername(values.username);
-                            userData.setGlobalFirstName(values.first_name);
-                            userData.setGlobalLastName(values.last_name);
-                            userData.setGlobalDescription(values.description);
-                            userData.setGlobalSex(values.sex);
-                            userData.setGlobalLink(values.link);
-                            userData.setGlobalProfileType(values.profile_type);
-                            userData.setGlobalProfileStatus(values.profile_status);
+                            setUsername(values.username);
+                            setFirstName(values.first_name);
+                            setLastName(values.last_name);
+                            setDescription(values.description);
+                            setSex(values.sex);
+                            setLink(values.link);
+                            setProfType(values.profile_type);
+                            setProfStatus(values.profile_status);
                             messages.success('Настройки успешно сохранены');
                         } else {
                             setUsernameText(res.data?.validate_errors?.username ? res.data.validate_errors.username : null);
