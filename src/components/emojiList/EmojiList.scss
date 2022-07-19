@@ -29,11 +29,16 @@
         &_list {
             display: flex;
             flex-wrap: wrap;
+            
         }
 
         &_item {
             font-size: 20px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: calc(100% / 8);
         }
     }
 }
