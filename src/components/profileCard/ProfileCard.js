@@ -6,7 +6,7 @@ import Cropper from 'react-easy-crop';
 import { useCallback, useEffect, useState } from 'react';
 import { Dropdown, Modal } from 'antd';
 import {
-    SettingOutlined, PictureOutlined, CameraOutlined} from '@ant-design/icons';
+    SettingOutlined, PictureOutlined, CameraOutlined, CheckCircleFilled} from '@ant-design/icons';
 
 import Services from '../../services/authService';
 import Button from '../button/Button';
@@ -196,7 +196,14 @@ const ProfileCard = () => {
                     </div>
                     <div className="profileCard__item profileCard__body">
                         <div className="profileCard__body_item profileCard__body_item--username">
-                            {allUserData.username}
+                            {allUserData.username} 
+                            {
+                                !allUserData.isConfirmed ? (
+                                    <span className="profileCard__body_item--username_confirmed">
+                                    <CheckCircleFilled />
+                                    </span>
+                                ) : null
+                            }
                         </div>
                         <div className="profileCard__body_item profileCard__body_item--name">
                             {allUserData.firstName} {allUserData.lastName}

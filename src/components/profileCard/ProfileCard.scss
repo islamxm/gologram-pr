@@ -96,6 +96,13 @@
             font-size: 30px;
             line-height: 30px;
             margin-bottom: 15px;
+
+            &_confirmed {
+                color :var(--orange);
+                font-size: 25px;
+                line-height: 25px;
+                margin: 0 15px;
+            }
         }
 
         &_item--name {

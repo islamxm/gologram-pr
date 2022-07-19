@@ -64,8 +64,7 @@ const ProfileDropdownMenu = () => {
                     <div className="profileDropdownMenu__item_link_text">Выйти</div>
                 </div>
             </div>
-            <div className="profileDropdownMenu_item"></div>
-            <div className="profileDropdownMenu_item"></div>
+            
         </div>
     )
 }

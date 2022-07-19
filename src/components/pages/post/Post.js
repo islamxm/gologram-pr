@@ -21,7 +21,9 @@ import { LeftOutlined,
         SendOutlined,
         SmileOutlined ,
         LoadingOutlined,
-        CloseOutlined  } from '@ant-design/icons';
+        CheckCircleFilled,
+        CloseOutlined,
+      } from '@ant-design/icons';
 import {BsBookmark, BsFillBookmarkFill} from 'react-icons/bs';
 import useModal from '../../../hooks/useModal';
 import 'swiper/css';
@@ -42,7 +44,7 @@ const Post = () => {
     const [postData, setPostData] = useState(null);
     const [comment, setComment] = useState('');
     const [commentList, setCommentList] = useState([]);
-    const [btnDisabled, setBtnDisabled] = useState(true)
+    const [btnDisabled, setBtnDisabled] = useState(false)
     const [btnLoading, setBtnLoading] = useState(false);
     const [liked, setLiked] = useState(false);
     const [saved, setSaved] = useState(false);
@@ -53,6 +55,8 @@ const Post = () => {
     //new hook main user states
     const {userId,
            setUserId,
+           isConfirmed,
+           setIsConfirmed
            } = useUserData()
         
     const navigate = useNavigate();
@@ -91,6 +95,7 @@ const Post = () => {
                     setLikesCount(res.data.likes.length);
                     setLiked(res.data.you_liked);
                     setSaved(res.data.you_saved_to_save);
+                    setIsConfirmed(res.data.creater.is_confirmed)
                 } else {
                     messages.error('Произошла ошибка')
                 }
@@ -103,11 +108,12 @@ const Post = () => {
 
 
     // ОТКЛЮЧЕНИЕ КНОПКИ СОЗДАНИЯ КОММЕНТА ЕСЛИ ИНПУТ ПУСТОЙ
-    useEffect(() => {
-        if(comment === '') {
-            setBtnDisabled(true);
-        }
-    }, [comment])
+    // useEffect(() => {
+    //     if(comment === null) {
+    //         setBtnDisabled(true);
+    //     }
+    //     console.log(comment)
+    // }, [comment])
 
     
 
@@ -204,7 +210,8 @@ const Post = () => {
                 
             })
         } else {
-            setBtnDisabled(true);
+            // setBtnDisabled(true);
+            messages.default('Напишите комментарий');
         }
     }
 
@@ -363,6 +370,13 @@ const Post = () => {
                                                     src={postData.creater.avatar}
                                                     size={50} alt={'User Avatar'}/>
                                                 <div className="post__action_head_main_prf_username">{postData.creater.username}</div>
+                                                {
+                                                    !isConfirmed ? (
+                                                        <div className="post__action_head_main_prf_confirmed">
+                                                            <CheckCircleFilled />
+                                                        </div>
+                                                    ) : null
+                                                }
                                             </div>
                                             </Link>
                                         ) : null
@@ -402,6 +416,13 @@ const Post = () => {
                                     <div className="post__action_body_main_content">
                                         <div className="post__action_body_main_content_description">
                                             <span className="post__action_body_main_content_description_username">{postData.creater.username}</span>
+                                            {
+                                                !isConfirmed ? (
+                                                    <span className="post__action_body_main_content_description_confirmed">
+                                                        <CheckCircleFilled />
+                                                    </span>
+                                                ) : null
+                                            }
                                             <span className="post__action_body_main_content_description_text">{postData.text}</span>
                                             <div className="post__action_body_main_content_description_hashtags">
                                                 {
@@ -429,6 +450,13 @@ const Post = () => {
                                                         alt={'User avatar'}/>
                                                     <div className="post__action_body_cmts_item_content">
                                                         <span className="post__action_body_cmts_item_content_username">{comment.creater.username}</span>
+                                                        {
+                                                            !comment.creater.is_confirmed ? (
+                                                                <span className="post__action_body_cmts_item_content_confirmed">
+                                                                    <CheckCircleFilled />
+                                                                </span>
+                                                            ) : null
+                                                        }
                                                         <span className="post__action_body_cmts_item_content_text">
                                                             {comment.text}
                                                         </span>

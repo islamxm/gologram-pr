@@ -29,4 +29,11 @@
             background-color: red;
         }
     }
+
+    .message-default {
+        .ant-message-notice-content {
+            background-color: #fff;
+            color: #000;
+        }
+    }
 }

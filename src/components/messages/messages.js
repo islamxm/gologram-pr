@@ -1,5 +1,7 @@
 import './messages.scss';
 import {message} from 'antd';
+import { MessageTwoTone
+  } from '@ant-design/icons';
 
 const EmptyIcon = () => {
     return (
@@ -20,6 +22,13 @@ const messages = {
             icon: <EmptyIcon/>,
             className: 'message-error'
         });
+    },
+    default: (text) => {
+        message.info({
+            content: text,
+            icon: <MessageTwoTone twoToneColor='#FF8B00' style={{fontSize: '20px'}} />,
+            className: 'message-default'
+        })
     }
 }
 

@@ -12,12 +12,84 @@
             height: 40px;
             border: none;
             cursor: pointer;
+            transition: all .3s ease;
+            overflow: hidden;
+        }
+
+        &_btn-glass {
+
+        }
+
+        &_btn-glass.hidden {
+            width: 0;
+        }
+
+        &_btn-reset {
+            width: 0;
+            color: red;
+        }
+
+        &_btn-reset.active {
+            width: 40px;
         }
 
         input {
             border: none;
             flex: 1 0 auto;
-            padding: 5px;
+            padding: 5px 10px;
+        }
+    }
+
+    &__list {
+        background-color: #fff;
+        width: 500px;
+        border-radius: 10px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, .5);
+        max-height: 200px;
+
+        
+    }
+
+    &__item {   
+        display: flex;
+        align-items: center;
+        padding: 15px 10px;
+        transition: all .3s ease;
+
+        &:hover {
+            background-color: #f4e1d2;
+        }
+
+        &_avatar {
+            flex: 0 0 auto;
+            margin-right: 20px;
+        }
+
+        &_body {
+            &_main {
+                display: flex;
+                align-items: center;
+            }
+            &_username {
+                margin-right: 15px;
+                font-size: 18px;
+                line-height: 18px;
+                font-weight: 700;
+                color: #000;
+
+            }
+
+            &_confirmed {
+                color: var(--orange);
+                font-size: 16px;
+                line-height: 16px;
+            }
+
+            &_status {
+                color: #aaa;
+            }
         }
     }
 }
